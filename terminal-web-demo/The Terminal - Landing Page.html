@@ -1,0 +1,1360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#3b241b" />
+<title>THE TERMINAL — Cafe & European Kitchen</title>
+
+<!-- Google Fonts: Oswald + Cormorant Garamond italic + Pinyon Script -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<!-- Tailwind v4 Play CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<!-- Lucide icons -->
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+
+<style type="text/tailwindcss">
+  @theme {
+    --color-canvas:   #E8D2A8;   /* aged paper / parchment body */
+    --color-canvas-deep: #DDC392;
+    --color-iron:     #3A3A3A;   /* dark iron — menu / nav backplate */
+    --color-iron-2:   #2B2B2B;
+    --color-rust:     #7B3F00;
+    --color-rust-deep:#5a2d00;
+    --color-brass:    #CFA93F;
+    --color-brass-light:#f4c14f;
+    --color-brass-pale:#fff1b3;
+    --color-brick:    #A0522D;
+    --color-leather:  #4a2d22;
+    --color-patina:   #6D827D;
+    --color-quartz:   #F5F5F5;
+    --color-copper:   #B8967A;
+    --font-display: 'Oswald', sans-serif;
+    --font-script:  'Pinyon Script', cursive;
+    --font-italic:  'Cormorant Garamond', serif;
+  }
+</style>
+
+<style>
+  /* ─────────────────── BASE ─────────────────── */
+  html, body { background:#E8D2A8; color:#3A3A3A; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family:'Oswald', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  ::selection { background:#CFA93F; color:#1f1308; }
+  :focus-visible { outline: 2px solid #CFA93F; outline-offset: 3px; border-radius: 2px; }
+
+  /* ─────────────────── BRAND TEXT GRADIENTS (LIGHTER) ─────────────────── */
+  .text-grad-primary {
+    background-image: linear-gradient(0deg, #fff6dc 0%, #ffe199 25%, #f4c14f 55%, #ffe9b3 80%, #fff4d4 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    text-shadow:
+      0 0 14px rgba(255, 225, 153, 0.18),
+      0 3px 10px rgba(0,0,0,.22);
+  }
+  .text-grad-accent {
+    background-image: linear-gradient(0deg, #d99a3a 0%, #ffe199 25%, #fff4d4 50%, #ffe199 80%, #d99a3a 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+  }
+  /* Title on light backgrounds: solid rust — gradients reserved for the dark iron #3A3A3A surfaces only */
+  .text-grad-on-paper {
+    color: #5a2d00;
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+    text-shadow: 0 1px 0 rgba(255,255,255,.35);
+  }
+  .text-muted-gold { color: #b1894a; }
+
+  /* ─────────────────── DIVIDER ─────────────────── */
+  .brand-divider {
+    height: 4px; border-radius: 2px;
+    background-image: linear-gradient(0deg, #c88d2b 0%, #ffe9a3 50%, #c88d2b 100%);
+    box-shadow: 0 0 8px rgba(255,220,120,.25);
+  }
+  .brand-divider-rust {
+    height: 3px; border-radius: 2px;
+    background-image: linear-gradient(90deg, transparent, #7B3F00 35%, #CFA93F 50%, #7B3F00 65%, transparent);
+    opacity: .8;
+  }
+
+  /* Track sleeper divider (railway tracks) */
+  .track-divider {
+    position: relative; height: 22px;
+    background:
+      linear-gradient(#7B3F00,#7B3F00) center top 4px/100% 2px no-repeat,
+      linear-gradient(#7B3F00,#7B3F00) center bottom 4px/100% 2px no-repeat;
+  }
+  .track-divider::before {
+    content:''; position: absolute; inset:0;
+    background-image: repeating-linear-gradient(90deg, #4a2d22 0 10px, transparent 10px 40px);
+    height: 100%;
+  }
+
+  /* ─────────────────── WOOD SIGNBOARD ─────────────────── */
+  .signboard {
+    position: relative; border-radius: 6px;
+    background:
+      radial-gradient(circle at top, rgba(255,255,255,.08), transparent 35%),
+      linear-gradient(180deg, #5a3427 0%, #4a2d22 45%, #3b241b 100%);
+    box-shadow:
+      inset 0 0 25px rgba(0,0,0,.35),
+      0 10px 30px rgba(0,0,0,.45);
+  }
+  .signboard::after {
+    content:''; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+    background-image: repeating-linear-gradient(90deg,
+      rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 2px,
+      transparent 2px, transparent 6px);
+    opacity:.25; mix-blend-mode: screen;
+  }
+  .signboard-inner { position:relative; z-index:1; }
+
+  /* ─────────────────── DARK IRON CARD ─────────────────── */
+  .iron-card{
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 .85  0 0 0 0 .55  0 0 0 .03 0'/></filter><rect width='100%25' height='100%25' filter='url(%23p)'/></svg>"),
+      linear-gradient(180deg, #3a3a3a 0%, #2f2f2f 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 220, 120, .12),
+      inset 0 1px 0 rgba(255,255,255,.04),
+      inset 0 -2px 0 rgba(0,0,0,.45);
+  }
+
+  /* ─────────────────── AGED PAPER CARD (light side) ─────────────────── */
+  .paper-card{
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .22  0 0 0 0 .08  0 0 0 .14 0'/></filter><rect width='100%25' height='100%25' filter='url(%23p)'/></svg>"),
+      radial-gradient(ellipse at center, #F5E6C8 0%, #E0C8A0 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(123, 63, 0, .22),
+      0 12px 30px rgba(58, 28, 8, .25);
+  }
+
+  /* ─────────────────── RUSTED METAL FRAME (photos) ─────────────────── */
+  .rusted-frame{
+    position:relative; padding:14px; border-radius: 4px;
+    background:
+      linear-gradient(135deg, #7B3F00 0%, #54290a 30%, #8a4a14 60%, #3d1f08 100%);
+    box-shadow:
+      inset 0 0 0 2px rgba(0,0,0,.55),
+      inset 0 0 0 4px rgba(207,169,63,.22),
+      inset 0 0 18px rgba(0,0,0,.5),
+      0 14px 32px rgba(0,0,0,.4);
+  }
+  .rusted-frame::before{
+    content:''; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='r'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .22  0 0 0 0 .10  0 0 0 0 .02  0 0 0 .55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23r)'/></svg>");
+    mix-blend-mode: multiply; opacity: .65;
+  }
+
+  /* ─────────────────── BRICK WALL ─────────────────── */
+  .brick-wall{
+    background-color:#3b241b;
+    background-image:
+      linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.6)),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='80'><rect width='160' height='80' fill='%23A0522D'/><g fill='none' stroke='%231a0e07' stroke-width='2'><path d='M0 40 H160 M0 0 H160 M0 80 H160 M40 0 V40 M120 0 V40 M0 40 V80 M80 40 V80 M160 40 V80'/></g><g fill='%23000' opacity='.18'><rect x='2' y='2' width='36' height='36'/><rect x='42' y='2' width='76' height='36'/><rect x='122' y='2' width='36' height='36'/></g></svg>");
+    background-size: auto, 160px 80px;
+  }
+
+  /* ─────────────────── RIVET ─────────────────── */
+  .rivet {
+    position:absolute; width:10px; height:10px; border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, #fcda8c, #b97716 60%, #5a3a10);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,.4), 0 2px 3px rgba(0,0,0,.6);
+  }
+
+  /* ─────────────────── CHAIN ─────────────────── */
+  .chain{
+    width:6px;
+    background: repeating-linear-gradient(180deg, #2a2a2a 0 5px, #5a5a5a 5px 9px, #2a2a2a 9px 15px);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.65), 0 2px 6px rgba(0,0,0,.4);
+    border-radius: 2px;
+  }
+
+  /* ─────────────────── ANIMATIONS ─────────────────── */
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  @keyframes spin-rev  { to { transform: rotate(-360deg); } }
+  .gear-slow { animation: spin-slow 60s linear infinite; transform-origin:50% 50%; }
+  .gear-rev  { animation: spin-rev  80s linear infinite; transform-origin:50% 50%; }
+
+  @keyframes bulb-flicker {
+    0%,100%{ opacity:1; } 8%{ opacity:.85; } 20%{ opacity:.7; } 22%{ opacity:1; } 72%{ opacity:.78; } 74%{ opacity:1; }
+  }
+  .bulb-flicker { animation: bulb-flicker 4.6s infinite; }
+
+  @keyframes steam-rise {
+    0%   { transform: translateY(0) scale(.6); opacity:0; }
+    25%  { opacity:.35; }
+    100% { transform: translateY(-220px) scale(1.6); opacity:0; }
+  }
+  .steam{
+    position:absolute; bottom:-10px; width:60px; height:60px; border-radius:50%;
+    background: radial-gradient(circle, rgba(245,230,200,.55), rgba(245,230,200,0) 70%);
+    filter: blur(8px); animation: steam-rise 7s linear infinite; pointer-events:none;
+  }
+
+  @keyframes sway { 0%,100%{ transform: rotate(-1deg);} 50% { transform: rotate(1deg);} }
+  .sway { animation: sway 6s ease-in-out infinite; transform-origin: top center; }
+
+  @keyframes reveal { from { opacity:0; transform: translateY(20px);} to { opacity:1; transform:none; } }
+  .reveal { opacity:0; }
+  .reveal.in { animation: reveal .9s cubic-bezier(.22,1,.36,1) forwards; }
+
+  /* ─────────────────── NAV ─────────────────── */
+  #nav { transition: background .3s, backdrop-filter .3s, box-shadow .3s, height .3s; }
+  .nav-link{ position:relative; }
+  .nav-link::after{
+    content:''; position:absolute; left:50%; right:50%; bottom:-6px; height:2px;
+    background: linear-gradient(90deg, #b97716, #ffe9a3, #b97716);
+    transition: left .3s, right .3s;
+  }
+  .nav-link:hover::after, .nav-link.active::after { left:0; right:0; }
+
+  /* ─────────────────── BUTTONS ─────────────────── */
+  .btn-brass{
+    display:inline-flex; align-items:center; justify-content:center;
+    background: linear-gradient(180deg, #ffe9a3 0%, #f4c14f 45%, #b97716 100%);
+    color:#3b241b; font-family:'Oswald', sans-serif; font-weight:600;
+    letter-spacing:.22em; text-transform: uppercase;
+    border:1px solid #5a4310;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.5),
+      inset 0 -2px 0 rgba(0,0,0,.3),
+      0 6px 14px rgba(0,0,0,.3);
+    transition: filter .2s, transform .15s, box-shadow .25s;
+  }
+  .btn-brass:hover { filter: brightness(1.05); box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 0 0 1px #CFA93F, 0 0 24px rgba(207,169,63,.45); }
+  .btn-brass:active{ transform: translateY(1px) scale(.99); }
+
+  .btn-brass-outline{
+    display:inline-flex; align-items:center; justify-content:center;
+    background: transparent; color:#fff1b3; border:1.5px solid #CFA93F;
+    font-family:'Oswald', sans-serif; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
+    transition: background .3s, color .3s, box-shadow .3s, transform .15s;
+  }
+  .btn-brass-outline:hover { background: linear-gradient(180deg, #ffe9a3, #b97716); color: #3b241b; box-shadow: 0 0 0 1px #CFA93F, 0 0 24px rgba(207,169,63,.4); }
+  .btn-brass-outline:active{ transform: translateY(1px) scale(.99); }
+
+  /* ─────────────────── MENU TABS ─────────────────── */
+  .menu-tab{
+    position:relative; min-height:48px; padding:0 1.5rem;
+    font-family:'Oswald'; font-weight:600; letter-spacing:.18em; font-size:13px;
+    text-transform: uppercase;
+    transition: transform .15s, background-color .25s;
+  }
+  .menu-tab .label-on  { display:none; }
+  .menu-tab .label-off { display:inline-block; }
+  .menu-tab[aria-selected="true"] .label-on { display:inline-block; }
+  .menu-tab[aria-selected="true"] .label-off { display:none; }
+  .menu-tab[aria-selected="true"]{
+    background: linear-gradient(180deg, rgba(255,233,163,.10), rgba(184,150,122,.00));
+    box-shadow: inset 0 -2px 0 rgba(255,233,163,.7);
+  }
+  .menu-tab:hover .label-off { color:#d6a44b; }
+
+  /* ─────────────────── MENU ROWS — compact ─────────────────── */
+  .menu-row{
+    position:relative; width:100%; text-align:left;
+    display:flex; align-items:flex-start; justify-content:space-between;
+    gap:.75rem; padding: .7rem .85rem; min-height: 56px;
+    color:#F5F5F5; background:transparent;
+    border: 1px solid rgba(255,233,163,.08); border-radius:4px;
+    transition: background-color .3s, border-color .3s, transform .15s;
+  }
+
+  /* clamp long descriptions to keep rows tidy */
+  .menu-row .desc{
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+
+  /* ─────────────────── PAGER ─────────────────── */
+  .pager{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    margin-top: 1.5rem;
+  }
+  .pager-btn{
+    min-width:44px; min-height:38px; padding:6px 14px;
+    border:1px solid rgba(207,169,63,.45);
+    background: linear-gradient(180deg, rgba(255,233,163,.06), rgba(0,0,0,.15));
+    color:#fff4d4;
+    font-family:'Oswald', sans-serif; font-weight:600; letter-spacing:.18em;
+    text-transform: uppercase; font-size:11px;
+    border-radius: 3px;
+    transition: background .2s, color .2s, border-color .2s, transform .15s;
+  }
+  .pager-btn:hover { background: linear-gradient(180deg, #ffe9a3, #b97716); color:#3b241b; border-color:#5a4310; }
+  .pager-btn:disabled { opacity:.35; cursor:not-allowed; }
+  .pager-btn:active:not(:disabled){ transform: translateY(1px) scale(.99); }
+  .pager-page{
+    font-family:'Oswald', sans-serif; font-weight:500; letter-spacing:.32em;
+    color:#CFA93F; font-size:12px; tabular-nums; padding: 0 8px;
+  }
+  .menu-row:hover { background: rgba(255,233,163,.06); border-color: rgba(255,233,163,.28); }
+  .menu-row:active{ transform: scale(.99); }
+  .menu-row::before{
+    content:''; position:absolute; left:0; top:50%; transform: translateY(-50%);
+    width:2px; height:0; background: linear-gradient(180deg, #fcd16e, #b97716);
+    transition: height .3s; border-radius:2px;
+  }
+  .menu-row:hover::before, .menu-row:focus-visible::before { height: 66%; }
+
+  /* ─────────────────── FORM ─────────────────── */
+  .field{ position:relative; padding-top:6px; }
+  .field-label{
+    font-family:'Oswald'; font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+    color:#7b4b14; margin-bottom:.4rem; display:block; font-weight:500;
+  }
+  .field input, .field select, .field textarea{
+    width:100%; padding: 12px 14px; background:#F5E6C8; color:#3A3A3A;
+    border:1.5px solid #7B3F00; outline:none;
+    font-family:'Oswald'; font-size:16px;
+    box-shadow: inset 0 0 0 1px rgba(207,169,63,.4), inset 0 2px 6px rgba(123,63,0,.18);
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .field input::placeholder{ color:#7B3F00; opacity:.55; font-style:italic; }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    box-shadow: 0 0 0 3px rgba(207,169,63,.45), inset 0 0 0 1px rgba(207,169,63,.6);
+    border-color: #CFA93F;
+  }
+
+  /* ─────────────────── TIMETABLE ─────────────────── */
+  .timetable-row{
+    display:grid; grid-template-columns: 1fr auto; align-items:center;
+    border-bottom: 1px dashed rgba(207,169,63,.4);
+    padding: 12px 0;
+    font-family:'Oswald'; color:#F5E6C8; letter-spacing:.05em;
+  }
+  .timetable-row .dep { color:#CFA93F; font-variant-numeric: tabular-nums; font-weight:500; }
+
+  /* ─────────────────── MODAL ─────────────────── */
+  @keyframes fade-in { from{ opacity:0 } to{ opacity:1 } }
+  @keyframes modal-in { from { opacity:0; transform: translateY(24px) scale(.96);} to { opacity:1; transform:none; } }
+  .backdrop-anim{ animation: fade-in .3s ease forwards; }
+  .modal-anim   { animation: modal-in .42s cubic-bezier(.22,1,.36,1) forwards; }
+  .modal-frame{
+    position:relative; border-radius:8px;
+    background:
+      linear-gradient(#3A3A3A, #3A3A3A) padding-box,
+      linear-gradient(180deg, #fff6dc 0%, #ffe199 25%, #f4c14f 55%, #ffe9b3 80%, #fff4d4 100%) border-box;
+    border: 1.5px solid transparent;
+    box-shadow: 0 30px 80px rgba(0,0,0,.55);
+  }
+
+  /* No-scrollbar */
+  .no-scrollbar::-webkit-scrollbar { display:none; }
+  .no-scrollbar { scrollbar-width: none; }
+</style>
+</head>
+
+<body class="bg-canvas text-iron antialiased overflow-x-hidden">
+
+<!-- ════════════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════════ -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50">
+  <div id="nav-bg" class="absolute inset-0 -z-10 transition-all duration-300" style="background: transparent;"></div>
+  <div id="nav-line" class="absolute bottom-0 left-0 right-0 h-px transition-colors duration-300" style="background: transparent;"></div>
+
+  <div class="max-w-7xl mx-auto px-5 lg:px-10 flex items-center justify-between" id="navInner" style="height:88px;">
+    <!-- Wordmark only (medallion removed) -->
+    <a href="#home" class="flex flex-col leading-tight">
+      <span class="text-grad-accent font-bold tracking-[.28em] text-[13px]">THE TERMINAL</span>
+      <span class="text-quartz/65 text-[10px] tracking-[.32em]" id="nav-sub">CAFE · EUROPEAN KITCHEN</span>
+    </a>
+
+    <!-- Center nav -->
+    <nav class="hidden lg:flex items-center gap-9 text-[12px]" aria-label="Primary">
+      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#home">Home</a>
+      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#about">About</a>
+      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#menu">Menu</a>
+      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#reserve">Reservation</a>
+      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#location">Location</a>
+    </nav>
+
+    <a href="#reserve" class="hidden lg:inline-flex btn-brass px-5 py-2.5 text-[11px]">Reserve a Table</a>
+
+    <!-- Mobile burger -->
+    <button id="burger" class="lg:hidden p-2 text-brass-light" aria-label="Open menu" aria-controls="overlay" aria-expanded="false">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div id="overlay" class="fixed inset-0 z-[60] -translate-y-full transition-transform duration-500 lg:hidden brick-wall"
+     role="dialog" aria-modal="true" aria-label="Site navigation">
+  <div class="absolute inset-4 border-2 border-double border-brass-light/60 pointer-events-none rounded-md"></div>
+  <div class="relative h-full flex flex-col p-8">
+    <div class="flex justify-between items-center">
+      <span class="text-grad-accent font-bold tracking-[.28em] text-[14px]">THE TERMINAL</span>
+      <button id="closeMenu" class="text-brass-light p-2" aria-label="Close menu">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <nav class="mt-12 flex flex-col gap-7" id="overlayNav" aria-label="Site">
+      <a href="#home"     class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">Home</a>
+      <a href="#about"    class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">About</a>
+      <a href="#menu"     class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">Menu</a>
+      <a href="#reserve"  class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">Reservation</a>
+      <a href="#location" class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">Location</a>
+    </nav>
+    <a href="#reserve" class="btn-brass mt-auto py-4 text-[12px]">Reserve a Table</a>
+  </div>
+</div>
+
+<!-- SVG defs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="g-gear-unused" viewBox="0 0 100 100"></symbol>
+    <symbol id="g-loco" viewBox="0 0 120 60">
+      <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 46h104"/><path d="M14 42V26h28v16"/>
+        <path d="M42 42V14h36l10 12v16"/>
+        <rect x="48" y="20" width="22" height="10"/>
+        <circle cx="24" cy="50" r="6"/><circle cx="56" cy="50" r="6"/><circle cx="86" cy="50" r="6"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<main>
+
+<!-- ════════════════════════════════════════════════════
+     1. HOME / HERO
+════════════════════════════════════════════════════ -->
+<section id="home" class="relative min-h-[100svh] overflow-hidden flex items-center brick-wall pt-24 md:pt-28">
+
+  <!-- Background overlay tint -->
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(20,12,4,.78) 0%, rgba(15,10,4,.82) 60%, rgba(8,5,2,.92) 100%);"></div>
+
+  <!-- Hero is now clean of decorative corner gears — sky stays uncluttered -->
+
+  <!-- Steam -->
+  <div class="steam" style="left:8%;"></div>
+  <div class="steam" style="left:32%; animation-delay:-2s;"></div>
+  <div class="steam" style="left:68%; animation-delay:-4s;"></div>
+  <div class="steam" style="left:88%; animation-delay:-1s;"></div>
+
+    <!-- Centered signboard -->
+    <div class="relative z-10 mx-auto w-full max-w-6xl px-5 md:px-10 py-10 md:py-16 flex flex-col items-center">
+
+      <!-- The Signboard -->
+      <div class="signboard relative w-full max-w-3xl px-6 md:px-12 py-8 md:py-12 sway reveal">
+        <span class="rivet" style="top:10px; left:10px;"></span>
+        <span class="rivet" style="top:10px; right:10px;"></span>
+        <span class="rivet" style="bottom:10px; left:10px;"></span>
+        <span class="rivet" style="bottom:10px; right:10px;"></span>
+
+      <!-- Sign inner -->
+      <div class="signboard-inner text-center">
+        <div class="flex items-center justify-center gap-3 mb-3">
+          <span class="h-px w-10 md:w-16" style="background: linear-gradient(90deg, transparent, #c88d2b 70%, #ffe9a3);"></span>
+          <span class="text-grad-accent tracking-[.4em] text-[10px] md:text-[11px] font-medium">EST · 2024</span>
+          <span class="h-px w-10 md:w-16" style="background: linear-gradient(90deg, #ffe9a3, #c88d2b 30%, transparent);"></span>
+        </div>
+
+        <h1 class="text-grad-primary font-black uppercase leading-[.9] tracking-[.04em]"
+            style="font-size: clamp(2.5rem, 8vw, 6rem);">
+          THE TERMINAL
+        </h1>
+
+        <div class="brand-divider mt-5 mx-auto" style="max-width: 320px;"></div>
+
+        <div class="mt-5 text-grad-accent uppercase font-medium tracking-[.32em]"
+             style="font-size: clamp(.78rem, 1.2vw, 1rem);">
+          Cafe &nbsp;·&nbsp; European Kitchen
+        </div>
+      </div>
+    </div>
+
+    <!-- Tagline -->
+    <p class="reveal mt-10 max-w-2xl text-center italic text-quartz/80 leading-relaxed"
+       style="font-family:'Cormorant Garamond', serif; font-size: clamp(1.05rem, 1.6vw, 1.35rem);">
+      A small European kitchen at the end of an old freight line — slow mornings, lantern-lit evenings, and a kitchen that doesn't rush.
+    </p>
+
+    <!-- CTAs -->
+    <div class="reveal mt-9 md:mt-11 flex flex-col sm:flex-row gap-4">
+      <a href="#menu" class="btn-brass-outline px-7 md:px-9 py-4 text-[11px] md:text-[12px] min-w-[220px]">
+        <i data-lucide="utensils-crossed" class="w-4 h-4 mr-3"></i>
+        Explore the Menu
+      </a>
+      <a href="#reserve" class="btn-brass px-7 md:px-9 py-4 text-[11px] md:text-[12px] min-w-[220px]">
+        <i data-lucide="ticket" class="w-4 h-4 mr-3"></i>
+        Reserve a Table
+      </a>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="reveal mt-12 md:mt-16 flex flex-col items-center gap-2 text-brass-light/85">
+      <span class="font-mono tracking-[.32em] text-[10px]">SCROLL</span>
+      <i data-lucide="chevron-down" class="w-4 h-4 animate-bounce"></i>
+    </div>
+  </div>
+</section>
+
+<!-- Track divider removed -->
+
+<!-- ════════════════════════════════════════════════════
+     2. ABOUT — All Aboard
+════════════════════════════════════════════════════ -->
+<section id="about" class="relative px-5 md:px-12 py-20 md:py-28 bg-canvas">
+
+  <!-- subtle map watermark -->
+  <div class="absolute inset-0 pointer-events-none opacity-30"
+       style='background-image: url("data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 600%22 fill=%22none%22 stroke=%22%237B3F00%22 stroke-width=%22.6%22><path d=%22M40 520 C 200 480 280 380 380 360 S 540 300 640 280 S 820 220 900 180 1100 120 1180 60%22/><path d=%22M60 440 C 220 420 320 360 460 320 S 700 240 880 220 1120 200 1180 160%22/><circle cx=%22380%22 cy=%22360%22 r=%223%22 fill=%22%237B3F00%22/><circle cx=%22620%22 cy=%22280%22 r=%223%22 fill=%22%237B3F00%22/></svg>"); background-size: cover; background-position:center;'></div>
+
+  <div class="relative max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+    <!-- LEFT: tilted brass-framed photograph -->
+    <div class="reveal relative" style="transform: rotate(-1.6deg);">
+      <div class="rusted-frame">
+        <span class="rivet" style="top:6px; left:6px;"></span>
+        <span class="rivet" style="top:6px; right:6px;"></span>
+        <span class="rivet" style="bottom:6px; left:6px;"></span>
+        <span class="rivet" style="bottom:6px; right:6px;"></span>
+        <div class="relative overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80"
+               alt="Vintage railway café interior with warm lantern light and timber surfaces"
+               class="w-full h-[440px] md:h-[520px] object-cover"
+               style="filter: sepia(.55) saturate(.9) contrast(1.05) brightness(.92);" />
+          <div class="absolute inset-0 pointer-events-none" style="box-shadow: inset 0 0 80px rgba(0,0,0,.55);"></div>
+        </div>
+      </div>
+      <!-- Corner gear ornaments removed -->
+    </div>
+
+    <!-- RIGHT: story -->
+    <div class="reveal">
+      <div class="text-rust uppercase tracking-[.4em] text-[11px] font-medium">— Track 04 · All Aboard</div>
+
+      <h2 class="text-grad-on-paper font-black uppercase mt-4 leading-[.95] tracking-[.02em]"
+          style="font-size: clamp(2.25rem, 5.5vw, 4rem);">
+        Built inside an old<br/>freight house.
+      </h2>
+
+      <div class="brand-divider-rust mt-6" style="max-width: 220px;"></div>
+
+      <div class="mt-7 space-y-5 text-iron/85 leading-relaxed" style="font-size: clamp(.95rem, 1.1vw, 1.05rem);">
+        <p>
+          <strong class="text-rust">The Terminal</strong> sits at the quiet end of a forgotten railway line — once used to stage parcels for the morning train, now serving European classics under the slow turn of brass cogs. Salvaged oak, lime-washed brick, two skylights, and a single brass lamp from the original station office.
+        </p>
+        <p>
+          Our kitchen carries the dishes our great-grandparents walked across borders with — Vienna's schnitzel, Budapest's goulash, Lyon's confit — plated as if for the dining car of the Orient Express. Every plate is a postcard. Every coffee, a ticket.
+        </p>
+      </div>
+
+      <!-- Pull quote in italic -->
+      <figure class="mt-8 pl-5 border-l-2 border-rust">
+        <blockquote class="italic text-rust-deep leading-snug" style="font-family:'Cormorant Garamond', serif; font-size: clamp(1.1rem, 1.6vw, 1.25rem);">
+          “ The journey is the meal, and the meal is the journey. ”
+        </blockquote>
+        <figcaption class="mt-3 uppercase tracking-[.32em] text-[11px] text-rust font-medium">— Chef M. Kovács</figcaption>
+      </figure>
+
+      <!-- Highlight chips -->
+      <div class="mt-9 grid grid-cols-3 gap-3">
+        <div class="paper-card text-center px-3 py-4 rounded-md">
+          <div class="text-grad-on-paper font-black leading-none" style="font-size: clamp(1.75rem, 3vw, 2.5rem);">02</div>
+          <div class="text-iron/65 uppercase tracking-[.24em] text-[10px] mt-1 font-medium">Years of Service</div>
+        </div>
+        <div class="paper-card text-center px-3 py-4 rounded-md">
+          <div class="text-grad-on-paper font-black leading-none" style="font-size: clamp(1.75rem, 3vw, 2.5rem);">21</div>
+          <div class="text-iron/65 uppercase tracking-[.24em] text-[10px] mt-1 font-medium">Dishes on the Bill</div>
+        </div>
+        <div class="paper-card text-center px-3 py-4 rounded-md">
+          <div class="text-grad-on-paper font-black leading-none" style="font-size: clamp(1.75rem, 3vw, 2.5rem);">48</div>
+          <div class="text-iron/65 uppercase tracking-[.24em] text-[10px] mt-1 font-medium">Seats in the Room</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ════════════════════════════════════════════════════
+     3. MENU — Dark Iron section
+════════════════════════════════════════════════════ -->
+<section id="menu" class="relative bg-iron px-5 md:px-12 py-20 md:py-28">
+
+  <!-- Ambient gear ornaments removed -->
+
+  <!-- Section header -->
+  <header class="relative max-w-6xl mx-auto text-center reveal">
+    <div class="flex items-center justify-center gap-3 mb-4">
+      <span class="h-px w-10 md:w-16" style="background: linear-gradient(90deg, transparent, #c88d2b 70%, #ffe9a3);"></span>
+      <span class="text-grad-accent uppercase tracking-[.4em] text-[11px] font-medium">— Bill of Fare —</span>
+      <span class="h-px w-10 md:w-16" style="background: linear-gradient(90deg, #ffe9a3, #c88d2b 30%, transparent);"></span>
+    </div>
+
+    <h2 class="text-grad-primary font-black uppercase leading-none tracking-tight"
+        style="font-size: clamp(2.75rem, 8vw, 6rem);">
+      Menu
+    </h2>
+    <div class="brand-divider mt-5 mx-auto" style="max-width: 280px;"></div>
+    <p class="mt-5 italic text-quartz/75 max-w-xl mx-auto" style="font-family:'Cormorant Garamond', serif; font-size: clamp(.95rem, 1.3vw, 1.1rem);">
+      A short kitchen with long memory — tap any dish for the chef's notes.
+    </p>
+  </header>
+
+  <!-- Tabs -->
+  <div class="relative max-w-6xl mx-auto mt-10 md:mt-12 reveal">
+    <div role="tablist" aria-label="Menu category"
+         class="flex flex-wrap gap-1 p-1 rounded-md mx-auto border border-brass/25"
+         style="max-width: 720px; background: linear-gradient(180deg, #2f2f2f, #252525);">
+      <button role="tab" aria-selected="true"  aria-controls="panel-appetizers" id="tab-appetizers" data-tab="appetizers" class="menu-tab flex-1 min-w-[120px]">
+        <span class="label-on text-grad-accent font-semibold">Appetizers</span>
+        <span class="label-off text-muted-gold">Appetizers</span>
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="panel-salads" id="tab-salads" data-tab="salads" class="menu-tab flex-1 min-w-[120px]">
+        <span class="label-on text-grad-accent font-semibold">Salads</span>
+        <span class="label-off text-muted-gold">Salads</span>
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="panel-soups" id="tab-soups" data-tab="soups" class="menu-tab flex-1 min-w-[120px]">
+        <span class="label-on text-grad-accent font-semibold">Soups</span>
+        <span class="label-off text-muted-gold">Soups</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Panels (one #3A3A3A background for the whole menu section — this section IS that bg) -->
+  <div class="relative max-w-6xl mx-auto mt-10 md:mt-14">
+
+    <!-- APPETIZERS -->
+    <div id="panel-appetizers" role="tabpanel" aria-labelledby="tab-appetizers" class="menu-panel reveal">
+      <div class="flex items-center gap-5 mb-7">
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, rgba(184,119,22,.55));"></span>
+        <span class="font-script text-brass-light leading-none px-4"
+              style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.2);">
+          Appetizer
+        </span>
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(184,119,22,.55), transparent);"></span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3" id="grid-appetizers"></div>
+      <div class="pager" id="pager-appetizers"></div>
+    </div>
+
+    <!-- SALADS -->
+    <div id="panel-salads" role="tabpanel" aria-labelledby="tab-salads" class="menu-panel hidden reveal">
+      <div class="flex items-center gap-5 mb-7">
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, rgba(184,119,22,.55));"></span>
+        <span class="font-script text-brass-light leading-none px-4"
+              style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.2);">
+          Salad
+        </span>
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(184,119,22,.55), transparent);"></span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3" id="grid-salads"></div>
+      <div class="pager" id="pager-salads"></div>
+    </div>
+
+    <!-- SOUPS -->
+    <div id="panel-soups" role="tabpanel" aria-labelledby="tab-soups" class="menu-panel hidden reveal">
+      <div class="flex items-center gap-5 mb-7">
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, rgba(184,119,22,.55));"></span>
+        <span class="font-script text-brass-light leading-none px-4"
+              style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.2);">
+          Soup
+        </span>
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(184,119,22,.55), transparent);"></span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3" id="grid-soups"></div>
+      <div class="pager" id="pager-soups"></div>
+    </div>
+  </div>
+
+  <!-- Fine print -->
+  <div class="relative max-w-6xl mx-auto mt-12 md:mt-16 pt-6 border-t border-brass/15 flex flex-col md:flex-row gap-3 items-start md:items-center justify-between text-quartz/55 text-[12px] tracking-[.22em] uppercase">
+    <span>Prices in ’000 VND</span>
+    <span class="text-brass-light/80">Service &amp; VAT exclusive</span>
+    <span>Allergens — ask your conductor</span>
+  </div>
+</section>
+
+
+
+<!-- ════════════════════════════════════════════════════
+     4. RESERVATION — vintage train ticket form
+════════════════════════════════════════════════════ -->
+<section id="reserve" class="relative px-5 md:px-12 py-20 md:py-28 bg-canvas-deep overflow-hidden">
+
+  <!-- faint map watermark -->
+  <div class="absolute inset-0 opacity-25 pointer-events-none"
+       style='background-image: url("data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 600%22 fill=%22none%22 stroke=%22%237B3F00%22 stroke-width=%22.6%22><path d=%22M40 520 C 200 480 280 380 380 360 S 540 300 640 280 S 820 220 900 180 1100 120 1180 60%22/><path d=%22M60 440 C 220 420 320 360 460 320 S 700 240 880 220 1120 200 1180 160%22/><circle cx=%22380%22 cy=%22360%22 r=%223%22 fill=%22%237B3F00%22/><circle cx=%22620%22 cy=%22280%22 r=%223%22 fill=%22%237B3F00%22/></svg>"); background-size: cover; background-position:center;'></div>
+
+  <div class="relative max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <header class="text-center reveal">
+      <div class="text-rust uppercase tracking-[.4em] text-[11px] font-medium">— Platform 09 ·  Purchase Your Ticket —</div>
+      <h2 class="text-grad-on-paper font-black uppercase mt-4 leading-[.95] tracking-tight"
+          style="font-size: clamp(2.25rem, 6vw, 4.5rem);">
+        Reserve Your Seat
+      </h2>
+      <div class="brand-divider-rust mt-5 mx-auto" style="max-width: 280px;"></div>
+      <p class="mt-5 italic text-iron/75 max-w-xl mx-auto" style="font-family:'Cormorant Garamond', serif; font-size: clamp(1rem, 1.3vw, 1.1rem);">
+        A short form. We'll wire you back within the day to confirm your seat.
+      </p>
+    </header>
+
+    <!-- Ticket-stub form -->
+    <div class="reveal mt-12 paper-card relative rounded-md p-6 md:p-10">
+      <!-- Decorative perforated edges -->
+      <span class="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-canvas-deep border-2 border-dashed border-rust"></span>
+      <span class="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-canvas-deep border-2 border-dashed border-rust"></span>
+
+      <!-- Stamp -->
+      <div class="absolute top-4 right-4 md:top-6 md:right-6 rounded-full border-2 border-dashed border-rust grid place-items-center w-20 h-20 -rotate-[14deg] hidden md:grid"
+           style="background: radial-gradient(circle, rgba(207,169,63,.16), transparent 70%);">
+        <div class="text-center leading-tight">
+          <div class="text-rust font-bold uppercase tracking-[.2em] text-[9px]">Platform</div>
+          <div class="text-rust font-black text-2xl leading-none">09</div>
+          <div class="text-rust font-bold uppercase tracking-[.2em] text-[8px]">1st Class</div>
+        </div>
+      </div>
+
+      <form id="reserveForm" class="relative grid md:grid-cols-2 gap-5 md:gap-6" novalidate>
+        <div class="field md:col-span-2">
+          <label class="field-label" for="f-name">Passenger Name</label>
+          <input id="f-name" type="text" placeholder="e.g. Anna Kovács" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="f-phone">Telegram (Phone)</label>
+          <input id="f-phone" type="tel" placeholder="+84 — — — —" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="f-email">Wire (Email)</label>
+          <input id="f-email" type="email" placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="f-date">Date of Departure</label>
+          <input id="f-date" type="date" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="f-time">Time</label>
+          <input id="f-time" type="time" value="19:00" required>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="f-guests">Party Size</label>
+          <select id="f-guests">
+            <option>2 passengers</option><option>3 passengers</option><option>4 passengers</option>
+            <option>5 passengers</option><option>6 passengers</option><option>7+ · private car</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="f-branch">Branch</label>
+          <select id="f-branch">
+            <option>The Villa — Điện Biên Phủ</option>
+            <option>Độc Lập — Nguyễn Thị Minh Khai</option>
+            <option>Diamond Plaza — Lê Duẩn</option>
+          </select>
+        </div>
+
+        <div class="field md:col-span-2">
+          <label class="field-label" for="f-notes">Notes to the Conductor</label>
+          <input id="f-notes" type="text" placeholder="Window booth, allergies, anniversary…">
+        </div>
+
+        <div class="md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 mt-2">
+          <div class="text-rust text-[12px] tracking-[.18em] uppercase font-medium leading-tight">
+            By boarding you accept our<br/>conductor's terms.
+          </div>
+          <button type="submit" class="btn-brass py-4 px-10 text-[12px] min-w-[220px]">
+            <i data-lucide="ticket" class="w-4 h-4 mr-3"></i>
+            Book Now
+          </button>
+        </div>
+
+        <div id="formNote" class="hidden md:col-span-2 mt-4 p-4 border-2 border-rust text-rust-deep font-medium"
+             style="background: rgba(255, 233, 163, .35); border-style: dashed;">
+          ✓ Ticket received. Your conductor will telegram you shortly.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ════════════════════════════════════════════════════
+     5. LOCATION — three branches + timetable
+════════════════════════════════════════════════════ -->
+<section id="location" class="relative px-5 md:px-12 py-20 md:py-28 bg-canvas">
+
+  <header class="max-w-6xl mx-auto text-center reveal">
+    <div class="text-rust uppercase tracking-[.4em] text-[11px] font-medium">— Departure Board —</div>
+    <h2 class="text-grad-on-paper font-black uppercase mt-4 leading-[.95] tracking-tight"
+        style="font-size: clamp(2.25rem, 6vw, 4.5rem);">
+      Find the Terminal
+    </h2>
+    <div class="brand-divider-rust mt-5 mx-auto" style="max-width: 280px;"></div>
+    <p class="mt-5 italic text-iron/75 max-w-xl mx-auto" style="font-family:'Cormorant Garamond', serif; font-size: clamp(1rem, 1.3vw, 1.1rem);">
+      Three stops along the line — same hours, same kitchen, same long Sunday.
+    </p>
+  </header>
+
+  <!-- Branches grid -->
+  <div class="max-w-6xl mx-auto mt-12 md:mt-16 grid md:grid-cols-3 gap-6 md:gap-8">
+
+    <!-- Branch 1 -->
+    <article class="reveal paper-card rounded-md p-6 relative">
+      <span class="rivet" style="top:8px; left:8px;"></span>
+      <span class="rivet" style="top:8px; right:8px;"></span>
+      <span class="rivet" style="bottom:8px; left:8px;"></span>
+      <span class="rivet" style="bottom:8px; right:8px;"></span>
+
+      <div class="flex items-start gap-3">
+        <i data-lucide="map-pin" class="w-5 h-5 text-rust mt-1 shrink-0"></i>
+        <div class="flex-1">
+          <div class="text-rust uppercase tracking-[.3em] text-[10px] font-medium">Branch · 01</div>
+          <h3 class="text-grad-on-paper font-bold uppercase mt-1 tracking-[.04em]" style="font-size: clamp(1.25rem, 2vw, 1.5rem);">The Villa</h3>
+        </div>
+      </div>
+      <div class="brand-divider-rust my-4"></div>
+      <p class="text-iron/85 leading-relaxed text-[14px]">290 Điện Biên Phủ,<br/>P. Xuân Hoà, TP.HCM<br/><span class="text-iron/55 italic text-[13px]">(ngã ba Lê Ngô Cát &amp; Điện Biên Phủ)</span></p>
+      <a href="tel:+84944565557" class="mt-4 inline-flex items-center gap-2 text-rust font-semibold tabular-nums text-[14px] hover:text-rust-deep">
+        <i data-lucide="phone-call" class="w-4 h-4"></i> 0944 56 55 57
+      </a>
+    </article>
+
+    <!-- Branch 2 -->
+    <article class="reveal paper-card rounded-md p-6 relative">
+      <span class="rivet" style="top:8px; left:8px;"></span>
+      <span class="rivet" style="top:8px; right:8px;"></span>
+      <span class="rivet" style="bottom:8px; left:8px;"></span>
+      <span class="rivet" style="bottom:8px; right:8px;"></span>
+
+      <div class="flex items-start gap-3">
+        <i data-lucide="map-pin" class="w-5 h-5 text-rust mt-1 shrink-0"></i>
+        <div class="flex-1">
+          <div class="text-rust uppercase tracking-[.3em] text-[10px] font-medium">Branch · 02</div>
+          <h3 class="text-grad-on-paper font-bold uppercase mt-1 tracking-[.04em]" style="font-size: clamp(1.25rem, 2vw, 1.5rem);">Độc Lập</h3>
+        </div>
+      </div>
+      <div class="brand-divider-rust my-4"></div>
+      <p class="text-iron/85 leading-relaxed text-[14px]">106 Nguyễn Thị Minh Khai,<br/>P. Xuân Hoà, TP.HCM<br/><span class="text-iron/55 italic text-[13px]">(ngay góc Nam Kỳ Khởi Nghĩa)</span></p>
+      <a href="tel:+84901565557" class="mt-4 inline-flex items-center gap-2 text-rust font-semibold tabular-nums text-[14px] hover:text-rust-deep">
+        <i data-lucide="phone-call" class="w-4 h-4"></i> 0901 56 55 57
+      </a>
+    </article>
+
+    <!-- Branch 3 -->
+    <article class="reveal paper-card rounded-md p-6 relative">
+      <span class="rivet" style="top:8px; left:8px;"></span>
+      <span class="rivet" style="top:8px; right:8px;"></span>
+      <span class="rivet" style="bottom:8px; left:8px;"></span>
+      <span class="rivet" style="bottom:8px; right:8px;"></span>
+
+      <div class="flex items-start gap-3">
+        <i data-lucide="map-pin" class="w-5 h-5 text-rust mt-1 shrink-0"></i>
+        <div class="flex-1">
+          <div class="text-rust uppercase tracking-[.3em] text-[10px] font-medium">Branch · 03</div>
+          <h3 class="text-grad-on-paper font-bold uppercase mt-1 tracking-[.04em]" style="font-size: clamp(1.25rem, 2vw, 1.5rem);">Diamond Plaza</h3>
+        </div>
+      </div>
+      <div class="brand-divider-rust my-4"></div>
+      <p class="text-iron/85 leading-relaxed text-[14px]">Tầng 5, Diamond Plaza,<br/>34 Lê Duẩn, P. Sài Gòn, TP.HCM<br/><span class="text-iron/55 italic text-[13px]">(rooftop terrace · skyline view)</span></p>
+      <a href="tel:+84963565557" class="mt-4 inline-flex items-center gap-2 text-rust font-semibold tabular-nums text-[14px] hover:text-rust-deep">
+        <i data-lucide="phone-call" class="w-4 h-4"></i> 0963 56 55 57
+      </a>
+    </article>
+  </div>
+
+  <!-- Hours timetable (railway departure board) -->
+  <div class="reveal mt-12 md:mt-16 max-w-5xl mx-auto signboard p-8 md:p-10 relative">
+    <span class="rivet" style="top:10px; left:10px;"></span>
+    <span class="rivet" style="top:10px; right:10px;"></span>
+    <span class="rivet" style="bottom:10px; left:10px;"></span>
+    <span class="rivet" style="bottom:10px; right:10px;"></span>
+
+    <div class="signboard-inner grid md:grid-cols-[1fr_1.3fr] gap-8 items-start">
+
+      <!-- Title -->
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-grad-accent uppercase tracking-[.4em] text-[10px] font-medium">Departure Board</span>
+        </div>
+        <h3 class="text-grad-primary font-black uppercase leading-none" style="font-size: clamp(2rem, 4vw, 3rem);">
+          Hours of<br/>Operation
+        </h3>
+        <div class="brand-divider mt-5" style="max-width: 220px;"></div>
+
+        <div class="mt-7 grid grid-cols-1 gap-4">
+          <div>
+            <div class="text-brass-light uppercase tracking-[.32em] text-[10px] font-medium">Hotline</div>
+            <a href="tel:19006403" class="text-grad-accent font-bold tabular-nums" style="font-size: clamp(1.25rem, 2vw, 1.5rem);">1900 6403</a>
+          </div>
+          <div>
+            <div class="text-brass-light uppercase tracking-[.32em] text-[10px] font-medium">Email</div>
+            <a href="/cdn-cgi/l/email-protection#9bf3fef7f7f4dbeff3feeffee9f6f2f5faf7b5f8fafdfe" class="text-quartz hover:text-brass-light text-[14px]"><span class="__cf_email__" data-cfemail="9df5f8f1f1f2dde9f5f8e9f8eff0f4f3fcf1b3fefcfbf8">[email&#160;protected]</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timetable -->
+      <div>
+        <div class="grid grid-cols-2 pb-2 border-b border-brass/30 text-brass-light uppercase tracking-[.22em] text-[11px] font-medium">
+          <span>Day</span><span class="text-right">Service Window</span>
+        </div>
+        <div class="timetable-row"><span>Monday</span><span class="dep">11:00 — 22:00</span></div>
+        <div class="timetable-row"><span>Tuesday</span><span class="dep">11:00 — 22:00</span></div>
+        <div class="timetable-row"><span>Wednesday</span><span class="dep">11:00 — 22:00</span></div>
+        <div class="timetable-row"><span>Thursday</span><span class="dep">11:00 — 22:00</span></div>
+        <div class="timetable-row"><span>Friday</span><span class="dep">11:00 — 23:00</span></div>
+        <div class="timetable-row"><span>Saturday</span><span class="dep">11:00 — 23:00</span></div>
+        <div class="timetable-row"><span>Sunday</span><span class="dep">11:00 — 22:00</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<footer class="relative brick-wall pt-16 pb-8 px-5 md:px-12">
+  <!-- Footer overlay tint removed — brick wall stands on its own -->
+
+  <!-- Footer ambient gears removed -->
+
+  <div class="relative max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+    <!-- Brand -->
+    <div>
+      <div class="flex items-center gap-3">
+      <!-- Brand medallion removed — wordmark stands alone -->
+        <div class="leading-tight">
+          <div class="text-grad-accent font-bold tracking-[.28em] text-[13px]">THE TERMINAL</div>
+          <div class="text-quartz/55 text-[10px] tracking-[.32em] mt-0.5">CAFE · EUROPEAN KITCHEN</div>
+        </div>
+      </div>
+      <p class="mt-5 text-quartz/65 leading-relaxed italic" style="font-family:'Cormorant Garamond', serif;">
+        A rail-house café for the unhurried — serving the dishes of old Europe under brass lanterns and slow-turning cogs.
+      </p>
+    </div>
+
+    <!-- Quick links -->
+    <div>
+      <div class="text-brass-light uppercase tracking-[.28em] text-[11px] font-medium">Connections</div>
+      <div class="brand-divider mt-3" style="max-width: 200px;"></div>
+      <ul class="mt-5 space-y-3 text-quartz/80">
+        <li><a href="#home"     class="hover:text-brass-light">Home</a></li>
+        <li><a href="#about"    class="hover:text-brass-light">About the Terminal</a></li>
+        <li><a href="#menu"     class="hover:text-brass-light">Menu</a></li>
+        <li><a href="#reserve"  class="hover:text-brass-light">Reserve a Table</a></li>
+        <li><a href="#location" class="hover:text-brass-light">Find Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Telegram newsletter -->
+    <div>
+      <div class="text-brass-light uppercase tracking-[.28em] text-[11px] font-medium">Receive Our Dispatches</div>
+      <div class="brand-divider mt-3" style="max-width: 240px;"></div>
+      <form id="newsForm" class="mt-5 flex flex-col gap-3" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('.tg-ok').classList.remove('hidden');">
+        <div class="flex items-center gap-3 border-b border-brass/40 pb-2">
+          <span class="text-brass-light uppercase tracking-[.3em] text-[10px] font-medium shrink-0">Wire</span>
+          <input type="email" required placeholder="your wire address"
+                 class="flex-1 bg-transparent outline-none text-quartz placeholder:text-quartz/35 py-2 text-[14px]" />
+          <button class="text-brass-light hover:text-brass-pale text-[12px] uppercase tracking-[.22em] font-medium" type="submit">Send →</button>
+        </div>
+        <p class="tg-ok hidden text-brass-light text-[11px] uppercase tracking-[.22em] font-medium">✓ Transmission received · stop ·</p>
+      </form>
+
+      <!-- Social medallions removed -->
+    </div>
+  </div>
+
+  <div class="relative max-w-6xl mx-auto mt-14 pt-6 border-t border-brass/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-quartz/55 text-[11px] tracking-[.22em] uppercase">
+    <span>© 2024 · The Terminal — All Journeys Reserved</span>
+    <span class="text-brass-light/70">Built with brass, oak &amp; patience</span>
+  </div>
+</footer>
+
+</main>
+
+<!-- ════════════════════════════════════════════════════
+     DISH DETAIL MODAL
+════════════════════════════════════════════════════ -->
+<div id="dishModal" class="fixed inset-0 z-[80] hidden items-center justify-center p-4 md:p-8" role="dialog" aria-modal="true" aria-labelledby="dish-modal-title">
+
+  <div id="dishBackdrop" class="absolute inset-0 bg-black/75 backdrop-blur-sm backdrop-anim"></div>
+
+  <div id="dishCard"
+       class="modal-frame modal-anim relative w-full max-w-3xl max-h-[90vh] overflow-y-auto grid md:grid-cols-[1.05fr_1fr]">
+
+    <!-- LEFT — decorative panel -->
+    <div id="dishImage" class="relative min-h-[240px] md:min-h-[460px] overflow-hidden rounded-l-md"
+         style="background: linear-gradient(135deg, #2a1d05, #1a0e07);">
+      <div class="absolute inset-0 grid place-items-center pointer-events-none opacity-40">
+        <div class="font-script text-brass-light" style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.18);">The&nbsp;Terminal</div>
+      </div>
+      <div class="absolute inset-0 ring-1 ring-inset ring-brass/30 pointer-events-none"></div>
+      <div class="absolute top-4 left-4 rounded-full border-2 border-dashed border-brass/70 grid place-items-center w-16 h-16 -rotate-6"
+           style="background: rgba(0,0,0,.55); backdrop-filter: blur(2px);">
+        <div class="text-center leading-tight">
+          <div class="text-[8px] tracking-[.2em] text-grad-accent font-bold">CHEF'S</div>
+          <div class="text-[8px] tracking-[.2em] text-grad-accent font-bold">PICK</div>
+        </div>
+      </div>
+      <div id="dishRibbon" class="absolute bottom-0 inset-x-0 px-5 py-2.5 font-semibold text-[11px] tracking-[.3em] uppercase"
+           style="background-image: linear-gradient(0deg, #b97716 0%, #f4c14f 20%, #fff1b3 50%, #f4c14f 80%, #b97716 100%); color:#1f1308;">
+        DISH
+      </div>
+    </div>
+
+    <!-- RIGHT — body -->
+    <div class="p-6 md:p-8 relative">
+      <button id="closeModal" aria-label="Close"
+              class="absolute top-4 right-4 w-10 h-10 grid place-items-center rounded-full text-quartz/80 hover:text-brass-light hover:bg-white/5 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div id="dishCategory" class="text-[11px] tracking-[.32em] uppercase text-grad-accent font-semibold">Category</div>
+      <h3 id="dish-modal-title" class="mt-2 uppercase font-bold tracking-[.05em] text-quartz leading-tight"
+          style="font-size: clamp(1.4rem, 3vw, 2rem);">Dish Name</h3>
+      <p id="dishDesc" class="mt-3 text-copper italic text-[15px] leading-relaxed">Description</p>
+
+      <div class="brand-divider my-5"></div>
+
+      <div class="flex items-baseline justify-between mb-6">
+        <div>
+          <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55 font-medium">Fare</div>
+          <div class="flex items-baseline gap-2 mt-1.5">
+            <span id="dishPrice" class="text-grad-primary font-black leading-none" style="font-size: clamp(2.2rem, 4vw, 3rem);">0</span>
+            <span class="text-grad-accent text-[12px] tracking-[.22em] font-semibold">VND ’000</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55">Serves</div>
+          <div class="text-quartz text-xl font-semibold mt-1">1 — 2</div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Chef's Notes</div>
+        <p id="dishNotes" class="text-quartz/85 text-[14px] leading-relaxed">Chef's notes…</p>
+      </div>
+
+      <div class="mb-5">
+        <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Ingredients · Allergens</div>
+        <div id="dishAllergens" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <div class="mb-6">
+        <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Chef's Pairing</div>
+        <div class="flex items-start gap-3 p-3 border-l-2 rounded-sm"
+             style="background: rgba(255, 233, 163, .06); border-left-color: #fcd16e;">
+          <i data-lucide="wine" class="w-4 h-4 text-brass-light shrink-0 mt-0.5"></i>
+          <p id="dishPairing" class="text-quartz/85 text-[13.5px] italic leading-snug">—</p>
+        </div>
+      </div>
+
+      <button id="closeModal2" class="w-full btn-brass py-3 px-5 text-[12px]">Close Ticket</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ───────── Menu data (21 dishes + Wikimedia imagery) ───────── */
+const MENU = {
+  appetizers: [
+    { name:'CALAMARI', price:85, desc:'Mực chiên giòn dùng kèm với salad & sốt Tartar',
+      notes:'Calamari rings hand-cut in the morning, dredged in seasoned semolina and flash-fried so the outside crackles while the inside stays milky and tender. Served with a green-leaf salad and a tartare we whip up daily with cornichons, capers, and chopped parsley.',
+      allergens:['Gluten','Egg','Shellfish'], pairing:'A crisp Sauvignon Blanc to cut the batter.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Fried_Calamari_Rings.jpg/640px-Fried_Calamari_Rings.jpg' },
+    { name:'GRILLED BEEF W. SPRING ONION OIL', price:95, desc:'Bò nướng mỡ hành',
+      notes:'Marinated short-rib slices charred over real charcoal, finished with a slow-rendered scallion-oil and a scatter of crushed peanuts. The Vietnamese countryside, plated for the dining car.',
+      allergens:['Soy','Peanuts'], pairing:'A glass of light, cool Pinot Noir.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Bo_nuong.jpg/640px-Bo_nuong.jpg' },
+    { name:'HOI AN BRUSCHETTA', price:85, desc:'Bánh mì nướng pate gà, đùi heo muối & ớt rim',
+      notes:'Toasted baguette layered with house chicken-liver pâté, slivers of cured ham, and a chilli jam we cook down each week. A nod to Hoi An mornings.',
+      allergens:['Gluten','Egg'], pairing:'Sparkling rosé, served chilled.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Bruschetta_DSC00043.jpg/640px-Bruschetta_DSC00043.jpg' },
+    { name:'BEEF BRUSCHETTA', price:95, desc:'Bánh mì nướng thịt bò xào kiểu Nhật',
+      notes:'Toasted sourdough piled with thin-sliced ribeye stir-fried in soy, mirin and grated ginger. Finished with sesame and scallion.',
+      allergens:['Gluten','Soy','Sesame'], pairing:'A glass of dry Junmai sake.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Bruschetta_with_beef.jpg/640px-Bruschetta_with_beef.jpg' },
+    { name:'FORACCIA & CIABATTA', price:45, desc:'Bánh mì dẹt & bánh mì tỏi kiểu Ý',
+      notes:'A board of two house breads — rosemary-salt focaccia warm from the oven and an airy ciabatta — served with a slow-whipped miso butter that bridges Tuscany and Tokyo.',
+      allergens:['Gluten','Soy','Dairy'], pairing:'A double espresso or a cold glass of Vermentino.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Focaccia_in_Florence.jpg/640px-Focaccia_in_Florence.jpg' },
+    { name:'CHICKEN PATE & BREAD', price:55, desc:'Bánh mì đen + Pate gà',
+      notes:'House chicken-liver pâté smoothed with brandy and brown butter, sealed under clarified butter, served with toasted seeded rye. Cornichons and red-onion jam on the side.',
+      allergens:['Gluten','Egg','Dairy'], pairing:'An off-dry Riesling.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Chicken_Liver_Pate_with_bread.jpg/640px-Chicken_Liver_Pate_with_bread.jpg' },
+    { name:'SEA URCHIN PATE & BREAD', price:75, desc:'Bánh mì đen + Pate nhum',
+      notes:'Our signature uni pâté — sea urchin folded into clarified butter with a whisper of yuzu, served cold on dark rye. Delicate, briny, a quiet luxury.',
+      allergens:['Gluten','Dairy','Shellfish'], pairing:'Brut Champagne, well-chilled.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Sea_urchin_on_toast.jpg/640px-Sea_urchin_on_toast.jpg' },
+    { name:'COLD CUTS', price:245, desc:'Thịt nguội, phô mai, Pate nhum, Olive & bánh mì đen',
+      notes:'A platter for the table: 24-month aged Spanish ham, two cheeses (Comté and a soft blue), the kitchen\'s sea-urchin pâté, marinated olives, and dark seeded bread baked the same day.',
+      allergens:['Gluten','Dairy','Shellfish'], pairing:'A bottle of Barolo or a vintage Tokaji.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Charcuterie_board_2.jpg/640px-Charcuterie_board_2.jpg' },
+  ],
+
+  salads: [
+    { name:'BALSAMIC SALAD', price:55, desc:'Salad dầu giấm kiểu Âu',
+      notes:'Bitter leaves, sweet baby tomatoes, and a 12-year-aged balsamic emulsified with cold-pressed olive oil. Finished with shaved Parmigiano.',
+      allergens:['Dairy'], pairing:'A light Pinot Grigio.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Salad_with_balsamic_vinaigrette.jpg/640px-Salad_with_balsamic_vinaigrette.jpg' },
+    { name:'CAESAR SALAD', price:75, desc:'Salad romaine sốt Caesar',
+      notes:'Romaine hearts dressed tableside-style with anchovy, garlic & egg-yolk emulsion. Smoky bacon lardons, garlic croutons, and a snowfall of aged Parmesan.',
+      allergens:['Gluten','Egg','Dairy','Fish'], pairing:'A lightly-oaked Chardonnay.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Caesar_salad_%281%29.jpg/640px-Caesar_salad_%281%29.jpg' },
+    { name:'SEAWEED SALAD', price:75, desc:'Salad rong biển sốt mè',
+      notes:'Marinated wakame and hijiki tossed with shaved cucumber, micro-shiso, and a sesame-soy dressing. Cold, clean, full of the sea.',
+      allergens:['Soy','Sesame'], pairing:'Cold Junmai sake or a pale lager.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Goma-wakame_by_jetalone_in_Tokyo.jpg/640px-Goma-wakame_by_jetalone_in_Tokyo.jpg' },
+    { name:'FRUIT SALAD', price:85, desc:'Salad trái cây theo mùa',
+      notes:'A bowl of the season\'s best fruit, tossed with toasted almonds and a soft yogurt dressing flavoured with orange-blossom honey.',
+      allergens:['Dairy','Tree Nuts'], pairing:'Moscato d\'Asti, or a mimosa for brunch.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Fruit_salad_bowl.jpg/640px-Fruit_salad_bowl.jpg' },
+    { name:'GRILLED BEEF SALAD', price:95, desc:'Salad bò Mỹ nướng',
+      notes:'Slices of charcoal-grilled American beef over leaves, cherry tomatoes, pickled onion, and crispy shallot. Dressed with a fish-sauce vinaigrette that bridges hemispheres.',
+      allergens:['Soy','Fish'], pairing:'A glass of Côtes du Rhône.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Grilled_beef_salad.jpg/640px-Grilled_beef_salad.jpg' },
+    { name:'GREEK SHRIMP SALAD', price:115, desc:'Salad tôm kiểu Hy Lạp',
+      notes:'Plump prawns folded into a Greek-style garlic-mayo aioli, mounded over micro greens and ribbons of pickled beetroot. Lemon wedge on the rim.',
+      allergens:['Egg','Shellfish','Dairy'], pairing:'Crisp Assyrtiko, from Santorini if we can get it.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Greek_salad_with_shrimp.jpg/640px-Greek_salad_with_shrimp.jpg' },
+    { name:'NORWEGIAN SALMON SALAD', price:125, desc:'Salad cá hồi Na Uy sốt Wasabi',
+      notes:'Cured-then-seared Norwegian salmon, leaves dressed with a wasabi-soy emulsion, pickled ginger, sesame and shiso.',
+      allergens:['Fish','Soy','Sesame'], pairing:'A glass of cold Sancerre, or a daiquiri.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Salmon_salad.jpg/640px-Salmon_salad.jpg' },
+    { name:'HAM & CHEESE SALAD', price:145, desc:'Salad đùi heo muối & phô mai',
+      notes:'A composed plate: cured ham draped over fennel, soft Brie, cashews and almonds, ribbons of orange and green apple. Light vinaigrette ties it together.',
+      allergens:['Dairy','Tree Nuts'], pairing:'A glass of Gewürztraminer.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Ham_and_cheese_salad.jpg/640px-Ham_and_cheese_salad.jpg' },
+    { name:'HAM SALAD', price:75, desc:'Salad đùi heo muối với rocket & xoài',
+      notes:'Salty cured ham, peppery rocket, ribbons of ripe mango, finished with a cream-cheese dressing. Sweet, salt, fat — the holy trinity.',
+      allergens:['Dairy'], pairing:'A glass of dry Riesling.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Prosciutto_and_arugula_salad.jpg/640px-Prosciutto_and_arugula_salad.jpg' },
+  ],
+
+  soups: [
+    { name:'PUMPKIN SOUP', price:45, desc:'Súp bí đỏ',
+      notes:'Roasted kabocha pumpkin blended with brown butter, a touch of nutmeg, and house chicken stock. Served with a slab of garlic-butter toast.',
+      allergens:['Gluten','Dairy'], pairing:'A buttery Chardonnay.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pumpkin_soup_with_pumpkin_seeds_and_cream.jpg/640px-Pumpkin_soup_with_pumpkin_seeds_and_cream.jpg' },
+    { name:'CORN SOUP', price:55, desc:'Súp bắp nâu',
+      notes:'Sweet corn slowly stewed with celery and leek, finished with a touch of cream and a drizzle of chive oil. Summer in a bowl.',
+      allergens:['Dairy'], pairing:'A glass of cool Riesling.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Corn_chowder_soup.jpg/640px-Corn_chowder_soup.jpg' },
+    { name:'PRAWN SOUP', price:65, desc:'Súp kem tôm',
+      notes:'A bisque-style cream of prawn, built on a slow-roasted prawn-shell stock, finished with cognac and a generous pour of cream. Garlic-butter toast on the side.',
+      allergens:['Gluten','Dairy','Shellfish'], pairing:'A glass of Albariño.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Shrimp_bisque.jpg/640px-Shrimp_bisque.jpg' },
+    { name:'MUSHROOM CREAM SOUP', price:65, desc:'Súp kem nấm',
+      notes:'A trio of mushrooms — porcini, cremini, oyster — coaxed slowly with shallot, thyme, and a finish of cream and Madeira. The Sunday-night soup of every European kitchen.',
+      allergens:['Dairy'], pairing:'An earthy Pinot Noir.',
+      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Cream_of_mushroom_soup.jpg/640px-Cream_of_mushroom_soup.jpg' },
+  ],
+};
+
+/* ───────── Render menu rows — compact with pagination ───────── */
+const PAGE_SIZE = 16;
+const pageState = { appetizers: 1, salads: 1, soups: 1 };
+
+function rowMarkup(item, absIdx, category) {
+  return `
+    <button type="button" class="menu-row" data-category="${category}" data-idx="${absIdx}">
+      <div class="min-w-0 flex-1">
+        <h4 class="text-grad-primary font-bold uppercase tracking-[.05em] leading-tight" style="font-size: clamp(0.78rem, .95vw, 0.88rem);">${item.name}</h4>
+        <p class="desc mt-1 text-copper leading-snug" style="font-size: clamp(11px, .85vw, 12.5px); max-width: 40ch;">${item.desc}</p>
+      </div>
+      <div class="flex items-baseline gap-1.5 shrink-0 pt-0.5">
+        <span class="text-grad-primary font-black tabular-nums tracking-wide leading-none" style="font-size: clamp(1rem, 1.4vw, 1.2rem);">${item.price}</span>
+      </div>
+    </button>`;
+}
+
+function pagerMarkup(cat, page, totalPages) {
+  if (totalPages <= 1) return '';
+  const pp = String(page).padStart(2, '0');
+  const tp = String(totalPages).padStart(2, '0');
+  return `
+    <button class="pager-btn" data-pager="${cat}" data-dir="prev" ${page === 1 ? 'disabled' : ''} aria-label="Previous page">← Prev</button>
+    <span class="pager-page">${pp} / ${tp}</span>
+    <button class="pager-btn" data-pager="${cat}" data-dir="next" ${page === totalPages ? 'disabled' : ''} aria-label="Next page">Next →</button>
+  `;
+}
+
+function renderCategory(cat) {
+  const items = MENU[cat] || [];
+  const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+  if (pageState[cat] > totalPages) pageState[cat] = totalPages;
+  const page = pageState[cat];
+  const start = (page - 1) * PAGE_SIZE;
+  const slice = items.slice(start, start + PAGE_SIZE);
+  document.getElementById('grid-' + cat).innerHTML = slice.map((it, i) => rowMarkup(it, start + i, cat)).join('');
+  document.getElementById('pager-' + cat).innerHTML = pagerMarkup(cat, page, totalPages);
+}
+
+function renderMenu() {
+  ['appetizers', 'salads', 'soups'].forEach(renderCategory);
+}
+
+/* Pager click handler */
+document.addEventListener('click', e => {
+  const b = e.target.closest('.pager-btn'); if (!b) return;
+  const cat = b.dataset.pager;
+  const items = MENU[cat] || [];
+  const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+  if (b.dataset.dir === 'prev' && pageState[cat] > 1) pageState[cat]--;
+  if (b.dataset.dir === 'next' && pageState[cat] < totalPages) pageState[cat]++;
+  renderCategory(cat);
+  // Smooth-scroll the category heading back into view so the user can see the new page
+  const panel = document.getElementById('panel-' + cat);
+  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+/* ───────── Tabs ───────── */
+function setActiveTab(name) {
+  document.querySelectorAll('.menu-tab').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === name ? 'true' : 'false'));
+  document.querySelectorAll('.menu-panel').forEach(p => p.classList.add('hidden'));
+  const panel = document.getElementById('panel-'+name);
+  panel.classList.remove('hidden');
+  panel.classList.remove('in');
+  requestAnimationFrame(()=> panel.classList.add('in'));
+}
+document.querySelectorAll('.menu-tab').forEach(b => b.addEventListener('click', () => setActiveTab(b.dataset.tab)));
+
+/* ───────── Modal ───────── */
+const modal      = document.getElementById('dishModal');
+const dishRibbon = document.getElementById('dishRibbon');
+const dishCat    = document.getElementById('dishCategory');
+const dishTitle  = document.getElementById('dish-modal-title');
+const dishDesc   = document.getElementById('dishDesc');
+const dishPrice  = document.getElementById('dishPrice');
+const dishNotes  = document.getElementById('dishNotes');
+const dishAllg   = document.getElementById('dishAllergens');
+const dishPair   = document.getElementById('dishPairing');
+const CAT_LABEL  = { appetizers:'Appetizer', salads:'Salad', soups:'Soup' };
+
+function openModal(category, idx) {
+  const item = MENU[category]?.[idx]; if (!item) return;
+  dishRibbon.textContent = `${CAT_LABEL[category].toUpperCase()} · ${item.name}`;
+  dishCat.textContent = CAT_LABEL[category];
+  dishTitle.textContent = item.name;
+  dishDesc.textContent = item.desc;
+  dishPrice.textContent = item.price;
+  dishNotes.textContent = item.notes;
+  dishPair.textContent = item.pairing;
+  // Photo: load the real Wikimedia dish image with sepia tone; fall back gracefully if blocked.
+  const dishImageEl = document.getElementById('dishImage');
+  if (item.image) {
+    dishImageEl.style.background = `linear-gradient(135deg, rgba(20,12,4,.25), rgba(15,10,4,.5)), url('${item.image}') center/cover no-repeat`;
+    dishImageEl.style.filter = 'sepia(.18) saturate(.96) contrast(1.05)';
+  } else {
+    dishImageEl.style.background = 'linear-gradient(135deg, #2a1d05, #1a0e07)';
+    dishImageEl.style.filter = '';
+  }
+  dishAllg.innerHTML = (item.allergens || []).map(a =>
+    `<span class="text-[11px] tracking-[.16em] uppercase font-semibold text-grad-accent border border-brass/40 px-2.5 py-1 rounded-sm">${a}</span>`).join('');
+  modal.classList.remove('hidden'); modal.classList.add('flex');
+  document.documentElement.style.overflow = 'hidden';
+  setTimeout(()=> document.getElementById('closeModal')?.focus(), 60);
+}
+function closeModal(){ modal.classList.add('hidden'); modal.classList.remove('flex'); document.documentElement.style.overflow=''; }
+document.addEventListener('click', e => {
+  const row = e.target.closest('.menu-row');
+  if (row) { openModal(row.dataset.category, +row.dataset.idx); return; }
+  if (e.target.id === 'dishBackdrop' || e.target.closest('#closeModal') || e.target.closest('#closeModal2')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+
+/* ───────── Reservation form ───────── */
+document.getElementById('reserveForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.classList.add('scale-95'); setTimeout(()=> btn.classList.remove('scale-95'), 200);
+  document.getElementById('formNote').classList.remove('hidden');
+});
+
+/* ───────── Nav scroll behaviour ───────── */
+const navBg = document.getElementById('nav-bg');
+const navLine = document.getElementById('nav-line');
+const navInner = document.getElementById('navInner');
+function onScroll(){
+  const y = window.scrollY;
+  if (y > 30) {
+    navBg.style.background = 'rgba(58,58,58,.94)';
+    navBg.style.backdropFilter = 'blur(10px)';
+    navLine.style.background = 'linear-gradient(90deg, transparent, #CFA93F, transparent)';
+    navInner.style.height = '68px';
+  } else {
+    navBg.style.background = 'transparent';
+    navBg.style.backdropFilter = 'blur(0)';
+    navLine.style.background = 'transparent';
+    navInner.style.height = '88px';
+  }
+  // Active link
+  const sections = ['home','about','menu','reserve','location'];
+  let cur = 'home';
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 120) cur = id;
+  }
+  document.querySelectorAll('#nav nav a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+cur));
+}
+window.addEventListener('scroll', onScroll, { passive:true });
+
+/* ───────── Mobile drawer ───────── */
+const overlay = document.getElementById('overlay');
+const burger = document.getElementById('burger');
+burger.onclick = () => {
+  overlay.classList.remove('-translate-y-full');
+  burger.setAttribute('aria-expanded','true');
+  document.documentElement.style.overflow = 'hidden';
+};
+function closeOverlay(){
+  overlay.classList.add('-translate-y-full');
+  burger.setAttribute('aria-expanded','false');
+  document.documentElement.style.overflow = '';
+}
+document.getElementById('closeMenu').onclick = closeOverlay;
+document.getElementById('overlayNav').addEventListener('click', e => { if (e.target.tagName==='A') closeOverlay(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !overlay.classList.contains('-translate-y-full')) closeOverlay(); });
+
+/* ───────── Reveal on scroll (with synchronous viewport check) ───────── */
+function isInViewport(el){
+  const r = el.getBoundingClientRect();
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  return r.top < vh && r.bottom > 0;
+}
+const reveals = document.querySelectorAll('.reveal');
+const queue = [];
+reveals.forEach(el => { if (isInViewport(el)) el.classList.add('in'); else queue.push(el); });
+if (queue.length) {
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: .1 });
+  queue.forEach(el => io.observe(el));
+}
+setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')), 900);
+
+/* ───────── Boot ───────── */
+renderMenu();
+onScroll();
+if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

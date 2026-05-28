@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>The Terminal — Digital Menu</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          iron:    '#3A3A3A',
+          iron2:   '#2B2B2B',
+          iron3:   '#1d1d1d',
+          brass:   '#CFA93F',
+          'brass-hot': '#E7C463',
+          brass2:  '#8a6a1c',
+          quartz:  '#F5F5F5',
+          copper:  '#B8967A',
+          cream:   '#F5E6C8',
+          patina:  '#6D827D',
+          rust:    '#7B3F00',
+        },
+        fontFamily: {
+          display: ['Cinzel', 'serif'],
+          sans:    ['Inter', 'system-ui', 'sans-serif'],
+          mono:    ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          script:  ['"Pinyon Script"', 'cursive'],
+          italic:  ['"Cormorant Garamond"', 'serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<!-- React + Framer Motion + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/framer-motion@11.18.2/dist/framer-motion.js"></script>
+
+<style>
+  html, body { background: #2B2B2B; color: #F5F5F5; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(207,169,63,.08), transparent 55%),
+      radial-gradient(ellipse at 100% 100%, rgba(123,63,0,.10), transparent 50%),
+      linear-gradient(180deg, #3A3A3A 0%, #2B2B2B 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  /* ── Paper-dark / iron texture ── */
+  .paper-dark {
+    background-color: #2B2B2B;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 .85  0 0 0 0 .55  0 0 0 .04 0'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>"),
+      radial-gradient(ellipse at center, rgba(58,58,58,.4) 0%, rgba(0,0,0,.4) 100%);
+    box-shadow: inset 0 0 60px rgba(0,0,0,.4);
+  }
+  .shadow-iron {
+    box-shadow:
+      inset 0 0 0 1px rgba(207,169,63,.12),
+      inset 0 1px 0 rgba(255,255,255,.04),
+      inset 0 -2px 0 rgba(0,0,0,.45),
+      0 18px 38px rgba(0,0,0,.5);
+  }
+
+  /* Track divider */
+  .track-divider {
+    position: relative;
+    height: 14px;
+    background:
+      linear-gradient(#CFA93F,#CFA93F) center/100% 1px no-repeat,
+      linear-gradient(#CFA93F,#CFA93F) center top 4px/100% 1px no-repeat,
+      linear-gradient(#CFA93F,#CFA93F) center bottom 4px/100% 1px no-repeat;
+    opacity: .45;
+  }
+  .track-divider::before {
+    content:''; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(90deg, #2B2B2B 0 5px, transparent 5px 28px);
+  }
+
+  /* Gears */
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  @keyframes spin-rev  { to { transform: rotate(-360deg); } }
+  .gear-slow { animation: spin-slow 60s linear infinite; transform-origin: 50% 50%; }
+  .gear-rev  { animation: spin-rev  80s linear infinite; transform-origin: 50% 50%; }
+
+  /* Buttons */
+  .btn-brass {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, #E7C463 0%, #CFA93F 45%, #8a6a1c 100%);
+    color: #1f1308;
+    font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: .22em;
+    border: 1px solid #5a4310;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), inset 0 -2px 0 rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.35);
+    transition: filter .2s, transform .15s;
+  }
+  .btn-brass:hover { filter: brightness(1.06); }
+  .btn-brass:active { transform: translateY(1px) scale(.99); }
+
+  /* Scroll utilities */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+
+  /* Selection */
+  ::selection { background: #CFA93F; color: #1f1308; }
+
+  /* Focus */
+  :focus-visible { outline: 2px solid #CFA93F; outline-offset: 3px; border-radius: 2px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="menu/components.jsx"></script>
+  <script type="text/babel" src="menu/data.jsx"></script>
+  <script type="text/babel" src="menu/app.jsx"></script>
+</body>
+</html>
