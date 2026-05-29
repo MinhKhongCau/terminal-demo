@@ -605,7 +605,20 @@
               >
                 <Rivet pos="tl" /><Rivet pos="tr" /><Rivet pos="bl" /><Rivet pos="br" />
 
-                <div className="hidden md:block relative overflow-hidden min-h-[240px] md:min-h-[420px]"
+                {/* Responsive background image and overlay visible only on mobile screens */}
+                <div 
+                  className="absolute inset-0 z-0 bg-cover bg-center md:hidden"
+                  style={{ 
+                    backgroundImage: `url(${item.image || PLACEHOLDER_IMG})`,
+                    filter: 'brightness(0.55) contrast(1.05) saturate(0.95)'
+                  }}
+                />
+                <div 
+                  className="absolute inset-0 z-0 bg-gradient-to-b from-black/50 via-[#181818]/50 to-black/50 md:hidden" 
+                />
+
+                {/* Desktop side-by-side image preview (hidden on mobile) */}
+                <div className="hidden md:block relative overflow-hidden min-h-[240px] md:min-h-[420px] z-10"
                      style={{
                        background: `linear-gradient(135deg, rgba(0,0,0,.2), rgba(0,0,0,.55)), url('${item.image || PLACEHOLDER_IMG}') center/cover no-repeat`,
                        filter: 'sepia(.3) saturate(.95) contrast(1.05)'
@@ -631,7 +644,7 @@
                     aria-label="Close"
                     className="absolute top-4 right-4 w-10 h-10 grid place-items-center
                                text-brass hover:bg-brass/15 rounded-full transition-colors
-                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass/60"
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass/60 z-20"
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
                   </button>
