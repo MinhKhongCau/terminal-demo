@@ -231,7 +231,8 @@
     background: linear-gradient(180deg, #ffe9a3 0%, #f4c14f 45%, #b97716 100%);
     color:#3b241b; font-family:'Oswald', sans-serif; font-weight:600;
     letter-spacing:.22em; text-transform: uppercase;
-    border:1px solid #5a4310;
+    /* border:1px solid #5a4310; */
+    border-radius: 0.25rem;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,.5),
       inset 0 -2px 0 rgba(0,0,0,.3),
@@ -408,7 +409,7 @@
     <!-- Wordmark only (medallion removed) -->
     <a href="#home" class="flex flex-col leading-tight">
       <span class="text-grad-accent font-bold tracking-[.28em] text-[13px]">THE TERMINAL</span>
-      <span class="text-quartz/65 text-[10px] tracking-[.32em]" id="nav-sub">CAFE · EUROPEAN KITCHEN</span>
+      <span class="hidden md:block text-quartz/65 text-[10px] tracking-[.32em]" id="nav-sub">CAFE · EUROPEAN KITCHEN</span>
     </a>
 
     <!-- Center nav -->
@@ -430,25 +431,32 @@
 </header>
 
 <!-- Mobile drawer -->
-<div id="overlay" class="fixed inset-0 z-[60] -translate-y-full transition-transform duration-500 lg:hidden brick-wall"
+<div id="overlay" class="fixed inset-0 z-[60] -translate-y-full transition-all duration-500 lg:hidden brick-wall"
+     style="transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); transition-duration: 600ms;"
      role="dialog" aria-modal="true" aria-label="Site navigation">
-  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(20,12,4,.78) 0%, rgba(15,10,4,.82) 60%, rgba(8,5,2,.92) 100%);"></div>
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(20,12,4,.9) 0%, rgba(15,10,4,.93) 60%, rgba(8,5,2,.98) 100%); backdrop-filter: blur(8px);"></div>
   <div class="absolute inset-4 pointer-events-none rounded-md"></div>
-  <div class="relative h-full flex flex-col p-8">
+  <div class="relative h-full flex flex-col p-8 z-10">
     <div class="flex justify-between items-center">
-      <span class="text-grad-accent font-bold tracking-[.28em] text-[14px]">THE TERMINAL</span>
-      <button id="closeMenu" class="text-brass-light p-2" aria-label="Close menu">
+      <div class="flex flex-col">
+        <span class="text-grad-accent font-bold tracking-[.28em] text-[13px]">THE TERMINAL</span>
+        <span class="hidden md:block text-quartz/65 text-[9px] tracking-[.32em] mt-0.5">CAFE · EUROPEAN KITCHEN</span>
+      </div>
+      <button id="closeMenu" class="text-brass-light p-2 hover:bg-white/5 rounded-full transition-colors" aria-label="Close menu">
         <i data-lucide="x" class="w-6 h-6"></i>
       </button>
     </div>
-    <nav class="mt-12 flex flex-col gap-7" id="overlayNav" aria-label="Site">
-      <a href="#home"     class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">Home</a>
-      <a href="#about"    class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">About</a>
-      <a href="#menu"     class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">Menu</a>
-      <a href="#reserve"  class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">Reservation</a>
-      <a href="#location" class="text-quartz font-display tracking-[.22em] uppercase" style="font-size:1.5rem;">Location</a>
+    
+    <div class="brand-divider my-6" style="opacity: 0.3;"></div>
+    
+    <nav class="mt-4 flex flex-col gap-6 text-grad-primary" id="overlayNav" aria-label="Site">
+      <a href="#home"     class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">Home</a>
+      <a href="#about"    class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">About</a>
+      <a href="#menu"     class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">Menu</a>
+      <a href="#reserve"  class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">Reservation</a>
+      <a href="#location" class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2" style="font-size:1.35rem;">Location</a>
     </nav>
-    <a href="#reserve" class="btn-brass mt-auto py-4 text-[12px]">Reserve a Table</a>
+    <a href="#reserve" class="btn-brass mt-auto py-4 text-[12px] uppercase tracking-[.2em] font-semibold">Reserve a Table</a>
   </div>
 </div>
 
@@ -1007,7 +1015,7 @@ const MENU = {
     { name:'CORN SOUP', price:55, desc:'Súp bắp nấu cùng cần tây & baro',
       notes:'Sweet corn slowly stewed with celery and leek, finished with a touch of cream and a drizzle of chive oil. Summer in a bowl.',
       allergens:['Dairy'], pairing:'A glass of cool Riesling.',
-      image:'https://images.unsplash.com/photo-1547592165-e1d17fed6006?auto=format&fit=crop&w=800&q=80' },
+      image:'https://images.unsplash.com/photo-1665593998976-d957f2827fe7??auto=format&fit=crop&w=800&q=80' },
     { name:'PRAWN SOUP', price:65, desc:'Súp kem tôm dùng kèm bánh mì bơ tỏi',
       notes:'A bisque-style cream of prawn, built on a slow-roasted prawn-shell stock, finished with cognac and a generous pour of cream. Garlic-butter toast on the side.',
       allergens:['Gluten','Dairy','Shellfish'], pairing:'Albariño.',
