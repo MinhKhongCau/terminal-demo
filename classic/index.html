@@ -17,6 +17,12 @@
 <!-- Lucide icons -->
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 
+<!-- React + Framer Motion + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/framer-motion@11.18.2/dist/framer-motion.js"></script>
+
 <style type="text/tailwindcss">
   @theme {
     --color-canvas:   #E8D2A8;   /* aged paper / parchment body */
@@ -249,17 +255,28 @@
     position:relative; min-height:48px; padding:0 1.5rem;
     font-family:'Oswald'; font-weight:600; letter-spacing:.18em; font-size:13px;
     text-transform: uppercase;
-    transition: transform .15s, background-color .25s;
+    transition: transform .15s, background-color .25s, color .25s;
+    border-radius: 4px;
   }
   .menu-tab .label-on  { display:none; }
   .menu-tab .label-off { display:inline-block; }
-  .menu-tab[aria-selected="true"] .label-on { display:inline-block; }
+  .menu-tab[aria-selected="true"] .label-on {
+    display: inline-block !important;
+    color: #1f1308 !important;
+    background: none !important;
+    background-image: none !important;
+    -webkit-text-fill-color: #1f1308 !important;
+  }
   .menu-tab[aria-selected="true"] .label-off { display:none; }
   .menu-tab[aria-selected="true"]{
-    background: linear-gradient(180deg, rgba(255,233,163,.10), rgba(184,150,122,.00));
-    box-shadow: inset 0 -2px 0 rgba(255,233,163,.7);
+    background: linear-gradient(180deg, #E7C463 0%, #8a6a1c 100%) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -2px 0 rgba(0,0,0,.35) !important;
   }
   .menu-tab:hover .label-off { color:#d6a44b; }
+  .menu-tab:hover {
+    border-left-color: transparent !important;
+    border-bottom-color: transparent !important;
+  }
 
   /* ─────────────────── MENU ROWS — compact ─────────────────── */
   .menu-row{
@@ -267,7 +284,6 @@
     display:flex; align-items:flex-start; justify-content:space-between;
     gap:.75rem; padding: .5rem .6rem; min-height: auto;
     color:#F5F5F5; background:transparent;
-    border: 1px solid rgba(255,233,163,.08); border-radius:4px;
     transition: background-color .3s, border-color .3s, transform .15s;
   }
 
@@ -315,9 +331,14 @@
   .pager-btn:active:not(:disabled){ transform: translateY(1px) scale(.99); }
   .pager-page{
     font-family:'Oswald', sans-serif; font-weight:500; letter-spacing:.32em;
-    color:#CFA93F; font-size:12px; tabular-nums; padding: 0 8px;
+    color:#CFA93F; font-size:12px; font-variant-numeric: tabular-nums; padding: 0 8px;
   }
-  .menu-row:hover { background: rgba(255,233,163,.06); border-color: rgba(255,233,163,.28); }
+  .menu-row:hover {
+    background: rgba(255,233,163,.06);
+    border-color: rgba(255,233,163,.28);
+    border-left-color: transparent !important;
+    border-bottom-color: transparent !important;
+  }
   .menu-row:active{ transform: scale(.99); }
   .menu-row::before{
     content:''; position:absolute; left:0; top:50%; transform: translateY(-50%);
@@ -411,7 +432,8 @@
 <!-- Mobile drawer -->
 <div id="overlay" class="fixed inset-0 z-[60] -translate-y-full transition-transform duration-500 lg:hidden brick-wall"
      role="dialog" aria-modal="true" aria-label="Site navigation">
-  <div class="absolute inset-4 border-2 border-double border-brass-light/60 pointer-events-none rounded-md"></div>
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(20,12,4,.78) 0%, rgba(15,10,4,.82) 60%, rgba(8,5,2,.92) 100%);"></div>
+  <div class="absolute inset-4 pointer-events-none rounded-md"></div>
   <div class="relative h-full flex flex-col p-8">
     <div class="flex justify-between items-center">
       <span class="text-grad-accent font-bold tracking-[.28em] text-[14px]">THE TERMINAL</span>
@@ -602,103 +624,9 @@
 
 
 <!-- ════════════════════════════════════════════════════
-     3. MENU — Dark Iron section
+     3. MENU — React Powered Section
 ════════════════════════════════════════════════════ -->
-<section id="menu" class="relative bg-iron px-5 md:px-12 py-20 md:py-28">
-
-  <!-- Ambient gear ornaments removed -->
-
-  <!-- Section header -->
-  <header class="relative max-w-6xl mx-auto text-center reveal">
-    <div class="flex items-center justify-center gap-3 mb-4">
-      <span class="h-px w-10 md:w-16" style="background: linear-gradient(90deg, transparent, #c88d2b 70%, #ffe9a3);"></span>
-      <span class="text-grad-accent uppercase tracking-[.4em] text-[11px] font-medium">— Bill of Fare —</span>
-      <span class="h-px w-10 md:w-16" style="background: linear-gradient(90deg, #ffe9a3, #c88d2b 30%, transparent);"></span>
-    </div>
-
-    <h2 class="text-grad-primary font-black uppercase leading-none tracking-tight"
-        style="font-size: clamp(2.75rem, 8vw, 6rem);">
-      Menu
-    </h2>
-    <div class="brand-divider mt-5 mx-auto" style="max-width: 280px;"></div>
-    <p class="mt-5 italic text-quartz/75 max-w-xl mx-auto" style="font-family:'Cormorant Garamond', serif; font-size: clamp(.95rem, 1.3vw, 1.1rem);">
-      A short kitchen with long memory — tap any dish for the chef's notes.
-    </p>
-  </header>
-
-  <!-- Tabs -->
-  <div class="relative max-w-6xl mx-auto mt-10 md:mt-12 reveal">
-    <div role="tablist" aria-label="Menu category"
-         class="flex flex-wrap gap-1 p-1 rounded-md mx-auto border border-brass/25"
-         style="max-width: 720px; background: linear-gradient(180deg, #2f2f2f, #252525);">
-      <button role="tab" aria-selected="true"  aria-controls="panel-appetizers" id="tab-appetizers" data-tab="appetizers" class="menu-tab flex-1 min-w-[120px]">
-        <span class="label-on text-grad-accent font-semibold">Appetizers</span>
-        <span class="label-off text-muted-gold">Appetizers</span>
-      </button>
-      <button role="tab" aria-selected="false" aria-controls="panel-salads" id="tab-salads" data-tab="salads" class="menu-tab flex-1 min-w-[120px]">
-        <span class="label-on text-grad-accent font-semibold">Salads</span>
-        <span class="label-off text-muted-gold">Salads</span>
-      </button>
-      <button role="tab" aria-selected="false" aria-controls="panel-soups" id="tab-soups" data-tab="soups" class="menu-tab flex-1 min-w-[120px]">
-        <span class="label-on text-grad-accent font-semibold">Soups</span>
-        <span class="label-off text-muted-gold">Soups</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Panels (one #3A3A3A background for the whole menu section — this section IS that bg) -->
-  <div class="relative max-w-6xl mx-auto mt-10 md:mt-14">
-
-    <!-- APPETIZERS -->
-    <div id="panel-appetizers" role="tabpanel" aria-labelledby="tab-appetizers" class="menu-panel reveal">
-      <div class="flex items-center gap-5 mb-7">
-        <span class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, rgba(184,119,22,.55));"></span>
-        <span class="font-script text-brass-light leading-none px-4"
-              style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.2);">
-          Appetizer
-        </span>
-        <span class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(184,119,22,.55), transparent);"></span>
-      </div>
-      <div class="grid grid-cols-2 gap-2.5 md:gap-3" id="grid-appetizers"></div>
-      <div class="pager" id="pager-appetizers"></div>
-    </div>
-
-    <!-- SALADS -->
-    <div id="panel-salads" role="tabpanel" aria-labelledby="tab-salads" class="menu-panel hidden reveal">
-      <div class="flex items-center gap-5 mb-7">
-        <span class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, rgba(184,119,22,.55));"></span>
-        <span class="font-script text-brass-light leading-none px-4"
-              style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.2);">
-          Salad
-        </span>
-        <span class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(184,119,22,.55), transparent);"></span>
-      </div>
-      <div class="grid grid-cols-2 gap-2.5 md:gap-3" id="grid-salads"></div>
-      <div class="pager" id="pager-salads"></div>
-    </div>
-
-    <!-- SOUPS -->
-    <div id="panel-soups" role="tabpanel" aria-labelledby="tab-soups" class="menu-panel hidden reveal">
-      <div class="flex items-center gap-5 mb-7">
-        <span class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, rgba(184,119,22,.55));"></span>
-        <span class="font-script text-brass-light leading-none px-4"
-              style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.2);">
-          Soup
-        </span>
-        <span class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(184,119,22,.55), transparent);"></span>
-      </div>
-      <div class="grid grid-cols-2 gap-2.5 md:gap-3" id="grid-soups"></div>
-      <div class="pager" id="pager-soups"></div>
-    </div>
-  </div>
-
-  <!-- Fine print -->
-  <div class="relative max-w-6xl mx-auto mt-12 md:mt-16 pt-6 border-t border-brass/15 flex flex-col md:flex-row gap-3 items-start md:items-center justify-between text-quartz/55 text-[12px] tracking-[.22em] uppercase">
-    <span>Prices in ’000 VND</span>
-    <span class="text-brass-light/80">Service &amp; VAT exclusive</span>
-    <span>Allergens — ask your conductor</span>
-  </div>
-</section>
+<div id="menu-root"></div>
 
 
 
@@ -1005,306 +933,422 @@
 
 </main>
 
-<!-- ════════════════════════════════════════════════════
-     DISH DETAIL MODAL
-════════════════════════════════════════════════════ -->
-<div id="dishModal" class="fixed inset-0 z-[80] hidden items-center justify-center p-4 md:p-8" role="dialog" aria-modal="true" aria-labelledby="dish-modal-title">
 
-  <div id="dishBackdrop" class="absolute inset-0 bg-black/75 backdrop-blur-sm backdrop-anim"></div>
-
-  <div id="dishCard"
-       class="modal-frame modal-anim relative w-full max-w-3xl max-h-[90vh] overflow-y-auto grid md:grid-cols-[1.05fr_1fr]">
-
-    <!-- LEFT — decorative panel -->
-    <div id="dishImage" class="relative min-h-[240px] md:min-h-[460px] overflow-hidden rounded-l-md"
-         style="background: linear-gradient(135deg, #2a1d05, #1a0e07);">
-      <div class="absolute inset-0 grid place-items-center pointer-events-none opacity-40">
-        <div class="font-script text-brass-light" style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.18);">The&nbsp;Terminal</div>
-      </div>
-      <div class="absolute inset-0 ring-1 ring-inset ring-brass/30 pointer-events-none"></div>
-      <div class="absolute top-4 left-4 rounded-full border-2 border-dashed border-brass/70 grid place-items-center w-16 h-16 -rotate-6"
-           style="background: rgba(0,0,0,.55); backdrop-filter: blur(2px);">
-        <div class="text-center leading-tight">
-          <div class="text-[8px] tracking-[.2em] text-grad-accent font-bold">CHEF'S</div>
-          <div class="text-[8px] tracking-[.2em] text-grad-accent font-bold">PICK</div>
-        </div>
-      </div>
-      <div id="dishRibbon" class="absolute bottom-0 inset-x-0 px-5 py-2.5 font-semibold text-[11px] tracking-[.3em] uppercase"
-           style="background-image: linear-gradient(0deg, #b97716 0%, #f4c14f 20%, #fff1b3 50%, #f4c14f 80%, #b97716 100%); color:#1f1308;">
-        DISH
-      </div>
-    </div>
-
-    <!-- RIGHT — body -->
-    <div class="p-6 md:p-8 relative">
-      <button id="closeModal" aria-label="Close"
-              class="absolute top-4 right-4 w-10 h-10 grid place-items-center rounded-full text-quartz/80 hover:text-brass-light hover:bg-white/5 transition-colors">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div id="dishCategory" class="text-[11px] tracking-[.32em] uppercase text-grad-accent font-semibold">Category</div>
-      <h3 id="dish-modal-title" class="mt-2 uppercase font-bold tracking-[.05em] text-quartz leading-tight"
-          style="font-size: clamp(1.4rem, 3vw, 2rem);">Dish Name</h3>
-      <p id="dishDesc" class="mt-3 text-copper italic text-[15px] leading-relaxed">Description</p>
-
-      <div class="brand-divider my-5"></div>
-
-      <div class="flex items-baseline justify-between mb-6">
-        <div>
-          <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55 font-medium">Fare</div>
-          <div class="flex items-baseline gap-2 mt-1.5">
-            <span id="dishPrice" class="text-grad-primary font-black leading-none" style="font-size: clamp(2.2rem, 4vw, 3rem);">0</span>
-            <span class="text-grad-accent text-[12px] tracking-[.22em] font-semibold">VND ’000</span>
-          </div>
-        </div>
-        <div class="text-right">
-          <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55">Serves</div>
-          <div class="text-quartz text-xl font-semibold mt-1">1 — 2</div>
-        </div>
-      </div>
-
-      <div class="mb-4">
-        <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Chef's Notes</div>
-        <p id="dishNotes" class="text-quartz/85 text-[14px] leading-relaxed">Chef's notes…</p>
-      </div>
-
-      <div class="mb-5">
-        <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Ingredients · Allergens</div>
-        <div id="dishAllergens" class="flex flex-wrap gap-2"></div>
-      </div>
-
-      <div class="mb-6">
-        <div class="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Chef's Pairing</div>
-        <div class="flex items-start gap-3 p-3 border-l-2 rounded-sm"
-             style="background: rgba(255, 233, 163, .06); border-left-color: #fcd16e;">
-          <i data-lucide="wine" class="w-4 h-4 text-brass-light shrink-0 mt-0.5"></i>
-          <p id="dishPairing" class="text-quartz/85 text-[13.5px] italic leading-snug">—</p>
-        </div>
-      </div>
-
-      <button id="closeModal2" class="w-full btn-brass py-3 px-5 text-[12px]">Close Ticket</button>
-    </div>
-  </div>
-</div>
 
 <!-- ════════════════════════════════════════════════════
      SCRIPTS
 ════════════════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ───────── Menu data (21 dishes + Wikimedia imagery) ───────── */
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
+<!-- React Application Script -->
+<script type="text/babel">
 const MENU = {
   appetizers: [
     { name:'CALAMARI', price:85, desc:'Mực chiên giòn dùng kèm với salad & sốt Tartar',
       notes:'Calamari rings hand-cut in the morning, dredged in seasoned semolina and flash-fried so the outside crackles while the inside stays milky and tender. Served with a green-leaf salad and a tartare we whip up daily with cornichons, capers, and chopped parsley.',
-      allergens:['Gluten','Egg','Shellfish'], pairing:'A crisp Sauvignon Blanc to cut the batter.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Fried_Calamari_Rings.jpg/640px-Fried_Calamari_Rings.jpg' },
+      allergens:['Gluten','Shellfish'], pairing:'Crisp Sauvignon Blanc to cut the batter.',
+      image:'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80' },
     { name:'GRILLED BEEF W. SPRING ONION OIL', price:95, desc:'Bò nướng mỡ hành',
       notes:'Marinated short-rib slices charred over real charcoal, finished with a slow-rendered scallion-oil and a scatter of crushed peanuts. The Vietnamese countryside, plated for the dining car.',
-      allergens:['Soy','Peanuts'], pairing:'A glass of light, cool Pinot Noir.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Bo_nuong.jpg/640px-Bo_nuong.jpg' },
-    { name:'HOI AN BRUSCHETTA', price:85, desc:'Bánh mì nướng pate gà, đùi heo muối & ớt rim',
+      allergens:['Soy'], pairing:'A glass of light Pinot Noir.',
+      image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80' },
+    { name:'HOI AN BRUSCHETTA', price:85, desc:'Bánh mì nướng phủ pate gà, đùi heo muối & ớt rim',
       notes:'Toasted baguette layered with house chicken-liver pâté, slivers of cured ham, and a chilli jam we cook down each week. A nod to Hoi An mornings.',
       allergens:['Gluten','Egg'], pairing:'Sparkling rosé, served chilled.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Bruschetta_DSC00043.jpg/640px-Bruschetta_DSC00043.jpg' },
-    { name:'BEEF BRUSCHETTA', price:95, desc:'Bánh mì nướng thịt bò xào kiểu Nhật',
+      image:'https://images.unsplash.com/photo-1572656631137-7935297eff55?auto=format&fit=crop&w=800&q=80' },
+    { name:'BEEF BRUSCHETTA', price:95, desc:'Bánh mì nướng dùng kèm thịt bò xào kiểu Nhật',
       notes:'Toasted sourdough piled with thin-sliced ribeye stir-fried in soy, mirin and grated ginger. Finished with sesame and scallion.',
-      allergens:['Gluten','Soy','Sesame'], pairing:'A glass of dry Junmai sake.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Bruschetta_with_beef.jpg/640px-Bruschetta_with_beef.jpg' },
-    { name:'FORACCIA & CIABATTA', price:45, desc:'Bánh mì dẹt & bánh mì tỏi kiểu Ý',
+      allergens:['Gluten','Soy'], pairing:'A bold Malbec.',
+      image:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80' },
+    { name:'FORACCIA & CIABATTA', price:45, desc:'Bánh mì dẹt & bánh mì tổ kén kiểu Ý dùng kèm với bơ miso',
       notes:'A board of two house breads — rosemary-salt focaccia warm from the oven and an airy ciabatta — served with a slow-whipped miso butter that bridges Tuscany and Tokyo.',
-      allergens:['Gluten','Soy','Dairy'], pairing:'A double espresso or a cold glass of Vermentino.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Focaccia_in_Florence.jpg/640px-Focaccia_in_Florence.jpg' },
-    { name:'CHICKEN PATE & BREAD', price:55, desc:'Bánh mì đen + Pate gà',
+      allergens:['Gluten','Soy','Dairy'], pairing:'House espresso or a green tea.',
+      image:'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=800&q=80' },
+    { name:'CHICKEN PATE & BREAD', price:55, desc:'Bánh mì đen dùng kèm Pate gà',
       notes:'House chicken-liver pâté smoothed with brandy and brown butter, sealed under clarified butter, served with toasted seeded rye. Cornichons and red-onion jam on the side.',
-      allergens:['Gluten','Egg','Dairy'], pairing:'An off-dry Riesling.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Chicken_Liver_Pate_with_bread.jpg/640px-Chicken_Liver_Pate_with_bread.jpg' },
-    { name:'SEA URCHIN PATE & BREAD', price:75, desc:'Bánh mì đen + Pate nhum',
+      allergens:['Gluten','Egg'], pairing:'Dry Riesling.',
+      image:'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80' },
+    { name:'SEA URCHIN PATE & BREAD', price:75, desc:'Bánh mì đen dùng kèm Pate nhum',
       notes:'Our signature uni pâté — sea urchin folded into clarified butter with a whisper of yuzu, served cold on dark rye. Delicate, briny, a quiet luxury.',
-      allergens:['Gluten','Dairy','Shellfish'], pairing:'Brut Champagne, well-chilled.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Sea_urchin_on_toast.jpg/640px-Sea_urchin_on_toast.jpg' },
-    { name:'COLD CUTS', price:245, desc:'Thịt nguội, phô mai, Pate nhum, Olive & bánh mì đen',
+      allergens:['Gluten','Shellfish'], pairing:'Brut Champagne.',
+      image:'https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=800&q=80' },
+    { name:'COLD CUTS', price:245, desc:'Đùi heo muối, phô mai, Pate nhum trải Olive & bánh mì đen',
       notes:'A platter for the table: 24-month aged Spanish ham, two cheeses (Comté and a soft blue), the kitchen\'s sea-urchin pâté, marinated olives, and dark seeded bread baked the same day.',
-      allergens:['Gluten','Dairy','Shellfish'], pairing:'A bottle of Barolo or a vintage Tokaji.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Charcuterie_board_2.jpg/640px-Charcuterie_board_2.jpg' },
+      allergens:['Gluten','Dairy','Shellfish'], pairing:'A board of charcuterie deserves Barolo.',
+      image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80' },
   ],
-
   salads: [
     { name:'BALSAMIC SALAD', price:55, desc:'Salad dầu giấm kiểu Âu',
-      notes:'Bitter leaves, sweet baby tomatoes, and a 12-year-aged balsamic emulsified with cold-pressed olive oil. Finished with shaved Parmigiano.',
-      allergens:['Dairy'], pairing:'A light Pinot Grigio.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Salad_with_balsamic_vinaigrette.jpg/640px-Salad_with_balsamic_vinaigrette.jpg' },
-    { name:'CAESAR SALAD', price:75, desc:'Salad romaine sốt Caesar',
-      notes:'Romaine hearts dressed tableside-style with anchovy, garlic & egg-yolk emulsion. Smoky bacon lardons, garlic croutons, and a snowfall of aged Parmesan.',
-      allergens:['Gluten','Egg','Dairy','Fish'], pairing:'A lightly-oaked Chardonnay.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Caesar_salad_%281%29.jpg/640px-Caesar_salad_%281%29.jpg' },
+      notes:'Crisp garden greens, cherry tomatoes, cucumbers and red onion tossed in our aged balsamic vinaigrette. A clean palate-cleanser.',
+      allergens:[], pairing:'A crisp Pinot Grigio.',
+      image:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80' },
+    { name:'CAESAR SALAD', price:75, desc:'Salad romain sốt ceasar, crouton & thịt muối',
+      notes:'Crisp romaine hearts coated in a creamy garlic-parmesan dressing, topped with hand-torn sourdough croutons and shards of crispy pancetta.',
+      allergens:['Gluten','Dairy','Egg'], pairing:'Chardonnay.',
+      image:'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=800&q=80' },
     { name:'SEAWEED SALAD', price:75, desc:'Salad rong biển sốt mè',
-      notes:'Marinated wakame and hijiki tossed with shaved cucumber, micro-shiso, and a sesame-soy dressing. Cold, clean, full of the sea.',
-      allergens:['Soy','Sesame'], pairing:'Cold Junmai sake or a pale lager.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Goma-wakame_by_jetalone_in_Tokyo.jpg/640px-Goma-wakame_by_jetalone_in_Tokyo.jpg' },
-    { name:'FRUIT SALAD', price:85, desc:'Salad trái cây theo mùa',
-      notes:'A bowl of the season\'s best fruit, tossed with toasted almonds and a soft yogurt dressing flavoured with orange-blossom honey.',
-      allergens:['Dairy','Tree Nuts'], pairing:'Moscato d\'Asti, or a mimosa for brunch.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Fruit_salad_bowl.jpg/640px-Fruit_salad_bowl.jpg' },
+      notes:'A refreshing mix of ocean seaweed, shredded carrots, and cucumber curls tossed in a toasted sesame vinaigrette and sprinkled with sesame seeds.',
+      allergens:['Soy'], pairing:'Junmai Sake.',
+      image:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80' },
+    { name:'FRUIT SALAD', price:85, desc:'Salad trái cây theo mùa, hạnh nhân & sốt ya-ua',
+      notes:'A seasonal harvest of sweet melon, berries, and citrus tossed gently with honey-mint yogurt and topped with toasted almond flakes.',
+      allergens:['Dairy','Nuts'], pairing:'Moscato d\'Asti.',
+      image:'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80' },
     { name:'GRILLED BEEF SALAD', price:95, desc:'Salad bò Mỹ nướng',
-      notes:'Slices of charcoal-grilled American beef over leaves, cherry tomatoes, pickled onion, and crispy shallot. Dressed with a fish-sauce vinaigrette that bridges hemispheres.',
-      allergens:['Soy','Fish'], pairing:'A glass of Côtes du Rhône.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Grilled_beef_salad.jpg/640px-Grilled_beef_salad.jpg' },
-    { name:'GREEK SHRIMP SALAD', price:115, desc:'Salad tôm kiểu Hy Lạp',
-      notes:'Plump prawns folded into a Greek-style garlic-mayo aioli, mounded over micro greens and ribbons of pickled beetroot. Lemon wedge on the rim.',
-      allergens:['Egg','Shellfish','Dairy'], pairing:'Crisp Assyrtiko, from Santorini if we can get it.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Greek_salad_with_shrimp.jpg/640px-Greek_salad_with_shrimp.jpg' },
-    { name:'NORWEGIAN SALMON SALAD', price:125, desc:'Salad cá hồi Na Uy sốt Wasabi',
-      notes:'Cured-then-seared Norwegian salmon, leaves dressed with a wasabi-soy emulsion, pickled ginger, sesame and shiso.',
-      allergens:['Fish','Soy','Sesame'], pairing:'A glass of cold Sancerre, or a daiquiri.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Salmon_salad.jpg/640px-Salmon_salad.jpg' },
-    { name:'HAM & CHEESE SALAD', price:145, desc:'Salad đùi heo muối & phô mai',
-      notes:'A composed plate: cured ham draped over fennel, soft Brie, cashews and almonds, ribbons of orange and green apple. Light vinaigrette ties it together.',
-      allergens:['Dairy','Tree Nuts'], pairing:'A glass of Gewürztraminer.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Ham_and_cheese_salad.jpg/640px-Ham_and_cheese_salad.jpg' },
-    { name:'HAM SALAD', price:75, desc:'Salad đùi heo muối với rocket & xoài',
-      notes:'Salty cured ham, peppery rocket, ribbons of ripe mango, finished with a cream-cheese dressing. Sweet, salt, fat — the holy trinity.',
-      allergens:['Dairy'], pairing:'A glass of dry Riesling.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Prosciutto_and_arugula_salad.jpg/640px-Prosciutto_and_arugula_salad.jpg' },
+      notes:'Char-grilled USDA Choice sirloin slices on a bed of wild arugula, cherry tomatoes, and red onion, drizzled with a warm mustard-herb vinaigrette.',
+      allergens:['Soy'], pairing:'Syrah.',
+      image:'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80' },
   ],
-
   soups: [
-    { name:'PUMPKIN SOUP', price:45, desc:'Súp bí đỏ',
-      notes:'Roasted kabocha pumpkin blended with brown butter, a touch of nutmeg, and house chicken stock. Served with a slab of garlic-butter toast.',
-      allergens:['Gluten','Dairy'], pairing:'A buttery Chardonnay.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pumpkin_soup_with_pumpkin_seeds_and_cream.jpg/640px-Pumpkin_soup_with_pumpkin_seeds_and_cream.jpg' },
-    { name:'CORN SOUP', price:55, desc:'Súp bắp nâu',
+    { name:'PUMPKIN SOUP', price:45, desc:'Súp bí đỏ dùng kèm bánh mì bơ tỏi',
+      notes:'Roasted kabocha squash simmered with fresh ginger and nutmeg, puréed silky smooth and served with a golden slice of garlic-butter ciabatta.',
+      allergens:['Gluten','Dairy'], pairing:'Viognier.',
+      image:'https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?auto=format&fit=crop&w=800&q=80' },
+    { name:'CORN SOUP', price:55, desc:'Súp bắp nấu cùng cần tây & baro',
       notes:'Sweet corn slowly stewed with celery and leek, finished with a touch of cream and a drizzle of chive oil. Summer in a bowl.',
       allergens:['Dairy'], pairing:'A glass of cool Riesling.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Corn_chowder_soup.jpg/640px-Corn_chowder_soup.jpg' },
-    { name:'PRAWN SOUP', price:65, desc:'Súp kem tôm',
+      image:'https://images.unsplash.com/photo-1547592165-e1d17fed6006?auto=format&fit=crop&w=800&q=80' },
+    { name:'PRAWN SOUP', price:65, desc:'Súp kem tôm dùng kèm bánh mì bơ tỏi',
       notes:'A bisque-style cream of prawn, built on a slow-roasted prawn-shell stock, finished with cognac and a generous pour of cream. Garlic-butter toast on the side.',
-      allergens:['Gluten','Dairy','Shellfish'], pairing:'A glass of Albariño.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Shrimp_bisque.jpg/640px-Shrimp_bisque.jpg' },
+      allergens:['Gluten','Dairy','Shellfish'], pairing:'Albariño.',
+      image:'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80' },
     { name:'MUSHROOM CREAM SOUP', price:65, desc:'Súp kem nấm',
       notes:'A trio of mushrooms — porcini, cremini, oyster — coaxed slowly with shallot, thyme, and a finish of cream and Madeira. The Sunday-night soup of every European kitchen.',
-      allergens:['Dairy'], pairing:'An earthy Pinot Noir.',
-      image:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Cream_of_mushroom_soup.jpg/640px-Cream_of_mushroom_soup.jpg' },
+      allergens:['Dairy'], pairing:'Earthy Pinot Noir.',
+      image:'https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?auto=format&fit=crop&w=800&q=80' },
   ],
 };
 
-/* ───────── Render menu rows — compact with pagination ───────── */
-const PAGE_SIZE = 16;
-const pageState = { appetizers: 1, salads: 1, soups: 1 };
+const CAT_LABELS = {
+  all: 'All',
+  appetizers: 'Appetizers',
+  salads: 'Salads',
+  soups: 'Soups'
+};
 
-function rowMarkup(item, absIdx, category) {
-  return `
-    <button type="button" class="menu-row" data-category="${category}" data-idx="${absIdx}">
-      <div class="min-w-0 flex-1">
-        <h4 class="text-grad-primary font-bold uppercase tracking-[.05em] leading-tight" style="font-size: clamp(0.65rem, 2.5vw, 0.88rem);">${item.name}</h4>
-        <p class="desc mt-1 text-copper leading-snug" style="font-size: clamp(9px, 1.8vw, 12.5px); max-width: 40ch;">${item.desc}</p>
+const SECTION_HEADERS = {
+  appetizers: 'Appetizer',
+  salads: 'Salad',
+  soups: 'Soup'
+};
+
+const { motion, AnimatePresence } = window.Motion || { motion: { div: ({children, ...props}) => <div {...props}>{children}</div> }, AnimatePresence: ({children}) => children };
+
+function MenuApp() {
+  const [selectedTab, setSelectedTab] = React.useState('all');
+  const [selectedDish, setSelectedDish] = React.useState(null);
+
+  const categories = ['all', 'appetizers', 'salads', 'soups'];
+
+  const openDishModal = (item, cat) => {
+    setSelectedDish({ item, category: cat });
+    document.documentElement.style.overflow = 'hidden';
+  };
+
+  const closeDishModal = () => {
+    setSelectedDish(null);
+    document.documentElement.style.overflow = '';
+  };
+
+  return (
+    <section id="menu" className="relative bg-iron px-2 md:px-8 py-20 md:py-28">
+      {/* Section header */}
+      <header className="relative max-w-6xl mx-auto text-center mb-10">
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <span className="h-px w-10 md:w-16" style={{ background: 'linear-gradient(90deg, transparent, #c88d2b 70%, #ffe9a3)' }}></span>
+          <span className="text-grad-accent uppercase tracking-[.4em] text-[11px] font-medium">— Bill of Fare —</span>
+          <span className="h-px w-10 md:w-16" style={{ background: 'linear-gradient(90deg, #ffe9a3, #c88d2b 30%, transparent)' }}></span>
+        </div>
+
+        <h2 className="text-grad-primary font-black uppercase leading-none tracking-tight font-display"
+            style={{ fontSize: 'clamp(2.75rem, 8vw, 6rem)' }}>
+          Menu
+        </h2>
+        <div className="brand-divider mt-5 mx-auto" style={{ maxWidth: '280px' }}></div>
+        <p className="mt-5 italic text-quartz/75 max-w-xl mx-auto font-italic" style={{ fontSize: 'clamp(.95rem, 1.3vw, 1.1rem)' }}>
+          A short kitchen with long memory — tap any dish for the chef's notes.
+        </p>
+      </header>
+
+      {/* Tabs */}
+      <div className="relative max-w-6xl mx-auto mt-10 md:mt-12 mb-14">
+        <div role="tablist" aria-label="Menu category"
+             className="flex flex-wrap gap-1 p-1 rounded-md mx-auto"
+             style={{ maxWidth: '720px', background: 'linear-gradient(180deg, #2f2f2f, #252525)' }}>
+          {categories.map(cat => {
+            const isActive = selectedTab === cat;
+            return (
+              <button
+                key={cat}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setSelectedTab(cat)}
+                className="menu-tab flex-1 min-w-[100px] py-3 text-center transition-all duration-300 relative overflow-hidden"
+              >
+                {isActive ? (
+                  <span className="label-on text-grad-accent font-semibold">{CAT_LABELS[cat]}</span>
+                ) : (
+                  <span className="label-off text-muted-gold">{CAT_LABELS[cat]}</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
-      <div class="flex items-baseline gap-1.5 shrink-0 pt-0.5">
-        <span class="text-grad-primary font-black tabular-nums tracking-wide leading-none" style="font-size: clamp(0.8rem, 2vw, 1.2rem);">${item.price}</span>
+
+      {/* Panels container */}
+      <div className="relative max-w-6xl mx-auto mt-10 md:mt-14">
+        {selectedTab === 'all' ? (
+          <div className="space-y-16">
+            {Object.keys(MENU).map(cat => (
+              <MenuSection 
+                key={cat}
+                category={cat}
+                items={MENU[cat]}
+                onItemClick={(item) => openDishModal(item, cat)}
+              />
+            ))}
+          </div>
+        ) : (
+          <MenuSection 
+            category={selectedTab}
+            items={MENU[selectedTab] || []}
+            onItemClick={(item) => openDishModal(item, selectedTab)}
+          />
+        )}
       </div>
-    </button>`;
+
+      {/* Fine print */}
+      <div className="relative max-w-6xl mx-auto mt-12 md:mt-16 pt-6 border-t border-brass/15 flex flex-col md:flex-row gap-3 items-start md:items-center justify-between text-quartz/55 text-[12px] tracking-[.22em] uppercase">
+        <span>Prices in ’000 VND</span>
+        <span className="text-brass-light/80">Service &amp; VAT exclusive</span>
+        <span>Allergens — ask your conductor</span>
+      </div>
+
+      {/* Details Modal */}
+      <AnimatePresence>
+        {selectedDish && (
+          <DishModal 
+            dish={selectedDish.item}
+            category={selectedDish.category}
+            onClose={closeDishModal}
+          />
+        )}
+      </AnimatePresence>
+    </section>
+  );
 }
 
-function pagerMarkup(cat, page, totalPages) {
-  if (totalPages <= 1) return '';
-  const pp = String(page).padStart(2, '0');
-  const tp = String(totalPages).padStart(2, '0');
-  return `
-    <button class="pager-btn" data-pager="${cat}" data-dir="prev" ${page === 1 ? 'disabled' : ''} aria-label="Previous page">← Prev</button>
-    <span class="pager-page">${pp} / ${tp}</span>
-    <button class="pager-btn" data-pager="${cat}" data-dir="next" ${page === totalPages ? 'disabled' : ''} aria-label="Next page">Next →</button>
-  `;
+function MenuSection({ category, items, onItemClick }) {
+  const headerText = SECTION_HEADERS[category] || 'Dish';
+
+  return (
+    <div className="menu-panel">
+      <div className="flex items-center gap-5 mb-7">
+        <span className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(184,119,22,.55))' }}></span>
+        <span className="font-script text-brass-light leading-none px-4"
+              style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', textShadow: '0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.2)' }}>
+          {headerText}
+        </span>
+        <span className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(184,119,22,.55), transparent)' }}></span>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 md:gap-5">
+        {items.map((item, idx) => (
+          <DishCard 
+            key={item.name}
+            item={item}
+            onClick={() => onItemClick(item)}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
 
-function renderCategory(cat) {
-  const items = MENU[cat] || [];
-  const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
-  if (pageState[cat] > totalPages) pageState[cat] = totalPages;
-  const page = pageState[cat];
-  const start = (page - 1) * PAGE_SIZE;
-  const slice = items.slice(start, start + PAGE_SIZE);
-  document.getElementById('grid-' + cat).innerHTML = slice.map((it, i) => rowMarkup(it, start + i, cat)).join('');
-  document.getElementById('pager-' + cat).innerHTML = pagerMarkup(cat, page, totalPages);
+function DishCard({ item, onClick }) {
+  const imageUrl = item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80';
+  
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group relative w-full text-left flex items-stretch justify-between gap-2 md:gap-5
+                     px-4 md:px-6 py-4 md:py-5 min-h-[90px] md:min-h-[105px] rounded-lg overflow-hidden
+                     active:scale-[.985]
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass/60
+                     transition-all duration-350"
+      style={{ minHeight: '90px' }}
+    >
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
+        style={{ 
+          backgroundImage: `url('${imageUrl}')`,
+          filter: 'brightness(0.8) contrast(1.05) saturate(0.9)'
+        }}
+      />
+
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-black/35 via-black/55 to-black/65 transition-colors duration-300 group-hover:from-black/35 group-hover:via-black/55 group-hover:to-black/55" />
+
+      <div className="relative z-10 min-w-0 flex-1 flex flex-col justify-center py-2.5">
+        <h4 className="text-grad-primary font-bold uppercase tracking-[.05em] leading-tight group-hover:text-brass transition-colors duration-300" style={{ fontSize: 'clamp(0.75rem, 2.5vw, 0.95rem)' }}>
+          {item.name}
+        </h4>
+        <p className="desc mt-1 text-copper/85 leading-snug group-hover:text-cream/90 transition-colors duration-300" style={{ fontSize: 'clamp(10px, 1.8vw, 13px)', maxWidth: '42ch' }}>
+          {item.desc}
+        </p>
+      </div>
+
+      <div className="relative z-10 flex items-center gap-1.5 shrink-0 pt-0.5">
+        <span className="text-grad-primary font-black tabular-nums tracking-wide leading-none" style={{ fontSize: 'clamp(1rem, 2vw, 1.3rem)' }}>
+          {item.price}
+        </span>
+      </div>
+    </button>
+  );
 }
 
-function renderMenu() {
-  ['appetizers', 'salads', 'soups'].forEach(renderCategory);
+function DishModal({ dish, category, onClose }) {
+  const catLabel = SECTION_HEADERS[category] || 'Dish';
+
+  React.useEffect(() => {
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }, [dish]);
+
+  return (
+    <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 md:p-8">
+      {/* Backdrop */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+      />
+
+      {/* Card */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 15 }}
+        transition={{ type: 'spring', duration: 0.45 }}
+        className="modal-frame relative w-full max-w-3xl max-h-[90vh] overflow-y-auto grid md:grid-cols-[1.05fr_1fr] z-10"
+      >
+        {/* LEFT — decorative panel */}
+        <div className="relative min-h-[240px] md:min-h-[460px] overflow-hidden rounded-l-md"
+             style={{ background: 'linear-gradient(135deg, #2a1d05, #1a0e07)' }}>
+          {dish.image && (
+            <img 
+              src={dish.image} 
+              alt={dish.name}
+              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300" 
+              style={{ opacity: 1, filter: 'sepia(.18) saturate(.96) contrast(1.05)' }} 
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 grid place-items-center pointer-events-none opacity-40">
+            <div className="font-script text-brass-light" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', textShadow: '0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.18)' }}>The&nbsp;Terminal</div>
+          </div>
+          <div className="absolute inset-0 ring-1 ring-inset ring-brass/30 pointer-events-none"></div>
+          <div className="absolute top-4 left-4 rounded-full border-2 border-dashed border-brass/70 grid place-items-center w-16 h-16 -rotate-6"
+               style={{ background: 'rgba(0,0,0,.55)', backdropFilter: 'blur(2px)' }}>
+            <div className="text-center leading-tight">
+              <div className="text-[8px] tracking-[.2em] text-grad-accent font-bold">CHEF'S</div>
+              <div className="text-[8px] tracking-[.2em] text-grad-accent font-bold">PICK</div>
+            </div>
+          </div>
+          <div className="absolute bottom-0 inset-x-0 px-5 py-2.5 font-semibold text-[11px] tracking-[.3em] uppercase text-center"
+               style={{ backgroundImage: 'linear-gradient(0deg, #b97716 0%, #f4c14f 20%, #fff1b3 50%, #f4c14f 80%, #b97716 100%)', color: '#1f1308' }}>
+            {catLabel} · {dish.name}
+          </div>
+        </div>
+
+        {/* RIG`HT — body */}
+        <div className="p-6 md:p-8 relative">
+          <button 
+            onClick={onClose}
+            aria-label="Close"
+            className="absolute top-4 right-4 w-10 h-10 grid place-items-center rounded-full text-quartz/80 hover:text-brass-light hover:bg-white/5 transition-colors"
+          >
+            <i data-lucide="x" className="w-5 h-5"></i>
+          </button>
+
+          <div className="text-[11px] tracking-[.32em] uppercase text-grad-accent font-semibold">{catLabel}</div>
+          <h3 className="mt-2 uppercase font-bold tracking-[.05em] text-quartz leading-tight"
+              style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>{dish.name}</h3>
+          <p className="mt-3 text-copper italic text-[15px] leading-relaxed">{dish.desc}</p>
+
+          <div className="brand-divider my-5"></div>
+
+          <div className="flex items-baseline justify-between mb-6">
+            <div>
+              <div className="text-[10px] tracking-[.3em] uppercase text-quartz/55 font-medium">Fare</div>
+              <div className="flex items-baseline gap-2 mt-1.5">
+                <span className="text-grad-primary font-black leading-none" style={{ fontSize: 'clamp(2.2rem, 4vw, 3rem)' }}>{dish.price}</span>
+                <span className="text-grad-accent text-[12px] tracking-[.22em] font-semibold">VND ’000</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-[10px] tracking-[.3em] uppercase text-quartz/55 font-medium">Serves</div>
+              <div className="text-quartz text-xl font-semibold mt-1">1 — 2</div>
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <div className="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Chef's Notes</div>
+            <p className="text-quartz/85 text-[14px] leading-relaxed">{dish.notes}</p>
+          </div>
+
+          <div className="mb-5">
+            <div className="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Ingredients · Allergens</div>
+            <div className="flex flex-wrap gap-2">
+              {(dish.allergens || []).map(a => (
+                <span key={a} className="text-[11px] tracking-[.16em] uppercase font-semibold text-grad-accent border border-brass/40 px-2.5 py-1 rounded-sm">{a}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <div className="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Chef's Pairing</div>
+            <div className="flex items-start gap-3 p-3 border-l-2 rounded-sm"
+                 style={{ background: 'rgba(255, 233, 163, .06)', borderLeftColor: '#fcd16e' }}>
+              <i data-lucide="wine" className="w-4 h-4 text-brass-light shrink-0 mt-0.5"></i>
+              <p className="text-quartz/85 text-[13.5px] italic leading-snug">{dish.pairing}</p>
+            </div>
+          </div>
+
+          <button onClick={onClose} className="w-full btn-brass py-3 px-5 text-[12px]">Close Ticket</button>
+        </div>
+      </motion.div>
+    </div>
+  );
 }
 
-/* Pager click handler */
-document.addEventListener('click', e => {
-  const b = e.target.closest('.pager-btn'); if (!b) return;
-  const cat = b.dataset.pager;
-  const items = MENU[cat] || [];
-  const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
-  if (b.dataset.dir === 'prev' && pageState[cat] > 1) pageState[cat]--;
-  if (b.dataset.dir === 'next' && pageState[cat] < totalPages) pageState[cat]++;
-  renderCategory(cat);
-  // Smooth-scroll the category heading back into view so the user can see the new page
-  const panel = document.getElementById('panel-' + cat);
-  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
+ReactDOM.createRoot(document.getElementById('menu-root')).render(<MenuApp />);
 
-/* ───────── Tabs ───────── */
-function setActiveTab(name) {
-  document.querySelectorAll('.menu-tab').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === name ? 'true' : 'false'));
-  document.querySelectorAll('.menu-panel').forEach(p => p.classList.add('hidden'));
-  const panel = document.getElementById('panel-'+name);
-  panel.classList.remove('hidden');
-  panel.classList.remove('in');
-  requestAnimationFrame(()=> panel.classList.add('in'));
-}
-document.querySelectorAll('.menu-tab').forEach(b => b.addEventListener('click', () => setActiveTab(b.dataset.tab)));
+</script>
 
-/* ───────── Modal ───────── */
-const modal      = document.getElementById('dishModal');
-const dishRibbon = document.getElementById('dishRibbon');
-const dishCat    = document.getElementById('dishCategory');
-const dishTitle  = document.getElementById('dish-modal-title');
-const dishDesc   = document.getElementById('dishDesc');
-const dishPrice  = document.getElementById('dishPrice');
-const dishNotes  = document.getElementById('dishNotes');
-const dishAllg   = document.getElementById('dishAllergens');
-const dishPair   = document.getElementById('dishPairing');
-const CAT_LABEL  = { appetizers:'Appetizer', salads:'Salad', soups:'Soup' };
-
-function openModal(category, idx) {
-  const item = MENU[category]?.[idx]; if (!item) return;
-  dishRibbon.textContent = `${CAT_LABEL[category].toUpperCase()} · ${item.name}`;
-  dishCat.textContent = CAT_LABEL[category];
-  dishTitle.textContent = item.name;
-  dishDesc.textContent = item.desc;
-  dishPrice.textContent = item.price;
-  dishNotes.textContent = item.notes;
-  dishPair.textContent = item.pairing;
-  // Photo: load the real Wikimedia dish image with sepia tone; fall back gracefully if blocked.
-  const dishImageEl = document.getElementById('dishImage');
-  if (item.image) {
-    dishImageEl.style.background = `linear-gradient(135deg, rgba(20,12,4,.25), rgba(15,10,4,.5)), url('${item.image}') center/cover no-repeat`;
-    dishImageEl.style.filter = 'sepia(.18) saturate(.96) contrast(1.05)';
-  } else {
-    dishImageEl.style.background = 'linear-gradient(135deg, #2a1d05, #1a0e07)';
-    dishImageEl.style.filter = '';
-  }
-  dishAllg.innerHTML = (item.allergens || []).map(a =>
-    `<span class="text-[11px] tracking-[.16em] uppercase font-semibold text-grad-accent border border-brass/40 px-2.5 py-1 rounded-sm">${a}</span>`).join('');
-  modal.classList.remove('hidden'); modal.classList.add('flex');
-  document.documentElement.style.overflow = 'hidden';
-  setTimeout(()=> document.getElementById('closeModal')?.focus(), 60);
-}
-function closeModal(){ modal.classList.add('hidden'); modal.classList.remove('flex'); document.documentElement.style.overflow=''; }
-document.addEventListener('click', e => {
-  const row = e.target.closest('.menu-row');
-  if (row) { openModal(row.dataset.category, +row.dataset.idx); return; }
-  if (e.target.id === 'dishBackdrop' || e.target.closest('#closeModal') || e.target.closest('#closeModal2')) closeModal();
-});
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
-
+<!-- Global Page Interactive Scripts -->
+<script>
 /* ───────── Reservation form ───────── */
 document.getElementById('reserveForm').addEventListener('submit', e => {
   e.preventDefault();
   const btn = e.target.querySelector('button[type="submit"]');
-  btn.classList.add('scale-95'); setTimeout(()=> btn.classList.remove('scale-95'), 200);
-  document.getElementById('formNote').classList.remove('hidden');
+  btn.style.transform = 'scale(0.95)';
+  setTimeout(() => { btn.style.transform = ''; }, 200);
+  
+  const note = document.getElementById('formNote');
+  note.classList.remove('hidden');
+  note.style.opacity = '0';
+  note.style.transform = 'translateY(10px)';
+  note.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+  
+  requestAnimationFrame(() => {
+    note.style.opacity = '1';
+    note.style.transform = 'translateY(0)';
+  });
 });
 
 /* ───────── Nav scroll behaviour ───────── */
@@ -1370,7 +1414,6 @@ if (queue.length) {
 setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')), 900);
 
 /* ───────── Boot ───────── */
-renderMenu();
 onScroll();
 if (window.lucide) lucide.createIcons();
 </script>

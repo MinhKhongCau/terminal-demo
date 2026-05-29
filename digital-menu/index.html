@@ -610,7 +610,7 @@
                   className="absolute inset-0 z-0 bg-cover bg-center md:hidden"
                   style={{ 
                     backgroundImage: `url(${item.image || PLACEHOLDER_IMG})`,
-                    filter: 'brightness(0.55) contrast(1.05) saturate(0.95)'
+                    // filter: 'brightness(0.55) contrast(1.05) saturate(0.95)'
                   }}
                 />
                 <div 
@@ -637,7 +637,8 @@
                   </div>
                 </div>
 
-                <div className="p-6 md:p-8 relative">
+                {/* Ticket Details content wrapper (relative z-10 to stack on top, glassmorphic blur on mobile) */}
+                <div className="p-6 md:p-8 relative z-10 backdrop-blur-sm md:backdrop-blur-none">
                   <button
                     ref={closeRef}
                     onClick={onClose}
