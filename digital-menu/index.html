@@ -127,29 +127,199 @@
        MENU DATA — All categories and items
        ═══════════════════════════════════════════════════════════════ */
     const APPETIZERS = [
-      { name: 'CALAMARI',                       price: '85',  desc: 'Mực chiên giòn dùng kèm với salad & sốt Tartar', allergens: ['Gluten','Shellfish'], pairing: 'Crisp Sauvignon Blanc to cut the batter.' },
-      { name: 'GRILLED BEEF W. SPRING ONION OIL', price: '95', desc: 'Bò nướng mỡ hành', allergens: ['Soy'], pairing: 'A glass of light Pinot Noir.' },
-      { name: 'HOI AN BRUSCHETTA',              price: '85',  desc: 'Bánh mì nướng phủ pate gà, đùi heo muối & ớt rim', allergens: ['Gluten','Egg'], pairing: 'Sparkling rosé, served chilled.' },
-      { name: 'BEEF BRUSCHETTA',                price: '95',  desc: 'Bánh mì nướng dùng kèm thịt bò xào kiểu Nhật', allergens: ['Gluten','Soy'], pairing: 'A bold Malbec.' },
-      { name: 'FORACCIA & CIABATTA',            price: '45',  desc: 'Bánh mì dẹt & bánh mì tổ kén kiểu Ý dùng kèm với bơ miso', allergens: ['Gluten','Soy','Dairy'], pairing: 'House espresso or a green tea.' },
-      { name: 'CHICKEN PATE & BREAD',           price: '55',  desc: 'Bánh mì đen dùng kèm Pate gà', allergens: ['Gluten','Egg'], pairing: 'Dry Riesling.' },
-      { name: 'SEA URCHIN PATE & BREAD',        price: '75',  desc: 'Bánh mì đen dùng kèm Pate nhum', allergens: ['Gluten','Shellfish'], pairing: 'Brut Champagne.' },
-      { name: 'COLD CUTS',                      price: '245', desc: 'Đùi heo muối, phô mai, Pate nhum trải Olive & bánh mì đen', allergens: ['Gluten','Dairy','Shellfish'], pairing: 'A board of charcuterie deserves Barolo.' },
+      {
+        name: 'CALAMARI',
+        price: '85',
+        desc: 'Mực chiên giòn dùng kèm với salad & sốt Tartar',
+        allergens: ['Gluten', 'Shellfish'],
+        pairing: 'Crisp Sauvignon Blanc to cut the batter.',
+        image:
+          'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/calamari'
+      },
+      {
+        name: 'GRILLED BEEF W. SPRING ONION OIL',
+        price: '95',
+        desc: 'Bò nướng mỡ hành',
+        allergens: ['Soy'],
+        pairing: 'A glass of light Pinot Noir.',
+        image:
+          'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/grilled-beef-spring-onion'
+      },
+      {
+        name: 'HOI AN BRUSCHETTA',
+        price: '85',
+        desc: 'Bánh mì nướng phủ pate gà, đùi heo muối & ớt rim',
+        allergens: ['Gluten', 'Egg'],
+        pairing: 'Sparkling rosé, served chilled.',
+        image:
+          'https://images.unsplash.com/photo-1572656631137-7935297eff55?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/hoi-an-bruschetta'
+      },
+      {
+        name: 'BEEF BRUSCHETTA',
+        price: '95',
+        desc: 'Bánh mì nướng dùng kèm thịt bò xào kiểu Nhật',
+        allergens: ['Gluten', 'Soy'],
+        pairing: 'A bold Malbec.',
+        image:
+          'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/beef-bruschetta'
+      },
+      {
+        name: 'FORACCIA & CIABATTA',
+        price: '45',
+        desc: 'Bánh mì dẹt & bánh mì tổ kén kiểu Ý dùng kèm với bơ miso',
+        allergens: ['Gluten', 'Soy', 'Dairy'],
+        pairing: 'House espresso or a green tea.',
+        image:
+          'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/focaccia-ciabatta'
+      },
+      {
+        name: 'CHICKEN PATE & BREAD',
+        price: '55',
+        desc: 'Bánh mì đen dùng kèm Pate gà',
+        allergens: ['Gluten', 'Egg'],
+        pairing: 'Dry Riesling.',
+        image:
+          'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/chicken-pate-bread'
+      },
+      {
+        name: 'SEA URCHIN PATE & BREAD',
+        price: '75',
+        desc: 'Bánh mì đen dùng kèm Pate nhum',
+        allergens: ['Gluten', 'Shellfish'],
+        pairing: 'Brut Champagne.',
+        image:
+          'https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/sea-urchin-pate'
+      },
+      {
+        name: 'COLD CUTS',
+        price: '245',
+        desc: 'Đùi heo muối, phô mai, Pate nhum trải Olive & bánh mì đen',
+        allergens: ['Gluten', 'Dairy', 'Shellfish'],
+        pairing: 'A board of charcuterie deserves Barolo.',
+        image:
+          'https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/cold-cuts'
+      }
     ];
 
     const SALADS = [
-      { name: 'BALSAMIC SALAD',     price: '55', desc: 'Salad dầu giấm kiểu Âu', allergens: [], pairing: 'A light Pinot Grigio.' },
-      { name: 'CAESAR SALAD',       price: '75', desc: 'Salad romain sốt ceasar, crouton & thịt muối', allergens: ['Gluten','Egg','Dairy','Fish'], pairing: 'Chardonnay, lightly oaked.' },
-      { name: 'SEAWEED SALAD',      price: '75', desc: 'Salad rong biển sốt mè', allergens: ['Soy','Sesame'], pairing: 'Cold Junmai sake.' },
-      { name: 'FRUIT SALAD',        price: '85', desc: 'Salad trái cây theo mùa, hạnh nhân & sốt ya-ua', allergens: ['Dairy','Nuts'], pairing: 'A mimosa for brunch.' },
-      { name: 'GRILLED BEEF SALAD', price: '95', desc: 'Salad bò Mỹ nướng', allergens: ['Soy'], pairing: 'Côtes du Rhône.' },
+      {
+        name: 'BALSAMIC SALAD',
+        price: '55',
+        desc: 'Salad dầu giấm kiểu Âu',
+        allergens: [],
+        pairing: 'A light Pinot Grigio.',
+        image:
+          'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/balsamic-salad'
+      },
+      {
+        name: 'CAESAR SALAD',
+        price: '75',
+        desc: 'Salad romain sốt ceasar, crouton & thịt muối',
+        allergens: ['Gluten', 'Egg', 'Dairy', 'Fish'],
+        pairing: 'Chardonnay, lightly oaked.',
+        image:
+          'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/caesar-salad'
+      },
+      {
+        name: 'SEAWEED SALAD',
+        price: '75',
+        desc: 'Salad rong biển sốt mè',
+        allergens: ['Soy', 'Sesame'],
+        pairing: 'Cold Junmai sake.',
+        image:
+          'https://images.unsplash.com/photo-1637949385162-e416fb15b2ce?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/seaweed-salad'
+      },
+      {
+        name: 'FRUIT SALAD',
+        price: '85',
+        desc: 'Salad trái cây theo mùa, hạnh nhân & sốt ya-ua',
+        allergens: ['Dairy', 'Nuts'],
+        pairing: 'A mimosa for brunch.',
+        image:
+          'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/fruit-salad'
+      },
+      {
+        name: 'GRILLED BEEF SALAD',
+        price: '95',
+        desc: 'Salad bò Mỹ nướng',
+        allergens: ['Soy'],
+        pairing: 'Côtes du Rhône.',
+        image:
+          'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/grilled-beef-salad'
+      }
     ];
 
     const SOUPS = [
-      { name: 'PUMPKIN SOUP',        price: '45', desc: 'Súp bí đỏ dùng kèm bánh mì bơ tỏi', allergens: ['Gluten','Dairy'], pairing: 'Buttery Chardonnay.' },
-      { name: 'CORN SOUP',           price: '55', desc: 'Súp bắp nấu cùng cần tây & baro', allergens: ['Dairy'], pairing: 'A glass of cool Riesling.' },
-      { name: 'PRAWN SOUP',          price: '65', desc: 'Súp kem tôm dùng kèm bánh mì bơ tỏi', allergens: ['Gluten','Dairy','Shellfish'], pairing: 'Albariño.' },
-      { name: 'MUSHROOM CREAM SOUP', price: '65', desc: 'Súp kem nấm', allergens: ['Dairy'], pairing: 'Earthy Pinot Noir.' },
+      {
+        name: 'PUMPKIN SOUP',
+        price: '45',
+        desc: 'Súp bí đỏ dùng kèm bánh mì bơ tỏi',
+        allergens: ['Gluten', 'Dairy'],
+        pairing: 'Buttery Chardonnay.',
+        image:
+          'https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/pumpkin-soup'
+      },
+      {
+        name: 'CORN SOUP',
+        price: '55',
+        desc: 'Súp bắp nấu cùng cần tây & baro',
+        allergens: ['Dairy'],
+        pairing: 'A glass of cool Riesling.',
+        image:
+          'https://images.unsplash.com/photo-1547592165-e1d17fed6006?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/corn-soup'
+      },
+      {
+        name: 'PRAWN SOUP',
+        price: '65',
+        desc: 'Súp kem tôm dùng kèm bánh mì bơ tỏi',
+        allergens: ['Gluten', 'Dairy', 'Shellfish'],
+        pairing: 'Albariño.',
+        image:
+          'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/prawn-soup'
+      },
+      {
+        name: 'MUSHROOM CREAM SOUP',
+        price: '65',
+        desc: 'Súp kem nấm',
+        allergens: ['Dairy'],
+        pairing: 'Earthy Pinot Noir.',
+        image:
+          'https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?auto=format&fit=crop&w=800&q=80',
+        article:
+          '/menu/mushroom-cream-soup'
+      }
     ];
 
     const BRANCHES = [
@@ -314,36 +484,50 @@
             opacity: shown ? 1 : 0,
             transform: shown ? 'translateY(0)' : 'translateY(18px)',
           }}
-          className="group relative w-full text-left flex items-start justify-between gap-3 md:gap-5
-                     px-2 md:px-5 py-2 md:py-5 min-h-auto md:min-h-[64px] rounded-sm
-                     border-b border-brass/10
-                     hover:bg-brass/[.05] active:scale-[.985]
+          className="group relative w-full text-left flex items-stretch justify-between gap-3 md:gap-5
+                     px-4 md:px-6 py-4 md:py-5 min-h-[90px] md:min-h-[105px] rounded-lg overflow-hidden
+                     active:scale-[.985]
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass/60
-                     [transition:opacity_.6s_cubic-bezier(.22,1,.36,1),transform_.6s_cubic-bezier(.22,1,.36,1),background-color_.3s_ease,scale_.15s]"
+                     transition-all duration-350"
         >
-          <span className="absolute left-0 top-1/2 -translate-y-1/2 h-0 w-[2px] bg-brass transition-[height] duration-300 group-hover:h-2/3 group-focus-visible:h-2/3" aria-hidden="true"></span>
+          {/* Background image inside the card */}
+          <div 
+            className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
+            style={{ 
+              backgroundImage: `url(${item.image || PLACEHOLDER_IMG})`,
+              filter: 'brightness(0.8) contrast(1.05) saturate(0.9)'
+            }}
+          />
 
-          <div className="min-w-0 flex-1">
+          {/* Overlay to ensure rich readability and premium feel */}
+          <div 
+            className="absolute inset-0 z-0 bg-gradient-to-r from-black/35 via-black/55 to-black/65 transition-colors duration-300 group-hover:from-black/90 group-hover:via-black/75 group-hover:to-black/90" 
+          />
+
+          <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-brass scale-y-0 origin-center transition-transform duration-300 group-hover:scale-y-100 group-focus-visible:scale-y-100" aria-hidden="true"></span>
+
+          <div className="relative z-10 min-w-0 flex-1 flex flex-col justify-center">
             <h3 className="font-display font-bold tracking-[.08em] uppercase text-quartz
-                           text-[11px] md:text-[16px] leading-tight md:leading-snug
-                           group-hover:text-brass-hot transition-colors">
+                           text-[12px] md:text-[16px] leading-tight md:leading-snug
+                           group-hover:text-brass-hot transition-colors duration-350">
               {item.name}
             </h3>
-            <p className="mt-0.5 md:mt-1.5 text-copper text-[10px] md:text-[14px] leading-tight md:leading-snug max-w-[44ch] italic line-clamp-2">
+            <p className="mt-1 md:mt-2 text-cream/70 text-[10px] md:text-[13px] leading-tight md:leading-snug max-w-[42ch] italic line-clamp-2 group-hover:text-cream/90 transition-colors duration-350">
               {item.desc}
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 md:gap-3 shrink-0 pt-0.5">
-            <span className="font-display font-bold text-brass tabular-nums text-[13px] md:text-[20px] tracking-wider"
-                  style={{ textShadow: '0 1px 0 rgba(0,0,0,.4)' }}>
+          <div className="relative z-10 flex items-center gap-1.5 md:gap-3 shrink-0 pt-0.5">
+            <span className="font-display font-bold text-brass tabular-nums text-[14px] md:text-[20px] tracking-wider"
+                  style={{ textShadow: '0 2px 4px rgba(0,0,0,0.85)' }}>
               {item.price}
             </span>
-            <span className="font-mono text-brass/60 text-[8px] md:text-[11px] tracking-[.2em] hidden sm:inline">VND</span>
+            <span className="font-mono text-brass/70 text-[8px] md:text-[11px] tracking-[.2em] hidden sm:inline"
+                  style={{ textShadow: '0 1px 2px rgba(0,0,0,0.85)' }}>VND</span>
             <span className="hidden md:block text-brass opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-300">→</span>
           </div>
 
-          <span className="absolute left-2 right-2 md:left-5 md:right-5 bottom-0 h-px origin-left scale-x-0
+          <span className="absolute left-0 right-0 bottom-0 h-[2px] scale-x-0 origin-left
                            group-hover:scale-x-100 group-focus-visible:scale-x-100 transition-transform duration-500"
                 style={{ background: 'linear-gradient(90deg, #CFA93F, transparent)' }} aria-hidden="true"></span>
         </button>
@@ -354,7 +538,7 @@
       return (
         <section id={id} className="px-3 md:px-12">
           <CategoryTitle label={label} icon={icon} />
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-x-2 md:gap-x-12 lg:gap-x-16 -mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-2 md:gap-8 lg:gap-8 -mt-4">
             {items.map((it, i) => (
               <MenuItem key={it.name} item={it} idx={i} onOpen={onOpen} />
             ))}
@@ -423,7 +607,7 @@
 
                 <div className="hidden md:block relative overflow-hidden min-h-[240px] md:min-h-[420px]"
                      style={{
-                       background: `linear-gradient(135deg, rgba(0,0,0,.2), rgba(0,0,0,.55)), url('${item.img || PLACEHOLDER_IMG}') center/cover no-repeat`,
+                       background: `linear-gradient(135deg, rgba(0,0,0,.2), rgba(0,0,0,.55)), url('${item.image || PLACEHOLDER_IMG}') center/cover no-repeat`,
                        filter: 'sepia(.3) saturate(.95) contrast(1.05)'
                      }}>
                   <div className="absolute inset-0 ring-1 ring-inset ring-brass/30 pointer-events-none"></div>
