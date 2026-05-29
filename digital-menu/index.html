@@ -314,8 +314,8 @@
             opacity: shown ? 1 : 0,
             transform: shown ? 'translateY(0)' : 'translateY(18px)',
           }}
-          className="group relative w-full text-left flex items-start justify-between gap-5
-                     px-4 md:px-5 py-4 md:py-5 min-h-[64px] rounded-sm
+          className="group relative w-full text-left flex items-start justify-between gap-3 md:gap-5
+                     px-2 md:px-5 py-2 md:py-5 min-h-auto md:min-h-[64px] rounded-sm
                      border-b border-brass/10
                      hover:bg-brass/[.05] active:scale-[.985]
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass/60
@@ -325,25 +325,25 @@
 
           <div className="min-w-0 flex-1">
             <h3 className="font-display font-bold tracking-[.08em] uppercase text-quartz
-                           text-[15px] md:text-[16px] leading-snug
+                           text-[11px] md:text-[16px] leading-tight md:leading-snug
                            group-hover:text-brass-hot transition-colors">
               {item.name}
             </h3>
-            <p className="mt-1.5 text-copper text-[13px] md:text-[14px] leading-snug max-w-[44ch] italic">
+            <p className="mt-0.5 md:mt-1.5 text-copper text-[10px] md:text-[14px] leading-tight md:leading-snug max-w-[44ch] italic line-clamp-2">
               {item.desc}
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0 pt-0.5">
-            <span className="font-display font-bold text-brass tabular-nums text-[18px] md:text-[20px] tracking-wider"
+          <div className="flex items-center gap-1.5 md:gap-3 shrink-0 pt-0.5">
+            <span className="font-display font-bold text-brass tabular-nums text-[13px] md:text-[20px] tracking-wider"
                   style={{ textShadow: '0 1px 0 rgba(0,0,0,.4)' }}>
               {item.price}
             </span>
-            <span className="font-mono text-brass/60 text-[11px] tracking-[.2em] hidden sm:inline">VND</span>
-            <span className="text-brass opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-300">→</span>
+            <span className="font-mono text-brass/60 text-[8px] md:text-[11px] tracking-[.2em] hidden sm:inline">VND</span>
+            <span className="hidden md:block text-brass opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-300">→</span>
           </div>
 
-          <span className="absolute left-4 right-4 md:left-5 md:right-5 bottom-0 h-px origin-left scale-x-0
+          <span className="absolute left-2 right-2 md:left-5 md:right-5 bottom-0 h-px origin-left scale-x-0
                            group-hover:scale-x-100 group-focus-visible:scale-x-100 transition-transform duration-500"
                 style={{ background: 'linear-gradient(90deg, #CFA93F, transparent)' }} aria-hidden="true"></span>
         </button>
@@ -352,9 +352,9 @@
 
     function MenuCategory({ id, label, icon, items, onOpen }) {
       return (
-        <section id={id} className="px-5 md:px-12">
+        <section id={id} className="px-3 md:px-12">
           <CategoryTitle label={label} icon={icon} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 -mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-x-2 md:gap-x-12 lg:gap-x-16 -mt-4">
             {items.map((it, i) => (
               <MenuItem key={it.name} item={it} idx={i} onOpen={onOpen} />
             ))}
@@ -421,7 +421,7 @@
               >
                 <Rivet pos="tl" /><Rivet pos="tr" /><Rivet pos="bl" /><Rivet pos="br" />
 
-                <div className="relative overflow-hidden min-h-[240px] md:min-h-[420px]"
+                <div className="hidden md:block relative overflow-hidden min-h-[240px] md:min-h-[420px]"
                      style={{
                        background: `linear-gradient(135deg, rgba(0,0,0,.2), rgba(0,0,0,.55)), url('${item.img || PLACEHOLDER_IMG}') center/cover no-repeat`,
                        filter: 'sepia(.3) saturate(.95) contrast(1.05)'
@@ -524,23 +524,6 @@
 
       return (
         <div className="relative min-h-screen overflow-x-hidden text-quartz">
-          <svg viewBox="0 0 100 100" className="absolute -top-32 -left-32 w-[480px] h-[480px] text-brass/[.04] gear-slow pointer-events-none" aria-hidden="true">
-            <use href="#g-gear"/>
-          </svg>
-          <svg viewBox="0 0 100 100" className="absolute top-[60%] -right-32 w-[420px] h-[420px] text-brass/[.04] gear-rev pointer-events-none" aria-hidden="true">
-            <use href="#g-gear"/>
-          </svg>
-
-          <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-            <defs>
-              <symbol id="g-gear" viewBox="0 0 100 100">
-                <g fill="currentColor">
-                  <path d="M50 8l4 8 9-2 2 9 8 4-3 9 7 6-6 7 3 9-8 4-2 9-9-2-4 8-4-8-9 2-2-9-8-4 3-9-7-6 6-7-3-9 8-4 2-9 9 2z"/>
-                  <circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" strokeWidth="6"/>
-                </g>
-              </symbol>
-            </defs>
-          </svg>
 
           <MenuHeader
             branches={BRANCHES}
