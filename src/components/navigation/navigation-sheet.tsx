@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { X } from "lucide-react";
 import { useTranslation } from "@/components/providers/locale-provider";
 import { NAV_LINKS } from "./nav-links";
+import { BrandLogo } from "./brand-logo";
 import { BrandDivider } from "@/components/decorative/decorative";
 import { ThemeToggle } from "./theme-toggle";
 import { LocaleToggle } from "./locale-toggle";
@@ -53,13 +54,16 @@ export function NavigationSheet({ open, onClose }: NavigationSheetProps) {
 
       <div className="relative z-10 flex h-full flex-col p-8">
         <div className="flex items-center justify-between">
-          <div className="flex flex-col leading-tight">
-            <span className="text-grad-accent text-[13px] font-bold tracking-[.28em]">
-              {t("brand.name")}
-            </span>
-            <span className="mt-0.5 text-[9px] tracking-[.32em] text-quartz/65">
-              {t("brand.tagline")}
-            </span>
+          <div className="flex items-center gap-3 leading-tight">
+            <BrandLogo className="h-10 w-10" />
+            <div className="flex flex-col">
+              <span className="text-grad-accent text-[13px] font-bold tracking-[.28em]">
+                {t("brand.name")}
+              </span>
+              <span className="mt-0.5 text-[9px] tracking-[.32em] text-quartz/65">
+                {t("brand.tagline")}
+              </span>
+            </div>
           </div>
           <button
             type="button"

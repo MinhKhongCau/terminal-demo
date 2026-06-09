@@ -2,6 +2,7 @@
 
 import { ChevronDown, Ticket, UtensilsCrossed } from "lucide-react";
 import { useTranslation } from "@/components/providers/locale-provider";
+import { BrandLogo } from "@/components/navigation/brand-logo";
 import {
   BrandDivider,
   CornerRivets,
@@ -32,6 +33,10 @@ export function HeroSection() {
         <Reveal className="signboard sway relative w-full max-w-3xl px-6 py-8 md:px-12 md:py-12">
           <CornerRivets />
           <div className="signboard-inner text-center">
+            <BrandLogo
+              priority
+              className="mx-auto mb-5 h-24 w-24 md:h-28 md:w-28"
+            />
             <div className="mb-3 flex items-center justify-center gap-3">
               <span
                 className="h-px w-10 md:w-16"

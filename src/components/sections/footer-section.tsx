@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslation } from "@/components/providers/locale-provider";
 import { NAV_LINKS } from "@/components/navigation/nav-links";
+import { BrandLogo } from "@/components/navigation/brand-logo";
 import { BrandDivider } from "@/components/decorative/decorative";
 
 export function FooterSection() {
@@ -14,12 +15,15 @@ export function FooterSection() {
       <div className="relative mx-auto grid max-w-6xl gap-10 md:grid-cols-3">
         {/* Brand */}
         <div>
-          <div className="leading-tight">
-            <div className="text-grad-accent text-[13px] font-bold tracking-[.28em]">
-              {t("brand.name")}
-            </div>
-            <div className="mt-0.5 text-[10px] tracking-[.32em] text-quartz/55">
-              {t("brand.tagline")}
+          <div className="flex items-center gap-3 leading-tight">
+            <BrandLogo className="h-12 w-12" />
+            <div>
+              <div className="text-grad-accent text-[13px] font-bold tracking-[.28em]">
+                {t("brand.name")}
+              </div>
+              <div className="mt-0.5 text-[10px] tracking-[.32em] text-quartz/55">
+                {t("brand.tagline")}
+              </div>
             </div>
           </div>
           <p className="mt-5 font-serif italic leading-relaxed text-quartz/65">
