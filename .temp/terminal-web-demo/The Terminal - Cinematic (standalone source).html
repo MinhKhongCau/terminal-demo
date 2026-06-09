@@ -1,0 +1,1228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The Terminal — Cafe & European Kitchen</title>
+
+<!-- Three.js is loaded as an ES module via importmap (JS-referenced URL — lifted for the bundler) -->
+<meta name="ext-resource-dependency" content="https://unpkg.com/three@0.158.0/build/three.module.js" data-resource-id="threeModule" />
+
+<!-- Bundler splash thumbnail -->
+<template id="__bundler_thumbnail" data-bg-color="#F5F0E6">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#F5F0E6"/>
+    <!-- Two interlocking brass gears, simplified -->
+    <g transform="translate(600 400)" fill="#B8893E">
+      <g transform="translate(-110 -10)">
+        <circle r="150" fill="#B8893E"/>
+        <g>
+          <rect x="-22" y="-180" width="44" height="50" rx="4"/>
+          <rect x="-22" y="-180" width="44" height="50" rx="4" transform="rotate(40)"/>
+          <rect x="-22" y="-180" width="44" height="50" rx="4" transform="rotate(80)"/>
+          <rect x="-22" y="-180" width="44" height="50" rx="4" transform="rotate(120)"/>
+          <rect x="-22" y="-180" width="44" height="50" rx="4" transform="rotate(160)"/>
+          <rect x="-22" y="-180" width="44" height="50" rx="4" transform="rotate(200)"/>
+          <rect x="-22" y="-180" width="44" height="50" rx="4" transform="rotate(240)"/>
+          <rect x="-22" y="-180" width="44" height="50" rx="4" transform="rotate(280)"/>
+          <rect x="-22" y="-180" width="44" height="50" rx="4" transform="rotate(320)"/>
+        </g>
+        <circle r="42" fill="#F5F0E6"/>
+      </g>
+      <g transform="translate(140 110)">
+        <circle r="90" fill="#8a6429"/>
+        <g>
+          <rect x="-14" y="-115" width="28" height="32" rx="3"/>
+          <rect x="-14" y="-115" width="28" height="32" rx="3" transform="rotate(45)"/>
+          <rect x="-14" y="-115" width="28" height="32" rx="3" transform="rotate(90)"/>
+          <rect x="-14" y="-115" width="28" height="32" rx="3" transform="rotate(135)"/>
+          <rect x="-14" y="-115" width="28" height="32" rx="3" transform="rotate(180)"/>
+          <rect x="-14" y="-115" width="28" height="32" rx="3" transform="rotate(225)"/>
+          <rect x="-14" y="-115" width="28" height="32" rx="3" transform="rotate(270)"/>
+          <rect x="-14" y="-115" width="28" height="32" rx="3" transform="rotate(315)"/>
+        </g>
+        <circle r="26" fill="#F5F0E6"/>
+      </g>
+    </g>
+    <!-- Wordmark -->
+    <text x="600" y="700" text-anchor="middle" font-family="Georgia, serif" font-size="64" fill="#1F1F1F" letter-spacing="6">The Terminal</text>
+  </svg>
+</template>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Twind CDN — a Tailwind-compatible runtime (Play CDN is hosted only at cdn.tailwindcss.com, which the offline bundler can't fetch). API surface is compatible enough for this design. -->
+<script src="https://cdn.jsdelivr.net/npm/@twind/cdn@1.1.3/cdn.global.js"></script>
+<script>
+  twind.install({
+    hash: false,
+    theme: {
+      extend: {
+        colors: {
+          bone:'#F5F0E6', bone2:'#EDE6D6', charcoal:'#1F1F1F', charcoal2:'#2A2A2A',
+          brass:'#B8893E', brass2:'#a07731', taupe:'#8B7355', patina:'#6D827D',
+        },
+        fontFamily: {
+          serif:['Fraunces','Georgia','serif'],
+          sans: ['Inter','system-ui','sans-serif'],
+          mono: ['"JetBrains Mono"','ui-monospace','monospace'],
+        },
+      }
+    }
+  });
+</script>
+
+<!-- Motion libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<!-- Build importmap at runtime so the Three.js URL resolves to the inlined blob URL -->
+<script>
+  (function(){
+    var url = (window.__resources && window.__resources.threeModule) || 'https://unpkg.com/three@0.158.0/build/three.module.js';
+    var s = document.createElement('script');
+    s.type = 'importmap';
+    s.textContent = JSON.stringify({ imports: { three: url } });
+    document.head.appendChild(s);
+  })();
+</script>
+
+<style>
+  html, body { background:#F5F0E6; color:#1F1F1F; }
+  body { font-family:'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+  /* Lenis-required */
+  html.lenis { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+  /* Page grain overlay — slow pulse */
+  .grain-overlay{
+    position: fixed; inset:0; z-index: 90; pointer-events:none; mix-blend-mode: multiply; opacity:.06;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nMjQwJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nLjknIG51bU9jdGF2ZXM9JzInIHN0aXRjaFRpbGVzPSdzdGl0Y2gnLz48ZmVDb2xvck1hdHJpeCB2YWx1ZXM9JzAgMCAwIDAgMCAgMCAwIDAgMCAwICAwIDAgMCAwIDAgIDAgMCAwIDEgMCcvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbHRlcj0ndXJsKCNuKScvPjwvc3ZnPg==");
+    animation: grain-pulse 8s ease-in-out infinite;
+  }
+  @keyframes grain-pulse { 0%,100%{ opacity: .05 } 50% { opacity: .09 } }
+
+  .grain { position:relative; }
+  .grain::after{
+    content:''; position:absolute; inset:0; pointer-events:none; opacity:.07; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNDAnIGhlaWdodD0nMjQwJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nLjknIG51bU9jdGF2ZXM9JzInIHN0aXRjaFRpbGVzPSdzdGl0Y2gnLz48ZmVDb2xvck1hdHJpeCB2YWx1ZXM9JzAgMCAwIDAgMCAgMCAwIDAgMCAwICAwIDAgMCAwIDAgIDAgMCAwIC44IDAnLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBmaWx0ZXI9J3VybCgjbiknLz48L3N2Zz4=");
+  }
+
+  /* Custom cursor (desktop) */
+  .cursor, .cursor-ring { position: fixed; left:0; top:0; pointer-events:none; z-index: 100; transform: translate(-50%,-50%); will-change: transform; }
+  .cursor       { width:8px;  height:8px;  background:#B8893E; border-radius:50%; transition: opacity .25s; }
+  .cursor-ring  { width:36px; height:36px; border:1px solid #B8893E; border-radius:50%; opacity:0; transition: opacity .3s, width .3s, height .3s; }
+  body.cur-hover .cursor      { opacity:0; }
+  body.cur-hover .cursor-ring { opacity:1; width:44px; height:44px; }
+  @media (max-width: 1024px), (pointer: coarse) { .cursor, .cursor-ring { display:none; } }
+
+  /* Scroll progress brass line */
+  .progress { position: fixed; top:0; left:0; height:1.5px; width:0%; background:#B8893E; z-index: 95; }
+
+  /* Preloader */
+  .preloader{
+    position: fixed; inset:0; background:#F5F0E6; z-index: 200; display:flex; align-items:center; justify-content:center; flex-direction:column;
+  }
+  .preloader .pre-wm{ font-family:'Fraunces',serif; font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing:.04em; color:#1F1F1F; display:flex; gap:.02em; }
+  .preloader .pre-wm span{ display:inline-block; opacity:0; transform: translateY(40%); }
+  .preloader .pre-line{ width:0; height:1px; background:#B8893E; margin-top:18px; }
+
+  /* Animated text link */
+  .ulink { position:relative; display:inline-block; }
+  .ulink::after{
+    content:''; position:absolute; left:0; right:100%; bottom:-3px; height:1px; background:#B8893E;
+    transition: right .45s cubic-bezier(.7,0,.2,1);
+  }
+  .ulink:hover::after { right:0; }
+
+  /* Menu list */
+  .row-menu{
+    position:relative; display:grid; grid-template-columns: 1fr;
+    padding: 22px 16px; margin: 0 -16px;
+    border-top: 1px solid rgba(31,31,31,.10);
+    transition: background-color .3s ease;
+  }
+  .row-menu:last-child { border-bottom: 1px solid rgba(31,31,31,.10); }
+  .row-menu .row-arrow{
+    position:absolute; right: 16px; top: 24px; opacity:0; transform: translateX(-6px);
+    transition: opacity .35s, transform .35s; color:#B8893E; font-family:'JetBrains Mono', monospace;
+  }
+  .row-menu:hover { background: rgba(184,137,62,.06); }
+  .row-menu:hover .row-arrow{ opacity:1; transform: translateX(0); }
+  .leader{
+    flex:1; height:1px; align-self:end; margin: 0 12px 8px; position:relative;
+    background-image: radial-gradient(circle, rgba(31,31,31,.35) 1px, transparent 1.2px);
+    background-size: 6px 1px; background-repeat: repeat-x; background-position: 0 100%;
+    background-position-x: 100%; /* start hidden */
+    transition: background-position-x .9s cubic-bezier(.6,.05,.2,1) .15s;
+  }
+  .row-menu.in .leader{ background-position-x: 0%; }
+  .row-menu .name{ opacity:0; transform: translateX(-12px); transition: opacity .8s, transform .8s; transition-timing-function: cubic-bezier(.6,.05,.2,1); }
+  .row-menu .price{ opacity:0; transform: translateX(12px); transition: opacity .8s, transform .8s; transition-timing-function: cubic-bezier(.6,.05,.2,1); }
+  .row-menu .desc { opacity:0; transform: translateY(8px); transition: opacity .8s ease .15s, transform .8s ease .15s; }
+  .row-menu.in .name, .row-menu.in .price, .row-menu.in .desc { opacity:1; transform:none; }
+
+  /* Form fields */
+  .field { position:relative; padding-top: 22px; }
+  .field label{
+    position:absolute; left:0; top: 22px; font-family:'Inter'; font-size:16px; color: rgba(31,31,31,.45);
+    transition: transform .35s cubic-bezier(.6,.05,.2,1), color .35s, font-size .35s;
+    pointer-events:none;
+  }
+  .field input, .field select, .field textarea{
+    width:100%; background: transparent; border:none; outline:none;
+    border-bottom: 1px solid rgba(31,31,31,.30);
+    padding: 8px 0 12px; font-family:'Inter',sans-serif; font-size: 16px; color:#1F1F1F;
+    transition: border-bottom-color .3s, border-bottom-width .3s;
+  }
+  .field::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:#B8893E;
+    transform: scaleX(0); transform-origin: left; transition: transform .55s cubic-bezier(.6,.05,.2,1);
+  }
+  .field.in::after { transform: scaleX(1); }
+  .field input:focus ~ .focusbar, .field select:focus ~ .focusbar { } /* not used; using ::after */
+  .field input:focus, .field select:focus, .field textarea:focus { border-bottom-color: rgba(0,0,0,0); }
+  .field.has-value label, .field input:focus + label, .field select:focus + label, .field textarea:focus + label {
+    transform: translateY(-24px); font-size: 11px; letter-spacing:.22em; text-transform: uppercase; color:#8B7355;
+  }
+
+  /* Brass button */
+  .btn-brass{
+    display:inline-flex; align-items:center; justify-content:center;
+    background:#B8893E; color:#F5F0E6; padding: 16px 32px; font-weight:500; font-size: 13px;
+    letter-spacing:.18em; text-transform: uppercase;
+    transition: transform .25s cubic-bezier(.6,.05,.2,1), box-shadow .35s ease, background .25s;
+  }
+  .btn-brass:hover{ transform: translateY(-2px); box-shadow: 0 14px 28px rgba(184,137,62,.28); background:#a87a33; }
+  .btn-brass:active { transform: translateY(0) scale(.99); background:#8b6526; }
+
+  /* Plate (image rectangle) */
+  .plate { position:relative; overflow:hidden; background:#EDE6D6; }
+  .plate .img { position:absolute; inset:0; transform: scale(1.08); transition: transform .8s cubic-bezier(.6,.05,.2,1); }
+  .plate img { display:block; width:100%; height:100%; object-fit:cover; transition: transform .8s cubic-bezier(.6,.05,.2,1); }
+  .plate-hover:hover .img { transform: scale(1.04); }
+  .plate-hover:hover img { transform: scale(1.08); }
+
+  /* Tabs (filter underline morphs) */
+  .tab{ position:relative; padding: 8px 0; color:#8B7355; font-size:14px; transition: color .2s; cursor:pointer; }
+  .tab:hover { color:#1F1F1F; }
+  .tab.active { color:#1F1F1F; }
+  .tab-underline{
+    position:absolute; height:1px; background:#B8893E; bottom:2px;
+    transition: left .45s cubic-bezier(.7,0,.2,1), width .45s cubic-bezier(.7,0,.2,1);
+  }
+
+  /* Split text helpers */
+  .splitw { display: inline-block; overflow: hidden; vertical-align: bottom; }
+  .splitw > span { display: inline-block; transform: translateY(110%); will-change: transform; }
+  .splitline { display:block; overflow:hidden; }
+  .splitline > span { display:block; transform: translateY(110%); will-change: transform; }
+
+  /* Hero ambient scroll bob */
+  @keyframes bob { 0%,100%{ transform: translateY(0) } 50% { transform: translateY(6px) } }
+  .bob { animation: bob 2.4s ease-in-out infinite; }
+
+  /* Mobile overlay */
+  .menu-overlay { transform: translateY(-100%); transition: transform .55s cubic-bezier(.6,.05,.2,1); }
+  .menu-overlay.open { transform: translateY(0); }
+
+  /* Nav defaults */
+  #nav { transition: transform .5s cubic-bezier(.6,.05,.2,1); }
+  #nav.hide { transform: translateY(-110%); }
+
+  /* Pinned horizontal section */
+  .h-track { display: flex; height: 100vh; }
+  .h-panel {
+    flex: 0 0 100vw; height: 100vh; display:flex; align-items:center; justify-content:center; padding: 0 8vw;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .15s !important; }
+    .preloader { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="preloader" class="preloader" aria-hidden="true">
+  <div class="pre-wm" id="preWm"></div>
+  <div class="pre-line" id="preLine"></div>
+</div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+
+<!-- Scroll progress -->
+<div class="progress" id="progress"></div>
+
+<!-- Page grain -->
+<div class="grain-overlay" aria-hidden="true"></div>
+
+<!-- ───────────── NAV ───────────── -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50 -translate-y-full">
+  <div id="nav-bg" class="absolute inset-0 -z-10 transition-all duration-300" style="background: transparent;"></div>
+  <div id="nav-line" class="absolute bottom-0 left-0 right-0 h-px transition-colors duration-300" style="background: transparent;"></div>
+
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 flex items-center justify-between transition-[height] duration-300" id="navInner" style="height:84px;">
+    <a href="#top" class="font-serif text-[17px] tracking-[.04em] text-charcoal interactive">The&nbsp;Terminal</a>
+
+    <nav class="hidden md:flex items-center gap-9 text-[14px] text-charcoal/85">
+      <a class="ulink interactive" href="#menu">Menu</a>
+      <a class="ulink interactive" href="#story">Story</a>
+      <a class="ulink interactive" href="#visit">Visit</a>
+      <a class="ulink interactive" href="#reserve">Reserve</a>
+    </nav>
+
+    <a href="#reserve" class="hidden md:inline-flex btn-brass interactive !py-2.5 !px-5 !text-[11px]">Reserve</a>
+
+    <button id="burger" class="md:hidden p-2 text-charcoal interactive" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h18M3 17h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile overlay -->
+<div id="overlay" class="menu-overlay fixed inset-0 z-[60] bg-bone md:hidden flex flex-col">
+  <div class="flex items-center justify-between px-6 h-[84px]">
+    <span class="font-serif text-[17px] tracking-[.04em]">The&nbsp;Terminal</span>
+    <button id="closeMenu" class="p-2 text-charcoal" aria-label="Close menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M6 18L18 6"/></svg>
+    </button>
+  </div>
+  <nav class="flex-1 flex flex-col items-center justify-center gap-8 font-serif text-4xl text-charcoal" id="overlayNav">
+    <a class="ov-link opacity-0" href="#menu">Menu</a>
+    <a class="ov-link opacity-0" href="#story">Story</a>
+    <a class="ov-link opacity-0" href="#visit">Visit</a>
+    <a class="ov-link opacity-0" href="#reserve">Reserve</a>
+  </nav>
+  <div class="p-6"><a href="#reserve" class="btn-brass w-full">Reserve a table</a></div>
+</div>
+
+<main id="top">
+
+<!-- ───────────── HERO ───────────── -->
+<section class="min-h-[100svh] pt-[130px] pb-24 px-6 lg:px-10 relative overflow-hidden">
+  <div class="max-w-[1320px] mx-auto grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+
+    <!-- LEFT -->
+    <div class="lg:col-span-7 relative z-10">
+      <div id="heroLabel" class="font-mono text-[11px] tracking-[.32em] text-brass uppercase opacity-0">
+        Est. 2024 — Cafe &amp; European Kitchen
+      </div>
+
+      <h1 id="heroHead" class="font-serif text-charcoal mt-7 lg:mt-9 leading-[0.95] tracking-[-0.01em]"
+          style="font-size: clamp(3rem, 8vw, 7rem); font-weight:400;">
+        <span class="block" id="heroLine1"></span>
+        <span class="block italic font-light" id="heroLine2" style="font-variation-settings:'opsz' 144; position:relative;"></span>
+      </h1>
+
+      <p id="heroBody" class="mt-10 max-w-[46ch] text-[17px] leading-relaxed text-charcoal/75 opacity-0">
+        A small café serving European classics, single-origin coffee, and unhurried mornings — set inside the bones of an old freight station.
+      </p>
+
+      <div id="heroCtas" class="mt-9 flex flex-wrap items-center gap-8 text-[15px] opacity-0">
+        <a href="#menu" class="ulink interactive text-charcoal">View Menu&nbsp;→</a>
+        <a href="#reserve" class="ulink interactive text-charcoal">Reserve a table</a>
+      </div>
+    </div>
+
+    <!-- RIGHT — Three.js canvas -->
+    <div class="lg:col-span-5 relative">
+      <div id="three-wrap" class="relative w-full aspect-square max-w-[560px] ml-auto">
+        <canvas id="three-canvas" class="absolute inset-0 w-full h-full"></canvas>
+        <!-- Fallback SVG (hidden if Three.js mounts) -->
+        <svg id="threeFallback" viewBox="0 0 200 200" class="absolute inset-0 w-full h-full text-brass/80" style="display:none;">
+          <g fill="currentColor">
+            <path d="M100 30 l8 14 16-4 4 16 14 8 -4 16 12 12 -12 12 4 16 -14 8 -4 16 -16-4 -8 14 -8-14 -16 4 -4-16 -14-8 4-16 -12-12 12-12 -4-16 14-8 4-16 16 4z"/>
+          </g>
+          <circle cx="100" cy="100" r="22" fill="#F5F0E6"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ambient scroll label -->
+  <a href="#story" class="absolute bottom-8 left-6 lg:left-10 text-charcoal/45 interactive">
+    <div class="bob flex items-center gap-3">
+      <span class="font-mono text-[10px] tracking-[.32em] uppercase">Scroll</span>
+      <span class="w-10 h-px bg-charcoal/30"></span>
+    </div>
+  </a>
+</section>
+
+<!-- ───────────── 01 / STORY ───────────── -->
+<section id="story" class="px-6 lg:px-10 py-32 lg:py-44">
+  <div class="max-w-[1320px] mx-auto">
+
+    <div class="flex items-center gap-5 reveal-num">
+      <span class="font-mono text-[11px] tracking-[.32em] uppercase text-taupe">01 / Story</span>
+      <span class="h-px bg-brass num-line" style="width:0;"></span>
+    </div>
+
+    <div class="mt-16 lg:mt-24 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-6">
+        <h2 class="font-serif text-charcoal leading-[1.05] tracking-[-0.01em] split-lines"
+            style="font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight:400;">
+          <span class="splitline"><span>Built inside an old</span></span>
+          <span class="splitline"><span class="italic font-light">freight house.</span></span>
+        </h2>
+
+        <div class="mt-8 space-y-5 text-[17px] leading-relaxed text-charcoal/80 max-w-[52ch] split-lines">
+          <p class="splitline"><span>The Terminal occupies a small brick building at the end of</span></p>
+          <p class="splitline"><span>a forgotten railway line — once used to stage parcels for the</span></p>
+          <p class="splitline"><span>morning train, now used to stage espresso and breakfast plates.</span></p>
+          <p class="splitline mt-5"><span>We borrow from the slowness of the old timetable. Our menu</span></p>
+          <p class="splitline"><span>is short, our hours are kept, and the coffee is pulled by hand.</span></p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6">
+        <div class="plate plate-hover grain aspect-[5/6] story-plate" style="clip-path: inset(100% 0 0 0);">
+          <div class="img"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80" alt="Warmly lit café interior."/></div>
+        </div>
+      </div>
+    </div>
+
+    <figure class="mt-28 lg:mt-36 max-w-[62ch] mx-auto text-center relative">
+      <span id="qmark" class="absolute -left-6 lg:-left-12 -top-6 font-serif italic text-brass text-7xl leading-none" style="opacity:0; transform: scale(.4);">"</span>
+      <blockquote class="font-serif italic font-light text-charcoal leading-[1.2] split-lines"
+                  style="font-size: clamp(1.6rem, 3.4vw, 2.5rem);">
+        <span class="splitline"><span>“We wanted a room that felt like a long Sunday —</span></span>
+        <span class="splitline"><span>measured, generous, in no hurry to be anywhere else.”</span></span>
+      </blockquote>
+      <figcaption class="mt-8 font-mono text-[11px] tracking-[.32em] uppercase text-taupe opacity-0 reveal-fade">— M. Kovács, Chef</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ───────────── 02 / MENU ───────────── -->
+<section id="menu" class="px-6 lg:px-10 py-32 lg:py-44">
+  <div class="max-w-[1320px] mx-auto">
+
+    <div class="flex items-end justify-between flex-wrap gap-6">
+      <div>
+        <div class="flex items-center gap-5 reveal-num">
+          <span class="font-mono text-[11px] tracking-[.32em] uppercase text-taupe">02 / Menu</span>
+          <span class="h-px bg-brass num-line" style="width:0;"></span>
+        </div>
+        <h2 class="font-serif text-charcoal mt-6 leading-[1.05] tracking-[-0.01em] split-lines"
+            style="font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight:400;">
+          <span class="splitline"><span>Selected dishes.</span></span>
+        </h2>
+      </div>
+
+      <div id="filters" class="relative flex flex-wrap gap-7 font-sans pb-3">
+        <button class="tab active interactive" data-filter="all">All</button>
+        <button class="tab interactive" data-filter="breakfast">Breakfast</button>
+        <button class="tab interactive" data-filter="mains">Mains</button>
+        <button class="tab interactive" data-filter="desserts">Desserts</button>
+        <button class="tab interactive" data-filter="coffee">Coffee</button>
+        <span id="tabUL" class="tab-underline" style="left:0; width:24px;"></span>
+      </div>
+    </div>
+
+    <div class="mt-14 grid lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-8" id="menuList"></div>
+
+      <aside class="lg:col-span-4 hidden lg:flex flex-col gap-12 pt-14 menu-side">
+        <div class="plate plate-hover grain aspect-[4/5] side-plate" data-speed="0.08">
+          <div class="img"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80" alt="Plated breakfast."/></div>
+        </div>
+        <div class="plate plate-hover grain aspect-square side-plate ml-10" data-speed="0.14">
+          <div class="img"><img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=900&q=80" alt="Cup of coffee."/></div>
+        </div>
+        <div class="plate plate-hover grain aspect-[4/5] side-plate" data-speed="0.06">
+          <div class="img"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=80" alt="Slice of chocolate cake."/></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── 03 / SPACE ───────────── -->
+<section id="space" class="px-6 lg:px-10 py-32 lg:py-44">
+  <div class="max-w-[1320px] mx-auto">
+    <div class="flex items-center gap-5 reveal-num">
+      <span class="font-mono text-[11px] tracking-[.32em] uppercase text-taupe">03 / Space</span>
+      <span class="h-px bg-brass num-line" style="width:0;"></span>
+    </div>
+    <h2 class="font-serif text-charcoal mt-6 leading-[1.05] tracking-[-0.01em] split-lines"
+        style="font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight:400;">
+      <span class="splitline"><span>Inside.</span></span>
+    </h2>
+
+    <div class="mt-14 grid grid-cols-6 grid-rows-[260px_260px] md:grid-rows-[340px_340px] gap-3 md:gap-5">
+      <div class="col-span-6 md:col-span-4 row-span-2 plate plate-hover grain space-plate" data-speed="0.05">
+        <div class="img"><img src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1600&q=80" alt="Long communal table by window."/></div>
+      </div>
+      <div class="col-span-3 md:col-span-2 plate plate-hover grain space-plate" data-speed="0.10">
+        <div class="img"><img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=900&q=80" alt="Hanging pendant lamp."/></div>
+      </div>
+      <div class="col-span-3 md:col-span-2 plate plate-hover grain space-plate" data-speed="0.14">
+        <div class="img"><img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=900&q=80" alt="A loaf of bread on linen."/></div>
+      </div>
+    </div>
+
+    <p class="mt-10 font-mono text-[12px] tracking-[.2em] uppercase text-taupe max-w-[60ch] opacity-0 reveal-fade">
+      <span class="text-charcoal">— Forty-eight seats.</span> Reclaimed oak, lime-washed brick, two skylights and a single brass lamp from the original station office.
+    </p>
+  </div>
+</section>
+
+<!-- ───────────── HORIZONTAL SCROLL ───────────── -->
+<section id="hScroll" class="relative">
+  <!-- Desktop pinned -->
+  <div class="hidden md:block">
+    <div id="hOuter" class="relative">
+      <div id="hTrack" class="h-track">
+        <!-- 4 panels -->
+        <div class="h-panel">
+          <div class="grid grid-cols-12 gap-10 w-full max-w-[1320px] items-center">
+            <div class="col-span-7">
+              <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">— Pace · 01</div>
+              <div class="font-serif text-charcoal leading-[.95] mt-6" style="font-size: clamp(4rem, 12vw, 12rem); font-weight:400;">Slow.</div>
+              <p class="mt-8 max-w-[44ch] text-[17px] text-charcoal/70 leading-relaxed">Service moves at the pace of the room. Coffee is pulled the moment it's ordered, never before.</p>
+            </div>
+            <div class="col-span-5">
+              <div class="plate grain aspect-[4/5] max-w-[440px] ml-auto">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1100&q=80" alt="Pour-over coffee."/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-panel">
+          <div class="grid grid-cols-12 gap-10 w-full max-w-[1320px] items-center">
+            <div class="col-span-5">
+              <div class="plate grain aspect-square max-w-[440px]">
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1100&q=80" alt="Plated breakfast."/>
+              </div>
+            </div>
+            <div class="col-span-7">
+              <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">— Craft · 02</div>
+              <div class="font-serif text-charcoal leading-[.95] mt-6 italic font-light" style="font-size: clamp(4rem, 12vw, 12rem); font-weight:300;">Considered.</div>
+              <p class="mt-8 max-w-[44ch] text-[17px] text-charcoal/70 leading-relaxed">Short menu, long memory. Each dish is one chef's argument for one way of doing it well.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-panel">
+          <div class="grid grid-cols-12 gap-10 w-full max-w-[1320px] items-center">
+            <div class="col-span-7">
+              <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">— Room · 03</div>
+              <div class="font-serif text-charcoal leading-[.95] mt-6" style="font-size: clamp(4rem, 12vw, 12rem); font-weight:400;">Warm.</div>
+              <p class="mt-8 max-w-[44ch] text-[17px] text-charcoal/70 leading-relaxed">Reclaimed oak, lime-washed brick, two skylights. A single brass lamp from the original station office.</p>
+            </div>
+            <div class="col-span-5">
+              <div class="plate grain aspect-[4/5] max-w-[440px] ml-auto">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1100&q=80" alt="Warm pendant light."/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-panel">
+          <div class="grid grid-cols-12 gap-10 w-full max-w-[1320px] items-center">
+            <div class="col-span-5">
+              <div class="plate grain aspect-square max-w-[440px]">
+                <img src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1100&q=80" alt="Table by the window."/>
+              </div>
+            </div>
+            <div class="col-span-7">
+              <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">— Table · 04</div>
+              <div class="font-serif text-charcoal leading-[.95] mt-6 italic font-light" style="font-size: clamp(4rem, 12vw, 12rem); font-weight:300;">Yours.</div>
+              <p class="mt-8 max-w-[44ch] text-[17px] text-charcoal/70 leading-relaxed">Forty-eight seats, a long communal table, and the right window for a long afternoon.</p>
+              <a href="#reserve" class="ulink interactive inline-block mt-8 text-charcoal text-[15px]">Reserve a table&nbsp;→</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile fallback: stacked -->
+  <div class="md:hidden flex flex-col gap-24 py-24 px-6">
+    <div>
+      <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">— Pace · 01</div>
+      <div class="font-serif text-charcoal leading-[.95] mt-4" style="font-size: clamp(3rem, 18vw, 6rem); font-weight:400;">Slow.</div>
+      <p class="mt-6 text-[16px] text-charcoal/70 leading-relaxed">Service moves at the pace of the room. Coffee is pulled the moment it's ordered.</p>
+    </div>
+    <div>
+      <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">— Craft · 02</div>
+      <div class="font-serif italic font-light text-charcoal leading-[.95] mt-4" style="font-size: clamp(3rem, 18vw, 6rem);">Considered.</div>
+      <p class="mt-6 text-[16px] text-charcoal/70 leading-relaxed">Short menu, long memory. Each dish is one chef's argument for one way.</p>
+    </div>
+    <div>
+      <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">— Room · 03</div>
+      <div class="font-serif text-charcoal leading-[.95] mt-4" style="font-size: clamp(3rem, 18vw, 6rem); font-weight:400;">Warm.</div>
+      <p class="mt-6 text-[16px] text-charcoal/70 leading-relaxed">Reclaimed oak, lime-washed brick, two skylights and a single brass lamp.</p>
+    </div>
+    <div>
+      <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">— Table · 04</div>
+      <div class="font-serif italic font-light text-charcoal leading-[.95] mt-4" style="font-size: clamp(3rem, 18vw, 6rem);">Yours.</div>
+      <p class="mt-6 text-[16px] text-charcoal/70 leading-relaxed">Forty-eight seats, a long table, the right window for the afternoon.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── DETAILS STRIP (dark) ───────────── -->
+<section id="details" class="px-6 lg:px-10 py-32 lg:py-44 text-bone" style="background:#F5F0E6;">
+  <div class="max-w-[1320px] mx-auto grid md:grid-cols-3 gap-14">
+    <div class="det-item">
+      <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">
+        <span class="count" data-target="01">00</span>
+      </div>
+      <h3 class="font-serif mt-6 leading-[1.1]" style="font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight:400;">European-leaning menu.</h3>
+      <p class="mt-5 text-bone/65 leading-relaxed max-w-[34ch]">Vienna, Lyon and Budapest, by way of a short kitchen with long memory.</p>
+    </div>
+    <div class="det-item">
+      <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">
+        <span class="count" data-target="02">00</span>
+      </div>
+      <h3 class="font-serif mt-6 leading-[1.1]" style="font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight:400;">Single-origin coffee.</h3>
+      <p class="mt-5 text-bone/65 leading-relaxed max-w-[34ch]">Roasted weekly in small batches; pulled on a lever machine that's older than most of the staff.</p>
+    </div>
+    <div class="det-item">
+      <div class="font-mono text-[11px] tracking-[.32em] uppercase text-brass">
+        <span class="count" data-target="03">00</span>
+      </div>
+      <h3 class="font-serif mt-6 leading-[1.1]" style="font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight:400;">Open daily, 7am–11pm.</h3>
+      <p class="mt-5 text-bone/65 leading-relaxed max-w-[34ch]">Same hours every day. Slow mornings, lingering evenings, a kitchen that doesn't rush.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── 04 / VISIT ───────────── -->
+<section id="visit" class="px-6 lg:px-10 py-32 lg:py-44">
+  <div class="max-w-[1320px] mx-auto">
+    <div class="flex items-center gap-5 reveal-num">
+      <span class="font-mono text-[11px] tracking-[.32em] uppercase text-taupe">04 / Visit</span>
+      <span class="h-px bg-brass num-line" style="width:0;"></span>
+    </div>
+    <h2 class="font-serif text-charcoal mt-6 leading-[1.05] tracking-[-0.01em] split-lines"
+        style="font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight:400;">
+      <span class="splitline"><span>Find us.</span></span>
+    </h2>
+
+    <div class="mt-14 grid lg:grid-cols-12 gap-12 lg:gap-16">
+      <div class="lg:col-span-5 space-y-10 visit-text">
+        <div>
+          <div class="font-mono text-[11px] tracking-[.32em] uppercase text-taupe">Address</div>
+          <p class="mt-3 text-charcoal text-[17px] leading-relaxed">47 Old Freight Lane<br/>Quarter 3, District One</p>
+        </div>
+
+        <div>
+          <div class="font-mono text-[11px] tracking-[.32em] uppercase text-taupe">Hours</div>
+          <dl class="mt-3 font-mono text-[14px] text-charcoal grid grid-cols-[auto_1fr] gap-x-10 gap-y-2">
+            <dt class="text-charcoal/70">Mon–Wed</dt><dd class="type-row" data-text="07:00 — 22:00"></dd>
+            <dt class="text-charcoal/70">Thursday</dt><dd class="type-row" data-text="07:00 — 23:00"></dd>
+            <dt class="text-charcoal/70">Friday</dt><dd class="type-row" data-text="07:00 — 00:00"></dd>
+            <dt class="text-charcoal/70">Saturday</dt><dd class="type-row" data-text="08:00 — 00:00"></dd>
+            <dt class="text-charcoal/70">Sunday</dt><dd class="type-row" data-text="08:00 — 21:00"></dd>
+          </dl>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8">
+          <div>
+            <div class="font-mono text-[11px] tracking-[.32em] uppercase text-taupe">Phone</div>
+            <a href="tel:+842855120924" class="ulink interactive mt-3 inline-block text-charcoal">+84 28 5512 0924</a>
+          </div>
+          <div>
+            <div class="font-mono text-[11px] tracking-[.32em] uppercase text-taupe">Email</div>
+            <a href="mailto:hello@theterminal.cafe" class="ulink interactive mt-3 inline-block text-charcoal">hello@theterminal.cafe</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="plate grain aspect-[5/4] map-plate" style="filter: saturate(.1) brightness(1.05);">
+          <div class="img"><img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=80" alt="Map of the district."/></div>
+          <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+            <svg width="20" height="26" viewBox="0 0 20 26" fill="none"><path d="M10 1c-4 0-7 3-7 7 0 6 7 17 7 17s7-11 7-17c0-4-3-7-7-7z" fill="#B8893E" stroke="#1F1F1F" stroke-width="1"/><circle cx="10" cy="8" r="2.5" fill="#1F1F1F"/></svg>
+            <span class="mt-2 font-mono text-[10px] tracking-[.3em] uppercase text-charcoal bg-bone/85 px-2 py-1">The Terminal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── RESERVATION ───────────── -->
+<section id="reserve" class="px-6 lg:px-10 py-32 lg:py-44">
+  <div class="max-w-[720px] mx-auto text-center">
+    <div class="flex items-center justify-center gap-5 reveal-num">
+      <span class="h-px bg-brass num-line" style="width:0;"></span>
+      <span class="font-mono text-[11px] tracking-[.32em] uppercase text-taupe">05 / Reserve</span>
+      <span class="h-px bg-brass num-line" style="width:0;"></span>
+    </div>
+    <h2 class="font-serif italic font-light text-charcoal mt-6 leading-[1.05] tracking-[-0.01em] split-lines"
+        style="font-size: clamp(2.25rem, 5vw, 3.75rem); font-weight:300;">
+      <span class="splitline"><span>Reserve a table.</span></span>
+    </h2>
+    <p class="mt-5 text-charcoal/70 max-w-[48ch] mx-auto opacity-0 reveal-fade">
+      A short form. We'll write back within the day to confirm your seat.
+    </p>
+  </div>
+
+  <form id="resForm" class="max-w-[640px] mx-auto mt-16" novalidate>
+    <div class="grid sm:grid-cols-2 gap-x-10 gap-y-9">
+      <div class="field sm:col-span-2">
+        <input type="text" id="f-name" required>
+        <label for="f-name">Name</label>
+      </div>
+      <div class="field">
+        <input type="date" id="f-date" required>
+        <label for="f-date" class="opacity-0">Date</label>
+      </div>
+      <div class="field">
+        <input type="time" id="f-time" value="19:00" required>
+        <label for="f-time" class="opacity-0">Time</label>
+      </div>
+      <div class="field">
+        <select id="f-guests">
+          <option>2 guests</option><option>3 guests</option><option>4 guests</option>
+          <option>5 guests</option><option>6 guests</option><option>7+ — private</option>
+        </select>
+        <label for="f-guests" class="opacity-0">Guests</label>
+      </div>
+      <div class="field">
+        <input type="tel" id="f-phone">
+        <label for="f-phone">Phone</label>
+      </div>
+      <div class="field sm:col-span-2">
+        <input type="text" id="f-notes">
+        <label for="f-notes">Notes</label>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col items-center gap-5">
+      <button type="submit" class="btn-brass interactive">Confirm reservation</button>
+      <p id="resOk" class="hidden font-mono text-[12px] tracking-[.2em] uppercase text-brass">— Received. We'll be in touch shortly.</p>
+    </div>
+  </form>
+</section>
+
+<!-- ───────────── FOOTER ───────────── -->
+<footer class="bg-charcoal text-bone pt-32 pb-10 px-6 lg:px-10">
+  <div class="max-w-[1320px] mx-auto">
+
+    <div class="overflow-hidden">
+      <div id="footWm" class="font-serif text-bone leading-none tracking-[-0.02em]"
+           style="font-size: clamp(4rem, 14vw, 12rem); font-weight:400; transform: translateY(100%);">
+        The&nbsp;Terminal
+      </div>
+    </div>
+
+    <div class="mt-20 grid md:grid-cols-3 gap-14 foot-cols">
+      <div>
+        <div class="font-mono text-[11px] tracking-[.32em] uppercase text-bone/55">Address</div>
+        <p class="mt-4 leading-relaxed text-bone/85">47 Old Freight Lane<br/>Quarter 3, District One</p>
+      </div>
+      <div>
+        <div class="font-mono text-[11px] tracking-[.32em] uppercase text-bone/55">Hours</div>
+        <p class="mt-4 leading-relaxed text-bone/85 font-mono text-[14px]">
+          Mon–Wed&nbsp;&nbsp;07:00–22:00<br/>
+          Thursday&nbsp;&nbsp;&nbsp;&nbsp;07:00–23:00<br/>
+          Fri–Sat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;07:00–00:00<br/>
+          Sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;08:00–21:00
+        </p>
+      </div>
+      <div>
+        <div class="font-mono text-[11px] tracking-[.32em] uppercase text-bone/55">Follow</div>
+        <ul class="mt-4 space-y-2 text-bone/85">
+          <li><a href="#" class="ulink interactive">Instagram</a></li>
+          <li><a href="#" class="ulink interactive">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <form class="mt-20 max-w-[560px]" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('.nl-ok').classList.remove('hidden');">
+      <div class="font-mono text-[11px] tracking-[.32em] uppercase text-bone/55">Occasional dispatches</div>
+      <div class="mt-4 flex items-center gap-5 border-b border-bone/30 pb-3">
+        <input type="email" required placeholder="Your email" class="flex-1 bg-transparent outline-none text-bone placeholder:text-bone/35 py-2"/>
+        <button class="ulink interactive text-bone text-[14px]" type="submit">Subscribe</button>
+      </div>
+      <p class="nl-ok hidden mt-4 font-mono text-[11px] tracking-[.32em] uppercase text-brass">— Thank you. We'll write occasionally.</p>
+    </form>
+
+    <div class="mt-24 pt-6 border-t border-brass/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 font-mono text-[11px] tracking-[.32em] uppercase text-bone/55">
+      <div>© 2024 The Terminal</div>
+      <div>All journeys reserved.</div>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<!-- ═════════════ SCRIPTS ═════════════ -->
+<script type="module">
+import * as THREE from 'three';
+window.__THREE = THREE;
+</script>
+
+<script>
+/* ───── Helpers ───── */
+const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IS_TOUCH = matchMedia('(pointer: coarse)').matches;
+
+/* ───── Custom cursor ───── */
+(function cursor(){
+  if (IS_TOUCH) return;
+  const dot = document.getElementById('cur'), ring = document.getElementById('curR');
+  let x=0,y=0,rx=0,ry=0;
+  window.addEventListener('mousemove', e => { x = e.clientX; y = e.clientY; dot.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`; });
+  function loop(){ rx += (x-rx)*.18; ry += (y-ry)*.18; ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }
+  loop();
+  document.addEventListener('mouseover', e => { if (e.target.closest('.interactive, a, button')) document.body.classList.add('cur-hover'); });
+  document.addEventListener('mouseout',  e => { if (e.target.closest('.interactive, a, button')) document.body.classList.remove('cur-hover'); });
+})();
+
+/* ───── Preloader ───── */
+(function preloader(){
+  const wm = document.getElementById('preWm');
+  const word = 'THE TERMINAL';
+  wm.innerHTML = word.split('').map(c => `<span>${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+  const letters = wm.querySelectorAll('span');
+  const line = document.getElementById('preLine');
+  const tl = gsap.timeline({ onComplete(){ document.getElementById('preloader').remove(); kickOffEntrance(); }});
+  tl.to(letters, { opacity:1, y:0, duration:.7, ease:'power3.out', stagger:.05 })
+    .to(line, { width: '180px', duration:.6, ease:'power2.out' }, '-=.25')
+    .to('#preloader', { opacity:0, duration:.5, ease:'power2.inOut', delay:.25 })
+    .to('#preloader', { clipPath:'inset(100% 0 0 0)', duration:.7, ease:'power3.inOut' }, '-=.45');
+})();
+
+/* ───── Hero entrance (after preloader) ───── */
+function splitWordsInto(el, html){
+  el.innerHTML = html.split(' ').map(w => `<span class="splitw"><span>${w}&nbsp;</span></span>`).join('');
+}
+function kickOffEntrance(){
+  splitWordsInto(document.getElementById('heroLine1'), 'A quiet stop');
+  splitWordsInto(document.getElementById('heroLine2'), 'between journeys.');
+
+  const l1 = document.querySelectorAll('#heroLine1 .splitw > span');
+  const l2 = document.querySelectorAll('#heroLine2 .splitw > span');
+
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' }});
+  tl.to('#nav', { y:0, duration:.7 })
+    .to('#heroLabel', { opacity:1, y:0, duration:.7 }, 0.05)
+    .to(l1, { y: 0, duration: 1.0, stagger: .08 }, '-=.45')
+    .to(l2, { y: 0, duration: 1.0, stagger: .08 }, '-=.6')
+    .fromTo('#heroLine2', { '--ul':0 }, { '--ul':1, duration:.7, ease:'power2.out', onUpdate(){
+      const p = this.targets()[0]; const v = gsap.getProperty(p,'--ul');
+      let bar = p.querySelector('.brassBar');
+      if (!bar){ bar = document.createElement('span'); bar.className='brassBar'; bar.style.cssText='position:absolute;left:0;bottom:-.05em;height:2px;background:#B8893E;'; p.appendChild(bar); }
+      bar.style.width = (v*100) + '%';
+    }}, '-=.4')
+    .to('#heroBody', { opacity:1, duration:.7 }, '-=.55')
+    .to('#heroCtas', { opacity:1, duration:.7 }, '-=.5');
+}
+
+/* ───── Lenis smooth scroll ───── */
+const lenis = new Lenis({
+  duration: 1.15,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  lerp: 0.08,
+  smoothTouch: false,
+});
+function raf(t){ lenis.raf(t); requestAnimationFrame(raf); } requestAnimationFrame(raf);
+
+gsap.registerPlugin(ScrollTrigger);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
+/* anchor scrolling via Lenis */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href'); if (id.length < 2) return;
+    const el = document.querySelector(id); if (!el) return;
+    e.preventDefault(); lenis.scrollTo(el, { offset: -60, duration: 1.4 });
+  });
+});
+
+/* ───── Scroll progress line ───── */
+const progress = document.getElementById('progress');
+ScrollTrigger.create({
+  start: 0, end: 'max',
+  onUpdate: self => progress.style.width = (self.progress * 100) + '%'
+});
+
+/* ───── Nav scroll behavior ───── */
+const navBg = document.getElementById('nav-bg');
+const navLine = document.getElementById('nav-line');
+const navInner = document.getElementById('navInner');
+const nav = document.getElementById('nav');
+let lastY = 0;
+ScrollTrigger.create({
+  start: 0, end: 'max',
+  onUpdate(self){
+    const y = self.scroll();
+    if (y > 30) { navBg.style.background = 'rgba(245,240,230,.92)'; navBg.style.backdropFilter = 'blur(10px)'; navLine.style.background = 'rgba(31,31,31,.12)'; navInner.style.height='64px'; }
+    else { navBg.style.background = 'transparent'; navBg.style.backdropFilter = 'blur(0px)'; navLine.style.background = 'transparent'; navInner.style.height='84px'; }
+    if (y > lastY + 6 && y > 200) nav.classList.add('hide');
+    else if (y < lastY - 6) nav.classList.remove('hide');
+    lastY = y;
+  }
+});
+
+/* ───── Mobile overlay menu ───── */
+const overlay = document.getElementById('overlay');
+document.getElementById('burger').onclick = () => {
+  overlay.classList.add('open');
+  gsap.to('.ov-link', { opacity:1, y:0, duration:.6, stagger:.07, ease:'power3.out' });
+  gsap.fromTo('.ov-link', { y: 30 }, { y:0 });
+};
+document.getElementById('closeMenu').onclick = () => overlay.classList.remove('open');
+document.getElementById('overlayNav').addEventListener('click', e => {
+  if (e.target.tagName === 'A') overlay.classList.remove('open');
+});
+
+/* ───── Section number lines (scrubbed) ───── */
+document.querySelectorAll('.reveal-num').forEach(g => {
+  const line = g.querySelector('.num-line');
+  gsap.to(line, {
+    width: '80px', ease: 'none',
+    scrollTrigger: { trigger: g, start: 'top 85%', end: 'top 60%', scrub: .5 }
+  });
+});
+
+/* ───── Split-lines reveal ───── */
+document.querySelectorAll('.split-lines').forEach(group => {
+  const lines = group.querySelectorAll('.splitline > span');
+  gsap.to(lines, {
+    y: 0, duration: 1.1, ease: 'power3.out', stagger: .09,
+    scrollTrigger: { trigger: group, start: 'top 85%', once: true }
+  });
+});
+
+/* ───── Generic opacity-fade reveal ───── */
+document.querySelectorAll('.reveal-fade').forEach(el => {
+  gsap.to(el, {
+    opacity:1, y: 0, duration: .9, ease:'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+  });
+});
+
+/* ───── Story plate reveal + parallax + quote mark ───── */
+gsap.to('.story-plate', {
+  clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease: 'power3.out',
+  scrollTrigger: { trigger: '.story-plate', start: 'top 85%', once: true }
+});
+gsap.to('.story-plate .img', {
+  scale: 1, duration: 1.4, ease:'power2.out',
+  scrollTrigger: { trigger: '.story-plate', start: 'top 85%', once: true }
+});
+gsap.to('.story-plate img', {
+  yPercent: -8, ease: 'none',
+  scrollTrigger: { trigger: '.story-plate', start: 'top bottom', end: 'bottom top', scrub: true }
+});
+gsap.to('#qmark', {
+  opacity: 1, scale: 1, duration: 1.1, ease:'power3.out',
+  scrollTrigger: { trigger: '#qmark', start: 'top 85%', once: true }
+});
+
+/* ───── Menu list row reveal ───── */
+function observeMenuRows(){
+  const rio = new IntersectionObserver((es) => {
+    es.forEach((e,i) => { if (e.isIntersecting){ setTimeout(()=> e.target.classList.add('in'), i*60); rio.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.row-menu').forEach(r => rio.observe(r));
+}
+
+/* ───── Side plates parallax + tilt on enter ───── */
+ScrollTrigger.batch('.side-plate, .space-plate, .map-plate', {
+  onEnter: (els) => gsap.fromTo(els, { clipPath:'inset(100% 0 0 0)', scale:1.15 }, { clipPath:'inset(0% 0 0 0)', scale:1, duration: 1.2, ease:'power3.out', stagger:.12 }),
+  start: 'top 88%', once: true
+});
+document.querySelectorAll('.side-plate, .space-plate').forEach(el => {
+  const speed = parseFloat(el.dataset.speed || '.08');
+  gsap.to(el.querySelector('img'), {
+    yPercent: -10 - speed*40, ease: 'none',
+    scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+});
+gsap.to('.map-plate', {
+  filter: 'saturate(1) brightness(1)', duration: 1.6, ease:'power2.out',
+  scrollTrigger: { trigger: '.map-plate', start: 'top 80%', once: true }
+});
+
+/* ───── Tabs underline morph ───── */
+const filters = document.getElementById('filters');
+const tabUL = document.getElementById('tabUL');
+function moveUL(el){
+  const r = el.getBoundingClientRect();
+  const pr = filters.getBoundingClientRect();
+  gsap.to(tabUL, { left: r.left - pr.left, width: r.width, duration:.45, ease:'power2.inOut' });
+}
+function activeTab(){ return filters.querySelector('.tab.active'); }
+window.addEventListener('load', () => moveUL(activeTab()));
+window.addEventListener('resize', () => moveUL(activeTab()));
+
+/* ───── Menu data + render ───── */
+const MENU = [
+  { cat:'breakfast', name:'House croissant set',     desc:'Lacquered croissant, soft-boiled egg, apricot jam.',                price:'9'  },
+  { cat:'breakfast', name:'Conductor\'s plate',      desc:'Two eggs, smoked sausage, brioche soldiers, paprika butter.',        price:'12' },
+  { cat:'mains',     name:'Wiener schnitzel',        desc:'Veal cutlet, golden bread crumb, lemon, lingonberry.',              price:'24' },
+  { cat:'mains',     name:'Hungarian goulash',       desc:'Slow-braised beef, sweet paprika, smoked tomato, soft dumplings.',  price:'19' },
+  { cat:'mains',     name:'Duck confit du Lyon',     desc:'Twelve-hour leg of duck, white-bean cassoulet.',                    price:'27' },
+  { cat:'desserts',  name:'Sachertorte',             desc:'Dark chocolate sponge, apricot, glassy ganache, soft cream.',       price:'10' },
+  { cat:'desserts',  name:'Crème brûlée',            desc:'Madagascar vanilla custard, hand-torched amber sugar.',             price:'9'  },
+  { cat:'coffee',    name:'Single-origin pour-over', desc:'Rotating weekly. Ask the bar for today\'s lot.',                    price:'5'  },
+  { cat:'coffee',    name:'Lever espresso',          desc:'House blend, pulled on the brass machine. Chocolate, burnt orange.', price:'4'  },
+  { cat:'coffee',    name:'Vienna mélange',          desc:'Espresso, steamed milk, a thumbprint of foam.',                     price:'5'  },
+];
+const list = document.getElementById('menuList');
+function renderMenu(cat='all'){
+  const items = (cat === 'all') ? MENU : MENU.filter(m => m.cat === cat);
+  list.innerHTML = items.map(m => `
+    <div class="row-menu interactive" data-cat="${m.cat}">
+      <div class="flex items-baseline min-w-0">
+        <h3 class="name font-serif text-charcoal text-[20px] md:text-[22px] leading-tight font-medium whitespace-nowrap">${m.name}</h3>
+        <span class="leader"></span>
+        <span class="price font-mono text-brass text-[14px] tabular-nums whitespace-nowrap">€${m.price}</span>
+      </div>
+      <p class="desc col-span-2 mt-2 text-taupe text-[15px] leading-relaxed max-w-[60ch]">${m.desc}</p>
+      <span class="row-arrow text-[12px]">→</span>
+    </div>
+  `).join('');
+  observeMenuRows();
+}
+renderMenu();
+
+filters.addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  filters.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  b.classList.add('active');
+  moveUL(b);
+  renderMenu(b.dataset.filter);
+});
+
+/* ───── Horizontal pinned scroll ───── */
+const isDesktop = matchMedia('(min-width: 768px)').matches;
+if (isDesktop && !PREFERS_REDUCED){
+  const track = document.getElementById('hTrack');
+  const outer = document.getElementById('hOuter');
+  const panels = track.querySelectorAll('.h-panel');
+  const dist = (panels.length - 1) * window.innerWidth;
+  gsap.to(track, {
+    x: -dist, ease:'none',
+    scrollTrigger: {
+      trigger: outer, pin: true, scrub: 1,
+      end: () => '+=' + dist, invalidateOnRefresh: true,
+    }
+  });
+  // ambient background hue shift
+  gsap.to('body', {
+    backgroundColor: '#EDE6D6', ease:'none',
+    scrollTrigger: { trigger: outer, start: 'top top', end: () => '+=' + dist, scrub: true, onLeaveBack: ()=> document.body.style.background='#F5F0E6', onLeave: () => document.body.style.background='#F5F0E6' }
+  });
+}
+
+/* ───── Details strip — bone→charcoal background, count up ───── */
+gsap.to('#details', {
+  backgroundColor: '#1F1F1F', color:'#F5F0E6', ease:'none',
+  scrollTrigger: { trigger: '#details', start: 'top 80%', end: 'top 30%', scrub: true }
+});
+document.querySelectorAll('.count').forEach(el => {
+  const target = el.dataset.target;
+  ScrollTrigger.create({
+    trigger: el, start: 'top 80%', once: true,
+    onEnter(){
+      const tn = parseInt(target,10);
+      const obj = { v: 0 };
+      gsap.to(obj, { v: tn, duration: 1.2, ease:'power2.out',
+        onUpdate: () => el.textContent = String(Math.floor(obj.v)).padStart(2,'0') });
+    }
+  });
+});
+gsap.from('.det-item', {
+  y: 30, opacity:0, duration: 1, ease:'power3.out', stagger:.12,
+  scrollTrigger: { trigger:'#details', start:'top 75%', once: true }
+});
+
+/* ───── Typewriter hours rows ───── */
+document.querySelectorAll('.type-row').forEach(row => {
+  const text = row.dataset.text;
+  ScrollTrigger.create({
+    trigger: row, start: 'top 88%', once: true,
+    onEnter(){
+      let i = 0; const t = setInterval(() => {
+        row.textContent = text.slice(0, ++i);
+        if (i >= text.length) clearInterval(t);
+      }, 22);
+    }
+  });
+});
+
+/* ───── Reservation form fields ───── */
+gsap.utils.toArray('.field').forEach((f) => {
+  ScrollTrigger.create({
+    trigger: f, start: 'top 85%', once: true,
+    onEnter(){ setTimeout(()=> f.classList.add('in'), 100); }
+  });
+  const input = f.querySelector('input, select, textarea');
+  if (!input) return;
+  const sync = () => f.classList.toggle('has-value', !!input.value);
+  input.addEventListener('input', sync); input.addEventListener('change', sync); sync();
+});
+document.getElementById('resForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  gsap.fromTo(btn, { scale:1 }, { scale:.96, duration:.12, yoyo:true, repeat:1 });
+  document.getElementById('resOk').classList.remove('hidden');
+});
+
+/* ───── Footer wordmark reveal ───── */
+gsap.to('#footWm', {
+  y: 0, duration: 1.3, ease:'power3.out',
+  scrollTrigger: { trigger: '#footWm', start: 'top 90%', once: true }
+});
+gsap.from('.foot-cols > div', {
+  y: 20, opacity:0, duration: .9, stagger:.1, ease:'power2.out',
+  scrollTrigger: { trigger: '.foot-cols', start: 'top 90%', once: true }
+});
+
+/* ───── Refresh ScrollTrigger after layout/fonts settle ───── */
+window.addEventListener('load', () => setTimeout(()=> ScrollTrigger.refresh(), 200));
+</script>
+
+<!-- ───── Three.js: brass gear assembly ───── -->
+<script type="module">
+import * as THREE from 'three';
+
+const canvas = document.getElementById('three-canvas');
+const wrap   = document.getElementById('three-wrap');
+const fallback = document.getElementById('threeFallback');
+const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+try {
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+  function resize(){
+    const r = wrap.getBoundingClientRect();
+    renderer.setSize(r.width, r.height, false);
+    camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
+  }
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 100);
+  camera.position.set(0, 0, 8);
+
+  // Lights
+  scene.add(new THREE.AmbientLight(0xfff2e0, 0.55));
+  const key = new THREE.DirectionalLight(0xffd9a3, 1.1); key.position.set(3, 4, 5); scene.add(key);
+  const rim = new THREE.DirectionalLight(0x9fb5b8, 0.55); rim.position.set(-4, -1, -3); scene.add(rim);
+
+  // Brass material
+  const brass = new THREE.MeshStandardMaterial({
+    color: 0xB8893E, metalness: 0.85, roughness: 0.38, envMapIntensity: 1.0,
+  });
+  const brassDark = new THREE.MeshStandardMaterial({
+    color: 0x8a6429, metalness: 0.85, roughness: 0.45,
+  });
+
+  // Build a gear: outer ring + N teeth + hub + spokes
+  function makeGear({ radius=1, teeth=18, toothH=0.18, toothW=0.18, thickness=0.22, hub=0.28, spokes=6 }){
+    const g = new THREE.Group();
+    // ring (torus-like)
+    const ringGeo = new THREE.CylinderGeometry(radius, radius, thickness, 64);
+    const innerGeo = new THREE.CylinderGeometry(radius*0.74, radius*0.74, thickness+0.01, 64);
+    const ring = new THREE.Mesh(ringGeo, brass); ring.rotation.x = Math.PI/2;
+    const inner = new THREE.Mesh(innerGeo, brass); inner.rotation.x = Math.PI/2;
+    // teeth
+    for (let i=0; i<teeth; i++){
+      const a = (i / teeth) * Math.PI * 2;
+      const tGeo = new THREE.BoxGeometry(toothW, thickness, toothH);
+      const t = new THREE.Mesh(tGeo, brass);
+      t.position.set(Math.cos(a)*(radius+toothH/2 - 0.02), Math.sin(a)*(radius+toothH/2 - 0.02), 0);
+      t.rotation.z = a;
+      g.add(t);
+    }
+    g.add(ring);
+    // hub
+    const hubGeo = new THREE.CylinderGeometry(hub, hub, thickness*1.4, 32);
+    const hubM = new THREE.Mesh(hubGeo, brassDark); hubM.rotation.x = Math.PI/2;
+    g.add(hubM);
+    // spokes
+    for (let i=0; i<spokes; i++){
+      const a = (i/spokes) * Math.PI * 2;
+      const sGeo = new THREE.BoxGeometry(radius*0.65, thickness*0.55, 0.07);
+      const s = new THREE.Mesh(sGeo, brassDark);
+      s.position.set(Math.cos(a)*radius*0.35, Math.sin(a)*radius*0.35, 0);
+      s.rotation.z = a;
+      g.add(s);
+    }
+    return g;
+  }
+
+  const big = makeGear({ radius: 1.6, teeth: 22, toothH: 0.22, toothW: 0.22, thickness: 0.26, hub: 0.36, spokes: 6 });
+  big.position.set(-0.4, 0.2, 0);
+  scene.add(big);
+
+  const small = makeGear({ radius: 0.9, teeth: 14, toothH: 0.18, toothW: 0.18, thickness: 0.20, hub: 0.24, spokes: 5 });
+  small.position.set(1.55, -1.05, 0.05);
+  scene.add(small);
+
+  // Small accent rivets
+  const rivetGeo = new THREE.SphereGeometry(0.07, 16, 16);
+  for (let i=0; i<6; i++){
+    const a = (i/6) * Math.PI*2;
+    const m = new THREE.Mesh(rivetGeo, brassDark);
+    m.position.set(Math.cos(a)*1.1, Math.sin(a)*1.1, 0.15).add(big.position);
+    scene.add(m);
+  }
+
+  // mouse parallax
+  let tx=0, ty=0;
+  wrap.addEventListener('mousemove', e => {
+    const r = wrap.getBoundingClientRect();
+    tx = ((e.clientX - r.left)/r.width - 0.5) * 0.18;
+    ty = ((e.clientY - r.top)/r.height - 0.5) * 0.18;
+  });
+  wrap.addEventListener('mouseleave', () => { tx = 0; ty = 0; });
+
+  // scroll factor
+  let scrollFactor = 0;
+  if (window.ScrollTrigger){ /* gsap registers globally, but we use Lenis already */ }
+  window.addEventListener('scroll', () => {
+    scrollFactor = Math.min(1, window.scrollY / 800);
+  });
+
+  let rotY = 0, rotX = 0;
+  function animate(){
+    if (PREFERS_REDUCED){
+      renderer.render(scene, camera); return;
+    }
+    rotY += (tx - rotY) * 0.06;
+    rotX += (ty - rotX) * 0.06;
+    big.rotation.z += 0.0035 + scrollFactor*0.004;
+    small.rotation.z -= 0.0055 + scrollFactor*0.006;
+    scene.rotation.y = rotY;
+    scene.rotation.x = -rotX;
+
+    // scale down + translate up as we scroll past the hero
+    const s = 1 - scrollFactor*0.18;
+    scene.scale.setScalar(s);
+    scene.position.y = scrollFactor * 0.6;
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+  resize(); animate();
+  window.addEventListener('resize', resize);
+
+} catch(err) {
+  console.warn('Three.js failed; showing fallback', err);
+  fallback.style.display = 'block';
+  canvas.style.display = 'none';
+}
+</script>
+
+</body>
+</html>
