@@ -1,0 +1,489 @@
+{
+  "brand": {
+    "name": "THE TERMINAL",
+    "tagline": "CAFE · EUROPEAN KITCHEN",
+    "script": "The Terminal"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "menu": "Menu",
+    "reservation": "Reservation",
+    "location": "Location",
+    "reserveTable": "Reserve a Table",
+    "menuAria": "Primary",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "controls": {
+    "toggleTheme": "Toggle theme",
+    "toggleLanguage": "Change language"
+  },
+  "hero": {
+    "est": "EST · 2024",
+    "subtitle": "Cafe · European Kitchen",
+    "tagline": "A small European kitchen at the end of an old freight line — slow mornings, lantern-lit evenings, and a kitchen that doesn't rush.",
+    "exploreMenu": "Explore the Menu",
+    "reserveTable": "Reserve a Table",
+    "scroll": "SCROLL"
+  },
+  "about": {
+    "eyebrow": "— Track 04 · All Aboard",
+    "title": "Built inside an old freight house.",
+    "body1": "The Terminal sits at the quiet end of a forgotten railway line — once used to stage parcels for the morning train, now serving European classics under the slow turn of brass cogs. Salvaged oak, lime-washed brick, two skylights, and a single brass lamp from the original station office.",
+    "body2": "Our kitchen carries the dishes our great-grandparents walked across borders with — Vienna's schnitzel, Budapest's goulash, Lyon's confit — plated as if for the dining car of the Orient Express. Every plate is a postcard. Every coffee, a ticket.",
+    "quote": "“ The journey is the meal, and the meal is the journey. ”",
+    "quoteAuthor": "— Chef M. Kovács",
+    "imageAlt": "Vintage railway café interior with warm lantern light and timber surfaces",
+    "stats": [
+      { "value": "02", "label": "Years of Service" },
+      { "value": "21", "label": "Dishes on the Bill" },
+      { "value": "48", "label": "Seats in the Room" }
+    ]
+  },
+  "menu": {
+    "eyebrow": "— Bill of Fare —",
+    "title": "Menu",
+    "subtitle": "A short kitchen with long memory — tap any dish for the chef's notes.",
+    "categoryAria": "Menu category",
+    "fare": "Fare",
+    "currency": "VND ’000",
+    "serves": "Serves",
+    "chefsNotes": "Chef's Notes",
+    "allergensLabel": "Ingredients · Allergens",
+    "pairing": "Chef's Pairing",
+    "close": "Close",
+    "closeTicket": "Close Ticket",
+    "chefsPickLine1": "CHEF'S",
+    "chefsPickLine2": "PICK",
+    "finePrice": "Prices in ’000 VND",
+    "fineService": "Service & VAT exclusive",
+    "fineAllergens": "Allergens — ask your conductor",
+    "categories": {
+      "all": "All",
+      "appetizers": "Appetizers",
+      "salads": "Salads",
+      "soups": "Soups",
+      "mains": "Mains",
+      "desserts": "Desserts",
+      "pizzas": "Pizzas",
+      "tacos": "Tacos & Fries"
+    },
+    "sectionHeaders": {
+      "appetizers": "Appetizer",
+      "salads": "Salad",
+      "soups": "Soup",
+      "mains": "Main Course",
+      "desserts": "Dessert",
+      "pizzas": "Pizza",
+      "tacos": "Taco & Fries"
+    },
+    "allergens": {
+      "gluten": "Gluten",
+      "dairy": "Dairy",
+      "nuts": "Nuts",
+      "fish": "Fish",
+      "shellfish": "Shellfish",
+      "egg": "Egg",
+      "soy": "Soy"
+    },
+    "items": {
+      "cold-cut-plate": {
+        "name": "Cold Cut Plate",
+        "desc": "Parma ham, mortadella, salami ventrencia, salami milano, cashew nut, raisin, cracker, pineapple jam",
+        "notes": "A platter of cured meats and delicacies: aged Parma ham, mortadella, two distinct salamis, roasted cashews, golden raisins, house-made crackers, and a tart pineapple jam to balance the richness.",
+        "pairing": "A charcuterie board deserves Barolo."
+      },
+      "cheese-plate": {
+        "name": "Cheese Plate",
+        "desc": "Gorgonzola cheese, piattone cheese, taleggio cheese, Manchego cheese, cashew nut, raisin, cracker, pineapple jam",
+        "notes": "Four European cheeses—the sharp blue of Gorgonzola, creamy Piattone, soft-washed taleggio, and nutty Manchego—paired with roasted cashews, raisins, crackers, and house-made pineapple jam.",
+        "pairing": "A fine Barolo or aged Cheddar."
+      },
+      "parma-burrata": {
+        "name": "Parma & Burrata",
+        "desc": "Parma ham, burrata cheese, rocket, bread",
+        "notes": "Paper-thin 36-month Parma ham draped over creamy burrata, peppery arugula, and warm sourdough toast. Simplicity at its finest.",
+        "pairing": "Prosecco or sparkling wine."
+      },
+      "beef-carpaccio": {
+        "name": "Beef Carpaccio",
+        "desc": "Beef tenderloin, rocket, kumquat dressing, Padano cheese",
+        "notes": "Razor-thin slices of raw beef tenderloin, peppery rocket, shaved Padano, and a bright citrus kumquat dressing. Elegant, refined, raw.",
+        "pairing": "Crisp Sauvignon Blanc."
+      },
+      "bruschetta-smoked-salmon": {
+        "name": "Bruschetta Smoked Salmon",
+        "desc": "Bread, sourcream, smoked salmon, dill",
+        "notes": "Toasted bread layered with sour cream, cold-smoked salmon, and fresh dill. A classic pairing, executed with care.",
+        "pairing": "Brut Champagne."
+      },
+      "bruschetta-parma": {
+        "name": "Bruschetta Parma",
+        "desc": "Bread, tomato, parma ham, ricotta cheese",
+        "notes": "Toasted bread spread with creamy ricotta, topped with sweet tomato and delicate Parma ham. A light, refined starter.",
+        "pairing": "Rosé wine."
+      },
+      "garden-salad": {
+        "name": "Garden Salad",
+        "desc": "Mixed salad, potato, cherry tomato, red onion, cucumber, broccoli, balsamic sauce",
+        "notes": "A fresh composition of garden greens, boiled potatoes, cherry tomatoes, red onion, crisp cucumber, and steamed broccoli, tossed in aged balsamic vinaigrette.",
+        "pairing": "A light Pinot Grigio."
+      },
+      "tropical-fruit-salad-burrata": {
+        "name": "Tropical Fruit Salad & Burrata",
+        "desc": "Mixed salad, yellow orange, melon, grape, red dragon fruit, pineapple, cherry tomato, kumquat dressing",
+        "notes": "A bright seasonal salad of tropical and stone fruits—orange, melon, grapes, dragon fruit, pineapple, cherry tomatoes—finished with creamy burrata and a citrus kumquat dressing.",
+        "pairing": "A mimosa for brunch."
+      },
+      "smoked-salmon-salad": {
+        "name": "Smoked Salmon Salad",
+        "desc": "Mixed salad, rocket, melon, cherry tomato, smoked salmon, balsamic sauce",
+        "notes": "Garden greens, peppery rocket, sweet melon, cherry tomato, cold-smoked salmon, tossed in aged balsamic. Fresh, briny, elegant.",
+        "pairing": "Chardonnay, lightly oaked."
+      },
+      "soup-of-the-day": {
+        "name": "Soup of the Day",
+        "desc": "Creamy pumpkin soup or mushroom soup, bread",
+        "notes": "The kitchen's daily offering—either a silky roasted pumpkin bisque with nutmeg and ginger, or a trio of slow-cooked mushroom cream. Served with warm buttered bread.",
+        "pairing": "Buttery Chardonnay."
+      },
+      "spinach-stuffed-chicken-breast": {
+        "name": "Spinach Stuffed Chicken Breast",
+        "desc": "Chicken breast, spinach, cashew nut, ricotta cheese, Demi sauce, mixed salad",
+        "notes": "Tender chicken breast filled with wilted spinach and creamy ricotta, topped with roasted cashews, finished with a light demi-glace sauce. Served with fresh salad.",
+        "pairing": "A glass of light Pinot Noir."
+      },
+      "pan-seared-salmon": {
+        "name": "Pan Seared Salmon",
+        "desc": "Salmon, broccoli, asparagus, Mix Mushroom, beurre blanc sauce",
+        "notes": "Wild salmon fillet seared until the skin crisps, served on a bed of steamed broccoli and asparagus with sautéed mushrooms, finished with silky beurre blanc.",
+        "pairing": "Sauvignon Blanc."
+      },
+      "ribeye-hokube-steaks": {
+        "name": "Ribeye Hokube Steaks",
+        "desc": "Ribeye hokube, Mix mushroom, Garlic, Pepper sauce",
+        "notes": "Premium Japanese Hokube ribeye, dry-aged for depth, seared until rare, topped with a trio of sautéed mushrooms, roasted garlic, finished with a bold peppercorn sauce.",
+        "pairing": "A bold Cabernet Sauvignon."
+      },
+      "usda-striploin-steaks": {
+        "name": "USDA Striploin Steaks",
+        "desc": "Striploin steaks, Mix mushroom, Garlic, Red wine sauce",
+        "notes": "USDA Prime striploin, char-grilled to your liking, served with sautéed mushroom medley, roasted garlic cloves, finished with a rich red wine reduction.",
+        "pairing": "Côtes du Rhône."
+      },
+      "top-blade-aukube-steaks": {
+        "name": "Top Blade Aukube Steaks",
+        "desc": "Top Blade Aukube, Mix Mushroom, Garlic, Broccoli, Mushroom sauce",
+        "notes": "Tender Australian Aukube top blade, a prized cut for its marbling and depth, served with sautéed mushrooms, roasted garlic, steamed broccoli, and a rich mushroom sauce.",
+        "pairing": "Earthy Pinot Noir."
+      },
+      "german-sausage": {
+        "name": "German Sausage",
+        "desc": "German sausage, pickle, bbq sauce",
+        "notes": "Authentic German bratwurst, snapped from the grill, served with tangy house pickles and a bold smoky BBQ sauce. A crowd-pleaser from the old continent.",
+        "pairing": "A cold German Hefeweizen."
+      },
+      "lamb-sausage": {
+        "name": "Lamb Sausage",
+        "desc": "Lamb Sausage, Pickle, Bbq sauce",
+        "notes": "Hand-seasoned lamb sausage with herbs and spices, grilled until caramelized, served with house pickles and tangy BBQ sauce. Rich, aromatic, satisfying.",
+        "pairing": "Côtes du Rhône."
+      },
+      "hickory-sausage": {
+        "name": "Hickory Sausage",
+        "desc": "Hickory Sausage, Pickle, BBQ sauce",
+        "notes": "Slow-smoked over hickory wood for hours, this sausage carries deep, complex smoke notes. Served with crisp house pickles and classic BBQ sauce.",
+        "pairing": "A smoky Malbec."
+      },
+      "crispy-chicken-burger": {
+        "name": "Crispy Chicken Burger",
+        "desc": "Burger bun, chicken thigh, cheddar cheese salad, tomato, pickle, honey mustard sauce, french fries",
+        "notes": "Juicy chicken thigh fried until golden, melted cheddar, crisp lettuce, ripe tomato, tangy pickle, house-made honey mustard, all nestled in a toasted bun. Served with hand-cut fries.",
+        "pairing": "Ice-cold lager beer."
+      },
+      "beef-burger": {
+        "name": "Beef Burger",
+        "desc": "Burger bun, beef patty, cheddar cheese, salad, tomato, pickle, spicy garlic mayo, french fries",
+        "notes": "Thick-cut beef patty on a toasted bun with melted cheddar, fresh lettuce, tomato, pickle, and a fiery spiced garlic mayo. Hand-cut fries on the side.",
+        "pairing": "A bold IPA."
+      },
+      "seafood-pasta": {
+        "name": "Seafood Pasta",
+        "desc": "Spaghetti, shrimp, squid, mussel, squid ink, shrimp bisque, chilli, garlic, parsley",
+        "notes": "House-made spaghetti tossed in squid-ink sauce with shrimp, tender squid, fresh mussels, finished with a touch of shrimp bisque, fresh chilli, garlic, and parsley.",
+        "pairing": "Pinot Grigio."
+      },
+      "shrimp-pasta": {
+        "name": "Shrimp Pasta",
+        "desc": "Spaghetti, shrimp, seafood sauce, garlic, chilli, Padano cheese",
+        "notes": "Tender spaghetti with succulent shrimp, tossed in a light seafood sauce with fresh garlic, a hint of chilli, finished with fresh Padano cheese and parsley.",
+        "pairing": "Albariño."
+      },
+      "bolognese-pasta": {
+        "name": "Bolognese Pasta",
+        "desc": "Tagliatelle, Bolognese sauce, Padano cheese, parsley",
+        "notes": "Wide, tender tagliatelle dressed in a slow-simmered Bolognese of ground beef and tomato, topped with fresh Padano and a scatter of fresh parsley.",
+        "pairing": "Chianti."
+      },
+      "pesto-pasta-chicken-panko": {
+        "name": "Pesto Pasta & Chicken Panko",
+        "desc": "Tagliatelle, pesto sauce, padano cheese, chicken thigh",
+        "notes": "Silky tagliatelle coated in fresh basil pesto, topped with golden panko-crusted chicken thigh, finished with shaved Padano cheese.",
+        "pairing": "Pinot Grigio."
+      },
+      "carbonara-pasta": {
+        "name": "Carbonara Pasta",
+        "desc": "Spaghetti, Bacon, Padano cheese, egg",
+        "notes": "Authentic carbonara: spaghetti tossed with crispy bacon, creamy egg sauce, and fresh Padano cheese. No cream, just tradition.",
+        "pairing": "Pinot Grigio."
+      },
+      "pannacotta": {
+        "name": "Pannacotta",
+        "desc": "Italian cream dessert served chilled",
+        "notes": "Silky-smooth Italian cream set with gelatin, served chilled and topped with fresh berries and a light berry coulis. Delicate and refined.",
+        "pairing": "Moscato d'Asti."
+      },
+      "tiramisu": {
+        "name": "Tiramisu",
+        "desc": "Classic Italian dessert with mascarpone and espresso",
+        "notes": "Layers of espresso-soaked ladyfingers and creamy mascarpone, topped with a dusting of bitter cocoa powder. The Italian classic, done right.",
+        "pairing": "Sweet Italian Asti."
+      },
+      "pizza-four-cheese": {
+        "name": "Pizza Four Cheese",
+        "desc": "Dough pizza, Mozzarella, Gorgonzola, Piatone, Taleggio",
+        "notes": "Crispy wood-fired crust topped with four distinct cheeses—creamy mozzarella, sharp Gorgonzola, soft piattone, and nutty taleggio. A cheese-lover's dream.",
+        "pairing": "Chianti Classico."
+      },
+      "pizza-chicken-unagi": {
+        "name": "Pizza Chicken Unagi",
+        "desc": "Dough pizza, Mozzarella, Chicken thigh, Katsuo, Unagi sauce",
+        "notes": "Tender chicken thigh, sweet unagi sauce, topped with bonito flakes that dance in the heat, finished with creamy mozzarella. East meets Italy.",
+        "pairing": "Japanese beer."
+      },
+      "pizza-shrimp-mayo": {
+        "name": "Pizza Shrimp Mayo",
+        "desc": "Dough pizza, Mozzarella, Shrimp, Mayo sauce, Broccoli, Red onion",
+        "notes": "Succulent shrimp and tender broccoli florets, creamy mayo sauce, sweet red onion, all on a crispy pizza crust with melted mozzarella.",
+        "pairing": "Sauvignon Blanc."
+      },
+      "pizza-soy-beef": {
+        "name": "Pizza Soy Beef",
+        "desc": "Dough pizza, Mozzarella, Beef belly, Soy sauce, Microgen",
+        "notes": "Rich beef belly cooked in soy sauce, tender young microgreens, creamy mozzarella on a crispy base. A fusion of flavors on a thin crust.",
+        "pairing": "Light lager."
+      },
+      "pizza-meatlove": {
+        "name": "Pizza Meatlove",
+        "desc": "Dough pizza, Mozzarella, Salami, Bacon, Tomato sauce",
+        "notes": "A carnivore's fantasy—spicy salami, crispy bacon, sweet tomato sauce, and molten mozzarella on a perfectly charred crust. For the meat-lovers.",
+        "pairing": "Full-bodied red wine."
+      },
+      "pizza-njuda-mushroom": {
+        "name": "Pizza Njuda & Mushroom",
+        "desc": "Dough pizza, Mozzarella, Homemade njuda, Mix mushroom, Tomato sauce",
+        "notes": "Spicy house-made nduja spread generously, sautéed mushroom medley, sweet tomato sauce, melted mozzarella. Heat and earthiness in harmony.",
+        "pairing": "Spicy red wine."
+      },
+      "pizza-margherita": {
+        "name": "Pizza Margherita",
+        "desc": "Dough pizza, Mozzarella, Tomato sauce, Basil",
+        "notes": "The eternal classic—sweet tomato sauce, creamy mozzarella, fresh basil, olive oil on a thin wood-fired crust. Perfect simplicity.",
+        "pairing": "Chianti."
+      },
+      "pizza-veggie": {
+        "name": "Pizza Veggie",
+        "desc": "Dough pizza, Mozzarella, Tomato sauce, Bell pepper, Mix Mushroom",
+        "notes": "A colorful celebration of vegetables—roasted bell peppers, sautéed mushroom trio, sweet tomato sauce, creamy mozzarella on a crispy crust.",
+        "pairing": "Pinot Grigio."
+      },
+      "pizza-parma-burrata": {
+        "name": "Pizza Parma & Burrata",
+        "desc": "Dough pizza, Mozzarella, Tomato sauce, Basil, Parma ham, Burrata cheese",
+        "notes": "Tomato sauce and mozzarella base, topped after the oven with delicate Parma ham, creamy burrata, fresh basil, and a drizzle of fine olive oil.",
+        "pairing": "Prosecco."
+      },
+      "pizza-seafood": {
+        "name": "Pizza Seafood",
+        "desc": "Dough pizza, Seafood sauce, Mozzarella, Squid, Shrimp, Mussel",
+        "notes": "A briny treasure—tender squid, plump shrimp, fresh mussels, light seafood sauce, creamy mozzarella on a wood-fired crust. For seafood aficionados.",
+        "pairing": "Albariño."
+      },
+      "smoked-beef-quesadillas": {
+        "name": "Smoked Beef Quesadillas",
+        "desc": "Smoked beef, tortilla, avocado, mozzarella, coleslaw, guacamole, salsa",
+        "notes": "Tender smoked beef in a crisp tortilla, layered with creamy avocado, melted mozzarella, tangy coleslaw, fresh guacamole, and house-made salsa.",
+        "pairing": "Mexican beer."
+      },
+      "chicken-quesadillas": {
+        "name": "Chicken Quesadillas",
+        "desc": "Chicken thigh, tortilla, avocado, mozzarella, coleslaw, guacamole, salsa",
+        "notes": "Juicy chicken thigh folded in a crispy tortilla with ripe avocado, melted mozzarella, crisp coleslaw, fresh guacamole, and tangy salsa. A favorite.",
+        "pairing": "Light Mexican beer."
+      },
+      "smoked-beef-burrito": {
+        "name": "Smoked Beef Burrito",
+        "desc": "Smoked beef, tortilla, mozzarella, coleslaw, bbq sauce, guacamole, salsa, french fries",
+        "notes": "A hefty burrito packed with smoky beef, melted mozzarella, tangy coleslaw, spicy BBQ sauce, creamy guacamole, and fresh salsa. Served with hand-cut fries.",
+        "pairing": "Mexican beer."
+      },
+      "chicken-burritos": {
+        "name": "Chicken Burritos",
+        "desc": "Chicken thigh, tortilla, mozzarella, coleslaw, honey mustard sauce, guacamole, salsa, french fries",
+        "notes": "Generous chicken thigh wrapped in a warm tortilla with creamy guacamole, fresh salsa, honey-mustard sauce, coleslaw, and melted mozzarella. Fries included.",
+        "pairing": "Light Mexican beer."
+      },
+      "smoked-beef-nachos": {
+        "name": "Smoked Beef Nachos",
+        "desc": "Smoked beef, tortilla, guacamole, salsa, cheese sauce, Padano cheese",
+        "notes": "Crispy tortilla chips heaped with smoky beef, creamy guacamole, fresh salsa, rich cheese sauce, and shaved Padano. A feast for sharing.",
+        "pairing": "Mexican beer."
+      },
+      "chicken-nachos": {
+        "name": "Chicken Nachos",
+        "desc": "Chicken thigh, tortilla, guacamole, salsa, cheese sauce, Padano cheese",
+        "notes": "Loaded tortilla chips with tender chicken, fresh guacamole, tangy salsa, creamy cheese sauce, and shaved Padano. A delicious shared plate.",
+        "pairing": "Mexican beer."
+      },
+      "smoked-beef-tapas": {
+        "name": "Smoked Beef Tapas",
+        "desc": "Smoked beef, french fries, onion, bbq sauce, honey mustard sauce, garlic mayo sauce",
+        "notes": "Hand-cut fries topped with smoky beef, caramelized onion, and a choice of three house-made sauces: BBQ, honey mustard, or spiced garlic mayo.",
+        "pairing": "Beer or light wine."
+      },
+      "smoked-beef-taco": {
+        "name": "Smoked Beef Taco",
+        "desc": "Smoked Beef, Salsa, Coleslaw, Guacamole, Taco",
+        "notes": "A simple, satisfying taco—tender smoked beef, fresh salsa, crisp coleslaw, creamy guacamole, all in a soft corn tortilla.",
+        "pairing": "Mexican beer."
+      },
+      "chicken-taco": {
+        "name": "Chicken Taco",
+        "desc": "Chicken thigh, Salsa, Coleslaw, Guacamole, Taco",
+        "notes": "Juicy chicken thigh, fresh salsa, crisp coleslaw, creamy guacamole, wrapped in a warm corn tortilla. Quick, satisfying, delicious.",
+        "pairing": "Light Mexican beer."
+      },
+      "french-fries": {
+        "name": "French Fries",
+        "desc": "French fries, garlic mayo",
+        "notes": "Twice-fried golden potatoes, crispy outside and fluffy inside, served with our house spiced garlic mayo for dipping.",
+        "pairing": "Beer."
+      },
+      "chicken-unagi": {
+        "name": "Chicken Unagi",
+        "desc": "Chicken thigh, unagi sauce, katsuo",
+        "notes": "Tender chicken thigh glazed in sweet unagi sauce, topped with dancing bonito flakes. A Japanese-inspired comfort dish.",
+        "pairing": "Japanese beer."
+      },
+      "chicken-popcorn": {
+        "name": "Chicken Popcorn",
+        "desc": "Chicken thigh, garlic mayo sauce",
+        "notes": "Bite-sized pieces of crispy fried chicken thigh, perfectly seasoned and served with our house spiced garlic mayo. A crowd-pleaser.",
+        "pairing": "Beer."
+      }
+    }
+  },
+  "reservation": {
+    "eyebrow": "— Platform 09 · Purchase Your Ticket —",
+    "title": "Reserve Your Seat",
+    "subtitle": "A short form. We'll wire you back within the day to confirm your seat.",
+    "stampTop": "Platform",
+    "stampBottom": "1st Class",
+    "name": "Passenger Name",
+    "namePlaceholder": "e.g. Anna Kovács",
+    "phone": "Telegram (Phone)",
+    "phonePlaceholder": "+84 — — — —",
+    "email": "Wire (Email)",
+    "emailPlaceholder": "you@example.com",
+    "date": "Date of Departure",
+    "time": "Time",
+    "party": "Party Size",
+    "partySizes": [
+      "2 passengers",
+      "3 passengers",
+      "4 passengers",
+      "5 passengers",
+      "6 passengers",
+      "7+ · private car"
+    ],
+    "branch": "Branch",
+    "branchOptions": [
+      "The Villa — Điện Biên Phủ",
+      "Độc Lập — Nguyễn Thị Minh Khai",
+      "Diamond Plaza — Lê Duẩn"
+    ],
+    "notes": "Notes to the Conductor",
+    "notesPlaceholder": "Window booth, allergies, anniversary…",
+    "terms": "By boarding you accept our conductor's terms.",
+    "submit": "Book Now",
+    "success": "✓ Ticket received. Your conductor will telegram you shortly."
+  },
+  "location": {
+    "eyebrow": "— Departure Board —",
+    "title": "Find the Terminal",
+    "subtitle": "Three stops along the line — same hours, same kitchen, same long Sunday.",
+    "departureBoard": "Departure Board",
+    "hoursTitle": "Hours of Operation",
+    "hotline": "Hotline",
+    "hotlineTel": "19006403",
+    "hotlineDisplay": "1900 6403",
+    "emailLabel": "Email",
+    "email": "hello@theterminal.cafe",
+    "colDay": "Day",
+    "colWindow": "Service Window",
+    "branches": [
+      {
+        "label": "Branch · 01",
+        "name": "The Villa",
+        "address": "290 Điện Biên Phủ,\nP. Xuân Hoà, TP.HCM",
+        "note": "(ngã ba Lê Ngô Cát & Điện Biên Phủ)",
+        "phone": "0944 56 55 57",
+        "tel": "+84944565557"
+      },
+      {
+        "label": "Branch · 02",
+        "name": "Độc Lập",
+        "address": "106 Nguyễn Thị Minh Khai,\nP. Xuân Hoà, TP.HCM",
+        "note": "(ngay góc Nam Kỳ Khởi Nghĩa)",
+        "phone": "0901 56 55 57",
+        "tel": "+84901565557"
+      },
+      {
+        "label": "Branch · 03",
+        "name": "Diamond Plaza",
+        "address": "Tầng 5, Diamond Plaza,\n34 Lê Duẩn, P. Sài Gòn, TP.HCM",
+        "note": "(rooftop terrace · skyline view)",
+        "phone": "0963 56 55 57",
+        "tel": "+84963565557"
+      }
+    ],
+    "hours": [
+      { "day": "Monday", "window": "11:00 — 22:00" },
+      { "day": "Tuesday", "window": "11:00 — 22:00" },
+      { "day": "Wednesday", "window": "11:00 — 22:00" },
+      { "day": "Thursday", "window": "11:00 — 22:00" },
+      { "day": "Friday", "window": "11:00 — 23:00" },
+      { "day": "Saturday", "window": "11:00 — 23:00" },
+      { "day": "Sunday", "window": "11:00 — 22:00" }
+    ]
+  },
+  "footer": {
+    "blurb": "A rail-house café for the unhurried — serving the dishes of old Europe under brass lanterns and slow-turning cogs.",
+    "connections": "Connections",
+    "links": {
+      "home": "Home",
+      "about": "About the Terminal",
+      "menu": "Menu",
+      "reserve": "Reserve a Table",
+      "location": "Find Us"
+    },
+    "dispatchesTitle": "Receive Our Dispatches",
+    "wire": "Wire",
+    "wirePlaceholder": "your wire address",
+    "send": "Send →",
+    "sent": "✓ Transmission received · stop ·",
+    "copyright": "© 2024 · The Terminal — All Journeys Reserved",
+    "builtWith": "Built with brass, oak & patience"
+  }
+}

@@ -1,0 +1,545 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ════════════════════════════════════════════════════════════════
+   THE TERMINAL — DESIGN TOKENS
+   All colors, fonts, radii and surface styles are declared here as
+   CSS variables, then exposed to Tailwind in tailwind.config.ts so
+   components can use semantic utilities (bg-background, text-primary,
+   border-border, text-brass, …). Colors are stored as space-separated
+   RGB channels so Tailwind's `/<alpha>` opacity modifiers keep working.
+   ════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  :root {
+    /* ---- Fixed brand palette (identical in both themes) ---- */
+    --canvas: 232 210 168; /* aged paper / parchment */
+    --canvas-deep: 221 195 146;
+    --iron: 58 58 58; /* dark iron — menu / nav backplate */
+    --iron-2: 43 43 43;
+    --rust: 123 63 0;
+    --rust-deep: 90 45 0;
+    --brass: 207 169 63;
+    --brass-light: 244 193 79;
+    --brass-pale: 255 241 179;
+    --brick: 160 82 45;
+    --leather: 74 45 34;
+    --patina: 109 130 125;
+    --quartz: 245 245 245;
+    --copper: 184 150 122;
+
+    /* ---- Semantic tokens — LIGHT (daytime parchment) ---- */
+    --background: 232 210 168;
+    --background-deep: 221 195 146;
+    --foreground: 58 58 58;
+    --card: 240 224 192;
+    --card-foreground: 58 58 58;
+    --muted: 221 195 146;
+    --muted-foreground: 92 73 46;
+    --primary: 207 169 63; /* brass — the CTA identity */
+    --primary-foreground: 59 36 27; /* dark brown */
+    --accent: 123 63 0; /* rust — section eyebrows on paper */
+    --accent-foreground: 245 230 200;
+    --border: 123 63 0;
+    --input: 245 230 200;
+    --input-foreground: 58 58 58;
+    --ring: 207 169 63;
+
+    /* ---- Typography ---- */
+    --font-display: var(--font-oswald), "Oswald", system-ui, sans-serif;
+    --font-script: var(--font-pinyon), "Pinyon Script", cursive;
+    --font-serif: var(--font-cormorant), "Cormorant Garamond", serif;
+
+    /* ---- Radii & borders ---- */
+    --radius: 0.5rem;
+    --radius-sm: 0.25rem;
+    --radius-lg: 0.75rem;
+    --border-width: 1.5px;
+
+    /* ---- Surface gradient stops (theme-aware) ---- */
+    --paper-grad-from: #f5e6c8;
+    --paper-grad-to: #e0c8a0;
+    --field-bg: #f5e6c8;
+    --on-paper-color: #5a2d00; /* heading color on paper in light */
+  }
+
+  .dark {
+    /* ---- Semantic tokens — DARK (lantern-lit night) ---- */
+    --background: 30 20 16;
+    --background-deep: 23 16 12;
+    --foreground: 237 224 200;
+    --card: 42 33 27;
+    --card-foreground: 237 224 200;
+    --muted: 36 28 22;
+    --muted-foreground: 197 180 150;
+    --primary: 244 193 79; /* brass-light */
+    --primary-foreground: 31 19 8;
+    --accent: 244 193 79; /* brass — eyebrows glow at night */
+    --accent-foreground: 31 19 8;
+    --border: 207 169 63;
+    --input: 36 27 19;
+    --input-foreground: 237 224 200;
+    --ring: 244 193 79;
+
+    --paper-grad-from: #2f261d;
+    --paper-grad-to: #221a14;
+    --field-bg: #241b13;
+    --on-paper-color: #f4c14f;
+  }
+
+  * {
+    border-color: rgb(var(--border) / 0.5);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: rgb(var(--brass));
+    color: #1f1308;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--brass));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   COMPONENT SURFACES & UTILITIES
+   ════════════════════════════════════════════════════════════════ */
+@layer components {
+  /* ---- Brand text gradients ---- */
+  .text-grad-primary {
+    background-image: linear-gradient(0deg, #fff6dc 0%, #ffe199 25%, #f4c14f 55%, #ffe9b3 80%, #fff4d4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-shadow: 0 0 14px rgba(255, 225, 153, 0.18), 0 3px 10px rgba(0, 0, 0, 0.22);
+  }
+  .text-grad-accent {
+    background-image: linear-gradient(0deg, #d99a3a 0%, #ffe199 25%, #fff4d4 50%, #ffe199 80%, #d99a3a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  /* Heading on paper — solid rust in light, brass gradient at night */
+  .text-grad-on-paper {
+    color: var(--on-paper-color);
+    -webkit-text-fill-color: var(--on-paper-color);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .dark .text-grad-on-paper {
+    background-image: linear-gradient(0deg, #d99a3a 0%, #ffe199 25%, #fff4d4 50%, #ffe199 80%, #d99a3a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-shadow: none;
+  }
+  .text-muted-gold {
+    color: #b1894a;
+  }
+  .dark .text-muted-gold {
+    color: #c9a35a;
+  }
+
+  /* ---- Dividers ---- */
+  .brand-divider {
+    height: 4px;
+    border-radius: 2px;
+    background-image: linear-gradient(0deg, #c88d2b 0%, #ffe9a3 50%, #c88d2b 100%);
+    box-shadow: 0 0 8px rgba(255, 220, 120, 0.25);
+  }
+  .brand-divider-rust {
+    height: 3px;
+    border-radius: 2px;
+    background-image: linear-gradient(90deg, transparent, #7b3f00 35%, #cfa93f 50%, #7b3f00 65%, transparent);
+    opacity: 0.8;
+  }
+  .dark .brand-divider-rust {
+    background-image: linear-gradient(90deg, transparent, #cfa93f 35%, #ffe9a3 50%, #cfa93f 65%, transparent);
+  }
+
+  /* ---- Wood signboard ---- */
+  .signboard {
+    position: relative;
+    border-radius: 6px;
+    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 35%),
+      linear-gradient(180deg, #5a3427 0%, #4a2d22 45%, #3b241b 100%);
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+  .signboard::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+    opacity: 0.25;
+    mix-blend-mode: screen;
+  }
+  .signboard-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---- Dark iron card ---- */
+  .iron-card {
+    background: linear-gradient(180deg, #3a3a3a 0%, #2f2f2f 100%);
+    box-shadow: inset 0 0 0 1px rgba(255, 220, 120, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  /* ---- Aged paper card (light) / dark metal card (dark) ---- */
+  .paper-card {
+    background: radial-gradient(ellipse at center, var(--paper-grad-from) 0%, var(--paper-grad-to) 100%);
+    box-shadow: inset 0 0 0 1px rgba(123, 63, 0, 0.22), 0 12px 30px rgba(58, 28, 8, 0.25);
+  }
+  .dark .paper-card {
+    box-shadow: inset 0 0 0 1px rgba(207, 169, 63, 0.2), 0 12px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  /* ---- Rusted metal photo frame ---- */
+  .rusted-frame {
+    position: relative;
+    padding: 14px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #7b3f00 0%, #54290a 30%, #8a4a14 60%, #3d1f08 100%);
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.55), inset 0 0 0 4px rgba(207, 169, 63, 0.22),
+      inset 0 0 18px rgba(0, 0, 0, 0.5), 0 14px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ---- Brick wall (always the night side of the line) ---- */
+  .brick-wall {
+    background-color: #3b241b;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.6)),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='80'><rect width='160' height='80' fill='%23A0522D'/><g fill='none' stroke='%231a0e07' stroke-width='2'><path d='M0 40 H160 M0 0 H160 M0 80 H160 M40 0 V40 M120 0 V40 M0 40 V80 M80 40 V80 M160 40 V80'/></g><g fill='%23000' opacity='.18'><rect x='2' y='2' width='36' height='36'/><rect x='42' y='2' width='76' height='36'/><rect x='122' y='2' width='36' height='36'/></g></svg>");
+    background-size: auto, 160px 80px;
+  }
+  .dark .brick-wall {
+    background-color: #1a0f09;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.78)),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='80'><rect width='160' height='80' fill='%23A0522D'/><g fill='none' stroke='%231a0e07' stroke-width='2'><path d='M0 40 H160 M0 0 H160 M0 80 H160 M40 0 V40 M120 0 V40 M0 40 V80 M80 40 V80 M160 40 V80'/></g><g fill='%23000' opacity='.18'><rect x='2' y='2' width='36' height='36'/><rect x='42' y='2' width='76' height='36'/><rect x='122' y='2' width='36' height='36'/></g></svg>");
+  }
+
+  /* ---- Rivet ---- */
+  .rivet {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fcda8c, #b97716 60%, #5a3a10);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 2px 3px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ---- Brass buttons ---- */
+  .btn-brass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #ffe9a3 0%, #f4c14f 45%, #b97716 100%);
+    color: #3b241b;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+      0 6px 14px rgba(0, 0, 0, 0.3);
+    transition: filter 0.2s, transform 0.15s, box-shadow 0.25s;
+  }
+  .btn-brass:hover {
+    filter: brightness(1.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 0 0 1px #cfa93f, 0 0 24px rgba(207, 169, 63, 0.45);
+  }
+  .btn-brass:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  .btn-brass-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: #fff1b3;
+    border: 1.5px solid #cfa93f;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.15s;
+  }
+  .btn-brass-outline:hover {
+    background: linear-gradient(180deg, #ffe9a3, #b97716);
+    color: #3b241b;
+    box-shadow: 0 0 0 1px #cfa93f, 0 0 24px rgba(207, 169, 63, 0.4);
+  }
+  .btn-brass-outline:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  /* ---- Nav link underline ---- */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: -6px;
+    height: 2px;
+    background: linear-gradient(90deg, #b97716, #ffe9a3, #b97716);
+    transition: left 0.3s, right 0.3s;
+  }
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    left: 0;
+    right: 0;
+  }
+
+  /* ---- Menu tabs ---- */
+  .menu-tab {
+    position: relative;
+    min-height: 48px;
+    padding: 0 1.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    font-size: 13px;
+    text-transform: uppercase;
+    transition: transform 0.15s, background-color 0.25s, color 0.25s;
+    border-radius: 4px;
+  }
+  .menu-tab[aria-selected="true"] {
+    background: linear-gradient(180deg, #e7c463 0%, #8a6a1c 100%) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -2px 0 rgba(0, 0, 0, 0.35) !important;
+  }
+
+  /* ---- Pager ---- */
+  .pager-btn {
+    min-width: 44px;
+    min-height: 38px;
+    padding: 6px 14px;
+    border: 1px solid rgba(207, 169, 63, 0.45);
+    background: linear-gradient(180deg, rgba(255, 233, 163, 0.06), rgba(0, 0, 0, 0.15));
+    color: #fff4d4;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 11px;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .pager-btn:hover {
+    background: linear-gradient(180deg, #ffe9a3, #b97716);
+    color: #3b241b;
+  }
+  .pager-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* ---- Form fields ---- */
+  .field {
+    position: relative;
+    padding-top: 6px;
+  }
+  .field-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgb(var(--accent));
+    margin-bottom: 0.4rem;
+    display: block;
+    font-weight: 500;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--field-bg);
+    color: rgb(var(--input-foreground));
+    border: 1.5px solid rgb(var(--rust));
+    outline: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 16px;
+    box-shadow: inset 0 0 0 1px rgba(207, 169, 63, 0.4), inset 0 2px 6px rgba(123, 63, 0, 0.18);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .dark .field input,
+  .dark .field select,
+  .dark .field textarea {
+    border-color: rgba(207, 169, 63, 0.55);
+  }
+  .field input::placeholder {
+    color: rgb(var(--rust));
+    opacity: 0.55;
+    font-style: italic;
+  }
+  .dark .field input::placeholder {
+    color: rgb(var(--brass));
+    opacity: 0.4;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    box-shadow: 0 0 0 3px rgba(207, 169, 63, 0.45), inset 0 0 0 1px rgba(207, 169, 63, 0.6);
+    border-color: rgb(var(--brass));
+  }
+
+  /* ---- Timetable ---- */
+  .timetable-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    border-bottom: 1px dashed rgba(207, 169, 63, 0.4);
+    padding: 12px 0;
+    font-family: var(--font-display);
+    color: #f5e6c8;
+    letter-spacing: 0.05em;
+  }
+  .timetable-row .dep {
+    color: #cfa93f;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+
+  /* ---- Modal frame ---- */
+  .modal-frame {
+    position: relative;
+    border-radius: 8px;
+    background: linear-gradient(#3a3a3a, #3a3a3a) padding-box,
+      linear-gradient(180deg, #fff6dc 0%, #ffe199 25%, #f4c14f 55%, #ffe9b3 80%, #fff4d4 100%) border-box;
+    border: 1.5px solid transparent;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ════════════════════════════════════════════════════════════════ */
+@keyframes bulb-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  22% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 0.78;
+  }
+  74% {
+    opacity: 1;
+  }
+}
+
+@keyframes steam-rise {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-220px) scale(1.6);
+    opacity: 0;
+  }
+}
+.steam {
+  position: absolute;
+  bottom: -10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 230, 200, 0.55), rgba(245, 230, 200, 0) 70%);
+  filter: blur(8px);
+  animation: steam-rise 7s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+.sway {
+  animation: sway 6s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.reveal {
+  opacity: 0;
+}
+.reveal.in {
+  animation: reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.in {
+    opacity: 1;
+    animation: none;
+  }
+  .sway,
+  .steam {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
