@@ -1,0 +1,489 @@
+{
+  "brand": {
+    "name": "THE TERMINAL",
+    "tagline": "CAFE · BẾP ÂU",
+    "script": "The Terminal"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "menu": "Thực đơn",
+    "reservation": "Đặt bàn",
+    "location": "Địa điểm",
+    "reserveTable": "Đặt bàn",
+    "menuAria": "Chính",
+    "openMenu": "Mở menu",
+    "closeMenu": "Đóng menu"
+  },
+  "controls": {
+    "toggleTheme": "Đổi giao diện",
+    "toggleLanguage": "Đổi ngôn ngữ"
+  },
+  "hero": {
+    "est": "EST · 2024",
+    "subtitle": "Cafe · Bếp Âu",
+    "tagline": "Một căn bếp Âu nhỏ nằm cuối một tuyến đường ray chở hàng năm xưa — những buổi sáng thong thả, những buổi tối lung linh ánh đèn, và một căn bếp không bao giờ vội vã.",
+    "exploreMenu": "Khám phá thực đơn",
+    "reserveTable": "Đặt bàn",
+    "scroll": "CUỘN XUỐNG"
+  },
+  "about": {
+    "eyebrow": "— Đường ray 04 · Lên tàu thôi",
+    "title": "Dựng nên trong một nhà kho chở hàng cũ.",
+    "body1": "The Terminal nằm ở đoạn cuối yên tĩnh của một tuyến đường sắt bị lãng quên — nơi từng tập kết bưu kiện chờ chuyến tàu buổi sáng, nay phục vụ những món Âu cổ điển dưới nhịp xoay chậm rãi của những bánh răng đồng. Gỗ sồi tái sử dụng, tường gạch quét vôi, hai giếng trời, và một chiếc đèn đồng duy nhất từ phòng trưởng ga ngày xưa.",
+    "body2": "Căn bếp của chúng tôi gìn giữ những món ăn mà các cụ tổ tiên đã mang theo qua bao biên giới — schnitzel của Vienna, goulash của Budapest, confit của Lyon — bày biện như dành cho toa ăn của chuyến tàu Orient Express. Mỗi đĩa ăn là một tấm bưu thiếp. Mỗi tách cà phê là một tấm vé.",
+    "quote": "“ Hành trình chính là bữa ăn, và bữa ăn chính là hành trình. ”",
+    "quoteAuthor": "— Bếp trưởng M. Kovács",
+    "imageAlt": "Không gian quán cà phê đường sắt cổ điển với ánh đèn ấm áp và bề mặt gỗ mộc",
+    "stats": [
+      { "value": "02", "label": "Năm phục vụ" },
+      { "value": "21", "label": "Món trên thực đơn" },
+      { "value": "48", "label": "Chỗ ngồi trong phòng" }
+    ]
+  },
+  "menu": {
+    "eyebrow": "— Thực đơn —",
+    "title": "Thực đơn",
+    "subtitle": "Một căn bếp nhỏ với ký ức dài — chạm vào bất kỳ món nào để xem ghi chú của bếp trưởng.",
+    "categoryAria": "Nhóm thực đơn",
+    "fare": "Món",
+    "currency": "VND ’000",
+    "serves": "Khẩu phần",
+    "chefsNotes": "Ghi chú của bếp trưởng",
+    "allergensLabel": "Nguyên liệu · Dị ứng",
+    "pairing": "Gợi ý kết hợp",
+    "close": "Đóng",
+    "closeTicket": "Đóng vé",
+    "chefsPickLine1": "BẾP TRƯỞNG",
+    "chefsPickLine2": "ĐỀ CỬ",
+    "finePrice": "Giá tính theo nghìn đồng (’000 VND)",
+    "fineService": "Chưa bao gồm phí dịch vụ & VAT",
+    "fineAllergens": "Dị ứng — vui lòng hỏi nhân viên phục vụ",
+    "categories": {
+      "all": "Tất cả",
+      "appetizers": "Khai vị",
+      "salads": "Salad",
+      "soups": "Súp",
+      "mains": "Món chính",
+      "desserts": "Tráng miệng",
+      "pizzas": "Pizza",
+      "tacos": "Taco & Khoai chiên"
+    },
+    "sectionHeaders": {
+      "appetizers": "Khai vị",
+      "salads": "Salad",
+      "soups": "Súp",
+      "mains": "Món chính",
+      "desserts": "Tráng miệng",
+      "pizzas": "Pizza",
+      "tacos": "Taco & Khoai chiên"
+    },
+    "allergens": {
+      "gluten": "Gluten",
+      "dairy": "Sữa",
+      "nuts": "Hạt",
+      "fish": "Cá",
+      "shellfish": "Động vật có vỏ",
+      "egg": "Trứng",
+      "soy": "Đậu nành"
+    },
+    "items": {
+      "cold-cut-plate": {
+        "name": "Đĩa thịt nguội",
+        "desc": "Parma ham, mortadella, salami ventrencia, salami milano, hạt điều, nho khô, bánh quy giòn, mứt thơm",
+        "notes": "Đĩa thịt nguội và đặc sản tổng hợp: Parma ham ủ lâu năm, mortadella, hai loại salami khác biệt, hạt điều rang, nho khô vàng óng, bánh quy giòn nhà làm và mứt thơm chua dịu để cân bằng vị béo.",
+        "pairing": "Một đĩa charcuterie xứng đáng đi cùng Barolo."
+      },
+      "cheese-plate": {
+        "name": "Đĩa phô mai",
+        "desc": "Phô mai Gorgonzola, phô mai piattone, phô mai taleggio, phô mai Manchego, hạt điều, nho khô, bánh quy giòn, mứt thơm",
+        "notes": "Bốn loại phô mai châu Âu — vị xanh đậm của Gorgonzola, Piattone béo mịn, taleggio mềm rửa vỏ và Manchego thoảng hương hạt — kết hợp cùng hạt điều rang, nho khô, bánh quy giòn và mứt thơm nhà làm.",
+        "pairing": "Một chai Barolo hảo hạng hoặc Cheddar ủ lâu năm."
+      },
+      "parma-burrata": {
+        "name": "Parma & Burrata",
+        "desc": "Parma ham, phô mai burrata, rau rocket, bánh mì",
+        "notes": "Parma ham ủ 36 tháng thái mỏng như giấy, phủ lên burrata béo mịn, rau rocket vị cay nhẹ và bánh mì chua nướng ấm. Sự giản đơn ở mức tinh tế nhất.",
+        "pairing": "Prosecco hoặc vang sủi tăm."
+      },
+      "beef-carpaccio": {
+        "name": "Beef Carpaccio",
+        "desc": "Thăn nội bò, rau rocket, sốt tắc, phô mai Padano",
+        "notes": "Những lát thăn nội bò sống thái cực mỏng, rau rocket cay nhẹ, phô mai Padano bào và sốt tắc tươi sáng vị cam quýt. Thanh lịch, tinh tế, sống nguyên bản.",
+        "pairing": "Sauvignon Blanc tươi mát."
+      },
+      "bruschetta-smoked-salmon": {
+        "name": "Bruschetta cá hồi xông khói",
+        "desc": "Bánh mì, kem chua, cá hồi xông khói, thì là",
+        "notes": "Bánh mì nướng phủ lớp kem chua, cá hồi xông khói lạnh và thì là tươi. Một sự kết hợp kinh điển, được chế biến tỉ mỉ.",
+        "pairing": "Champagne Brut."
+      },
+      "bruschetta-parma": {
+        "name": "Bruschetta Parma",
+        "desc": "Bánh mì, cà chua, parma ham, phô mai ricotta",
+        "notes": "Bánh mì nướng phết phô mai ricotta béo mịn, phủ cà chua ngọt và Parma ham mềm mỏng. Món khai vị nhẹ nhàng, tinh tế.",
+        "pairing": "Vang hồng (rosé)."
+      },
+      "garden-salad": {
+        "name": "Salad vườn",
+        "desc": "Salad trộn, khoai tây, cà chua bi, hành tím, dưa leo, bông cải xanh, sốt balsamic",
+        "notes": "Sự kết hợp tươi mát của rau xanh vườn nhà, khoai tây luộc, cà chua bi, hành tím, dưa leo giòn và bông cải xanh hấp, trộn cùng sốt giấm balsamic ủ lâu năm.",
+        "pairing": "Một chai Pinot Grigio nhẹ nhàng."
+      },
+      "tropical-fruit-salad-burrata": {
+        "name": "Salad trái cây nhiệt đới & Burrata",
+        "desc": "Salad trộn, cam vàng, dưa lưới, nho, thanh long ruột đỏ, thơm, cà chua bi, sốt tắc",
+        "notes": "Một đĩa salad tươi sáng theo mùa với trái cây nhiệt đới — cam, dưa lưới, nho, thanh long, thơm, cà chua bi — hoàn thiện cùng burrata béo mịn và sốt tắc vị cam quýt.",
+        "pairing": "Một ly mimosa cho bữa brunch."
+      },
+      "smoked-salmon-salad": {
+        "name": "Salad cá hồi xông khói",
+        "desc": "Salad trộn, rau rocket, dưa lưới, cà chua bi, cá hồi xông khói, sốt balsamic",
+        "notes": "Rau xanh vườn nhà, rau rocket cay nhẹ, dưa lưới ngọt, cà chua bi, cá hồi xông khói lạnh, trộn cùng balsamic ủ lâu năm. Tươi mát, đậm vị biển, thanh lịch.",
+        "pairing": "Chardonnay ủ gỗ sồi nhẹ."
+      },
+      "soup-of-the-day": {
+        "name": "Súp trong ngày",
+        "desc": "Súp bí đỏ kem hoặc súp nấm, bánh mì",
+        "notes": "Món súp mỗi ngày của bếp — hoặc súp bí đỏ nướng béo mịn với nhục đậu khấu và gừng, hoặc súp kem ba loại nấm hầm chậm. Dùng kèm bánh mì bơ ấm.",
+        "pairing": "Chardonnay vị bơ."
+      },
+      "spinach-stuffed-chicken-breast": {
+        "name": "Ức gà cuộn cải bó xôi",
+        "desc": "Ức gà, cải bó xôi, hạt điều, phô mai ricotta, sốt Demi, salad trộn",
+        "notes": "Ức gà mềm cuộn cải bó xôi xào và phô mai ricotta béo mịn, phủ hạt điều rang, hoàn thiện cùng lớp sốt demi-glace nhẹ. Dùng kèm salad tươi.",
+        "pairing": "Một ly Pinot Noir nhẹ."
+      },
+      "pan-seared-salmon": {
+        "name": "Cá hồi áp chảo",
+        "desc": "Cá hồi, bông cải xanh, măng tây, nấm tổng hợp, sốt beurre blanc",
+        "notes": "Phi lê cá hồi hoang dã áp chảo cho da giòn, đặt trên lớp bông cải xanh và măng tây hấp cùng nấm xào, hoàn thiện với sốt beurre blanc mịn màng.",
+        "pairing": "Sauvignon Blanc."
+      },
+      "ribeye-hokube-steaks": {
+        "name": "Bít tết Ribeye Hokube",
+        "desc": "Ribeye Hokube, nấm tổng hợp, tỏi, sốt tiêu",
+        "notes": "Thăn ngoại (ribeye) Hokube Nhật Bản cao cấp, ủ khô để dậy vị, áp chảo tái, phủ ba loại nấm xào, tỏi nướng, hoàn thiện với sốt tiêu đậm đà.",
+        "pairing": "Một chai Cabernet Sauvignon đậm vị."
+      },
+      "usda-striploin-steaks": {
+        "name": "Bít tết Striploin USDA",
+        "desc": "Thăn lưng (striploin), nấm tổng hợp, tỏi, sốt vang đỏ",
+        "notes": "Thăn lưng USDA Prime, nướng than theo độ chín bạn thích, dùng kèm nấm xào tổng hợp, tép tỏi nướng, hoàn thiện với sốt vang đỏ cô đặc đậm đà.",
+        "pairing": "Côtes du Rhône."
+      },
+      "top-blade-aukube-steaks": {
+        "name": "Bít tết Top Blade Aukube",
+        "desc": "Top Blade Aukube, nấm tổng hợp, tỏi, bông cải xanh, sốt nấm",
+        "notes": "Top blade Aukube Úc mềm mại, một phần thịt quý nhờ vân mỡ và độ đậm vị, dùng kèm nấm xào, tỏi nướng, bông cải xanh hấp và sốt nấm đậm đà.",
+        "pairing": "Pinot Noir vị đất."
+      },
+      "german-sausage": {
+        "name": "Xúc xích Đức",
+        "desc": "Xúc xích Đức, dưa chua, sốt BBQ",
+        "notes": "Bratwurst Đức chính hiệu, nướng giòn tan, dùng kèm dưa chua nhà làm vị chua dịu và sốt BBQ khói đậm đà. Một món được lòng thực khách từ lục địa già.",
+        "pairing": "Một ly bia Hefeweizen Đức ướp lạnh."
+      },
+      "lamb-sausage": {
+        "name": "Xúc xích cừu",
+        "desc": "Xúc xích cừu, dưa chua, sốt BBQ",
+        "notes": "Xúc xích cừu ướp gia vị và thảo mộc bằng tay, nướng đến khi caramel hóa, dùng kèm dưa chua nhà làm và sốt BBQ chua dịu. Đậm đà, thơm nồng, thỏa mãn.",
+        "pairing": "Côtes du Rhône."
+      },
+      "hickory-sausage": {
+        "name": "Xúc xích Hickory",
+        "desc": "Xúc xích Hickory, dưa chua, sốt BBQ",
+        "notes": "Xông khói chậm trên gỗ hickory hàng giờ, cây xúc xích này mang hương khói sâu lắng, phức hợp. Dùng kèm dưa chua giòn nhà làm và sốt BBQ cổ điển.",
+        "pairing": "Một chai Malbec vị khói."
+      },
+      "crispy-chicken-burger": {
+        "name": "Burger gà giòn",
+        "desc": "Bánh burger, đùi gà, phô mai cheddar, salad, cà chua, dưa chua, sốt mật ong mù tạt, khoai tây chiên",
+        "notes": "Đùi gà mọng nước chiên vàng giòn, phô mai cheddar tan chảy, xà lách giòn, cà chua chín, dưa chua chua dịu, sốt mật ong mù tạt nhà làm, tất cả kẹp trong bánh burger nướng. Dùng kèm khoai tây cắt tay.",
+        "pairing": "Bia lager ướp lạnh."
+      },
+      "beef-burger": {
+        "name": "Burger bò",
+        "desc": "Bánh burger, miếng bò, phô mai cheddar, salad, cà chua, dưa chua, sốt mayo tỏi cay, khoai tây chiên",
+        "notes": "Miếng bò dày kẹp trong bánh burger nướng cùng phô mai cheddar tan chảy, xà lách tươi, cà chua, dưa chua và sốt mayo tỏi cay nồng. Khoai tây cắt tay ăn kèm.",
+        "pairing": "Một chai IPA đậm vị."
+      },
+      "seafood-pasta": {
+        "name": "Mì Ý hải sản",
+        "desc": "Spaghetti, tôm, mực, vẹm, mực ống đen, súp tôm bisque, ớt, tỏi, ngò tây",
+        "notes": "Spaghetti nhà làm trộn sốt mực đen với tôm, mực mềm, vẹm tươi, hoàn thiện với chút súp tôm bisque, ớt tươi, tỏi và ngò tây.",
+        "pairing": "Pinot Grigio."
+      },
+      "shrimp-pasta": {
+        "name": "Mì Ý tôm",
+        "desc": "Spaghetti, tôm, sốt hải sản, tỏi, ớt, phô mai Padano",
+        "notes": "Spaghetti mềm với tôm ngọt thịt, trộn cùng sốt hải sản nhẹ với tỏi tươi, chút ớt, hoàn thiện với phô mai Padano tươi và ngò tây.",
+        "pairing": "Albariño."
+      },
+      "bolognese-pasta": {
+        "name": "Mì Ý sốt Bolognese",
+        "desc": "Tagliatelle, sốt Bolognese, phô mai Padano, ngò tây",
+        "notes": "Sợi tagliatelle bản to, mềm, áo lớp sốt Bolognese hầm chậm từ thịt bò bằm và cà chua, phủ phô mai Padano tươi và rắc ngò tây.",
+        "pairing": "Chianti."
+      },
+      "pesto-pasta-chicken-panko": {
+        "name": "Mì Ý sốt Pesto & gà panko",
+        "desc": "Tagliatelle, sốt pesto, phô mai Padano, đùi gà",
+        "notes": "Tagliatelle mịn màng áo sốt pesto húng quế tươi, phủ đùi gà bọc vụn bánh panko chiên vàng, hoàn thiện với phô mai Padano bào.",
+        "pairing": "Pinot Grigio."
+      },
+      "carbonara-pasta": {
+        "name": "Mì Ý Carbonara",
+        "desc": "Spaghetti, thịt xông khói, phô mai Padano, trứng",
+        "notes": "Carbonara chính hiệu: spaghetti trộn cùng thịt xông khói giòn, sốt trứng béo mịn và phô mai Padano tươi. Không kem, chỉ có truyền thống.",
+        "pairing": "Pinot Grigio."
+      },
+      "pannacotta": {
+        "name": "Pannacotta",
+        "desc": "Món kem Ý dùng lạnh",
+        "notes": "Kem Ý mịn màng đông bằng gelatin, dùng lạnh và phủ trái mọng tươi cùng lớp coulis trái mọng nhẹ. Tinh tế và thanh nhã.",
+        "pairing": "Moscato d'Asti."
+      },
+      "tiramisu": {
+        "name": "Tiramisu",
+        "desc": "Món tráng miệng Ý cổ điển với mascarpone và espresso",
+        "notes": "Những lớp bánh ladyfinger thấm espresso và kem mascarpone béo mịn, phủ lớp bột cacao đắng. Món Ý kinh điển, chế biến chuẩn vị.",
+        "pairing": "Asti Ý vị ngọt."
+      },
+      "pizza-four-cheese": {
+        "name": "Pizza bốn loại phô mai",
+        "desc": "Đế pizza, Mozzarella, Gorgonzola, Piatone, Taleggio",
+        "notes": "Đế pizza nướng lò củi giòn rụm phủ bốn loại phô mai khác biệt — Mozzarella béo mịn, Gorgonzola vị đậm, piattone mềm và taleggio thoảng hương hạt. Giấc mơ của tín đồ phô mai.",
+        "pairing": "Chianti Classico."
+      },
+      "pizza-chicken-unagi": {
+        "name": "Pizza gà sốt Unagi",
+        "desc": "Đế pizza, Mozzarella, đùi gà, cá ngừ bào (katsuo), sốt Unagi",
+        "notes": "Đùi gà mềm, sốt unagi ngọt, phủ cá ngừ bào nhảy múa trong hơi nóng, hoàn thiện với mozzarella béo mịn. Khi phương Đông gặp nước Ý.",
+        "pairing": "Bia Nhật."
+      },
+      "pizza-shrimp-mayo": {
+        "name": "Pizza tôm sốt Mayo",
+        "desc": "Đế pizza, Mozzarella, tôm, sốt mayo, bông cải xanh, hành tím",
+        "notes": "Tôm ngọt thịt và những búp bông cải xanh mềm, sốt mayo béo mịn, hành tím ngọt, tất cả trên đế pizza giòn cùng mozzarella tan chảy.",
+        "pairing": "Sauvignon Blanc."
+      },
+      "pizza-soy-beef": {
+        "name": "Pizza bò sốt tương",
+        "desc": "Đế pizza, Mozzarella, ba chỉ bò, sốt tương, mầm rau",
+        "notes": "Ba chỉ bò đậm đà nấu sốt tương, mầm rau non mềm, mozzarella béo mịn trên đế giòn. Sự hòa quyện hương vị trên đế mỏng.",
+        "pairing": "Bia lager nhẹ."
+      },
+      "pizza-meatlove": {
+        "name": "Pizza thập cẩm thịt",
+        "desc": "Đế pizza, Mozzarella, Salami, thịt xông khói, sốt cà chua",
+        "notes": "Giấc mơ của người mê thịt — salami cay, thịt xông khói giòn, sốt cà chua ngọt và mozzarella tan chảy trên đế nướng cháy cạnh hoàn hảo. Dành cho các tín đồ ăn thịt.",
+        "pairing": "Vang đỏ đậm vị."
+      },
+      "pizza-njuda-mushroom": {
+        "name": "Pizza Nduja & nấm",
+        "desc": "Đế pizza, Mozzarella, nduja nhà làm, nấm tổng hợp, sốt cà chua",
+        "notes": "Nduja cay nhà làm phết rộng tay, nấm xào tổng hợp, sốt cà chua ngọt, mozzarella tan chảy. Vị cay và vị đất hòa quyện.",
+        "pairing": "Vang đỏ vị cay."
+      },
+      "pizza-margherita": {
+        "name": "Pizza Margherita",
+        "desc": "Đế pizza, Mozzarella, sốt cà chua, húng quế",
+        "notes": "Món kinh điển vượt thời gian — sốt cà chua ngọt, mozzarella béo mịn, húng quế tươi, dầu ô liu trên đế mỏng nướng lò củi. Sự giản đơn hoàn hảo.",
+        "pairing": "Chianti."
+      },
+      "pizza-veggie": {
+        "name": "Pizza rau củ",
+        "desc": "Đế pizza, Mozzarella, sốt cà chua, ớt chuông, nấm tổng hợp",
+        "notes": "Bản hòa ca đầy màu sắc của rau củ — ớt chuông nướng, ba loại nấm xào, sốt cà chua ngọt, mozzarella béo mịn trên đế giòn.",
+        "pairing": "Pinot Grigio."
+      },
+      "pizza-parma-burrata": {
+        "name": "Pizza Parma & Burrata",
+        "desc": "Đế pizza, Mozzarella, sốt cà chua, húng quế, Parma ham, phô mai Burrata",
+        "notes": "Nền sốt cà chua và mozzarella, sau khi ra lò phủ thêm Parma ham mềm mỏng, burrata béo mịn, húng quế tươi và chút dầu ô liu hảo hạng.",
+        "pairing": "Prosecco."
+      },
+      "pizza-seafood": {
+        "name": "Pizza hải sản",
+        "desc": "Đế pizza, sốt hải sản, Mozzarella, mực, tôm, vẹm",
+        "notes": "Kho báu từ biển — mực mềm, tôm mọng, vẹm tươi, sốt hải sản nhẹ, mozzarella béo mịn trên đế nướng lò củi. Dành cho người sành hải sản.",
+        "pairing": "Albariño."
+      },
+      "smoked-beef-quesadillas": {
+        "name": "Quesadilla bò xông khói",
+        "desc": "Bò xông khói, bánh tortilla, bơ, mozzarella, salad bắp cải, guacamole, salsa",
+        "notes": "Bò xông khói mềm trong bánh tortilla giòn, xếp lớp cùng bơ trái béo mịn, mozzarella tan chảy, salad bắp cải chua dịu, guacamole tươi và sốt salsa nhà làm.",
+        "pairing": "Bia Mexico."
+      },
+      "chicken-quesadillas": {
+        "name": "Quesadilla gà",
+        "desc": "Đùi gà, bánh tortilla, bơ, mozzarella, salad bắp cải, guacamole, salsa",
+        "notes": "Đùi gà mọng nước gập trong bánh tortilla giòn cùng bơ trái chín, mozzarella tan chảy, salad bắp cải giòn, guacamole tươi và sốt salsa chua dịu. Một món được yêu thích.",
+        "pairing": "Bia Mexico nhẹ."
+      },
+      "smoked-beef-burrito": {
+        "name": "Burrito bò xông khói",
+        "desc": "Bò xông khói, bánh tortilla, mozzarella, salad bắp cải, sốt BBQ, guacamole, salsa, khoai tây chiên",
+        "notes": "Một chiếc burrito đầy đặn nhồi bò xông khói, mozzarella tan chảy, salad bắp cải chua dịu, sốt BBQ cay, guacamole béo mịn và salsa tươi. Dùng kèm khoai tây cắt tay.",
+        "pairing": "Bia Mexico."
+      },
+      "chicken-burritos": {
+        "name": "Burrito gà",
+        "desc": "Đùi gà, bánh tortilla, mozzarella, salad bắp cải, sốt mật ong mù tạt, guacamole, salsa, khoai tây chiên",
+        "notes": "Đùi gà đầy đặn cuốn trong bánh tortilla ấm cùng guacamole béo mịn, salsa tươi, sốt mật ong mù tạt, salad bắp cải và mozzarella tan chảy. Có kèm khoai tây chiên.",
+        "pairing": "Bia Mexico nhẹ."
+      },
+      "smoked-beef-nachos": {
+        "name": "Nachos bò xông khói",
+        "desc": "Bò xông khói, bánh tortilla, guacamole, salsa, sốt phô mai, phô mai Padano",
+        "notes": "Bánh tortilla giòn phủ đầy bò xông khói, guacamole béo mịn, salsa tươi, sốt phô mai đậm đà và phô mai Padano bào. Một bữa tiệc để chia sẻ.",
+        "pairing": "Bia Mexico."
+      },
+      "chicken-nachos": {
+        "name": "Nachos gà",
+        "desc": "Đùi gà, bánh tortilla, guacamole, salsa, sốt phô mai, phô mai Padano",
+        "notes": "Bánh tortilla phủ đầy gà mềm, guacamole tươi, salsa chua dịu, sốt phô mai béo mịn và phô mai Padano bào. Một đĩa chia sẻ thơm ngon.",
+        "pairing": "Bia Mexico."
+      },
+      "smoked-beef-tapas": {
+        "name": "Tapas bò xông khói",
+        "desc": "Bò xông khói, khoai tây chiên, hành tây, sốt BBQ, sốt mật ong mù tạt, sốt mayo tỏi",
+        "notes": "Khoai tây cắt tay phủ bò xông khói, hành tây caramel hóa và lựa chọn ba loại sốt nhà làm: BBQ, mật ong mù tạt hoặc mayo tỏi cay.",
+        "pairing": "Bia hoặc vang nhẹ."
+      },
+      "smoked-beef-taco": {
+        "name": "Taco bò xông khói",
+        "desc": "Bò xông khói, salsa, salad bắp cải, guacamole, vỏ taco",
+        "notes": "Một chiếc taco giản đơn mà thỏa mãn — bò xông khói mềm, salsa tươi, salad bắp cải giòn, guacamole béo mịn, tất cả trong vỏ bánh bắp mềm.",
+        "pairing": "Bia Mexico."
+      },
+      "chicken-taco": {
+        "name": "Taco gà",
+        "desc": "Đùi gà, salsa, salad bắp cải, guacamole, vỏ taco",
+        "notes": "Đùi gà mọng nước, salsa tươi, salad bắp cải giòn, guacamole béo mịn, cuốn trong vỏ bánh bắp ấm. Nhanh gọn, thỏa mãn, thơm ngon.",
+        "pairing": "Bia Mexico nhẹ."
+      },
+      "french-fries": {
+        "name": "Khoai tây chiên",
+        "desc": "Khoai tây chiên, sốt mayo tỏi",
+        "notes": "Khoai tây chiên hai lần vàng ruộm, ngoài giòn trong xốp, dùng kèm sốt mayo tỏi cay nhà làm để chấm.",
+        "pairing": "Bia."
+      },
+      "chicken-unagi": {
+        "name": "Gà sốt Unagi",
+        "desc": "Đùi gà, sốt unagi, cá ngừ bào (katsuo)",
+        "notes": "Đùi gà mềm phủ lớp sốt unagi ngọt, rắc cá ngừ bào nhảy múa. Một món ấm bụng lấy cảm hứng từ Nhật Bản.",
+        "pairing": "Bia Nhật."
+      },
+      "chicken-popcorn": {
+        "name": "Gà viên (Popcorn)",
+        "desc": "Đùi gà, sốt mayo tỏi",
+        "notes": "Những miếng đùi gà chiên giòn cỡ vừa miệng, tẩm gia vị hoàn hảo và dùng kèm sốt mayo tỏi cay nhà làm. Một món được lòng tất cả.",
+        "pairing": "Bia."
+      }
+    }
+  },
+  "reservation": {
+    "eyebrow": "— Sân ga 09 · Mua vé của bạn —",
+    "title": "Đặt chỗ của bạn",
+    "subtitle": "Một biểu mẫu ngắn gọn. Chúng tôi sẽ liên hệ lại trong ngày để xác nhận chỗ ngồi cho bạn.",
+    "stampTop": "Sân ga",
+    "stampBottom": "Hạng nhất",
+    "name": "Tên hành khách",
+    "namePlaceholder": "vd. Anna Kovács",
+    "phone": "Điện tín (Số điện thoại)",
+    "phonePlaceholder": "+84 — — — —",
+    "email": "Thư tín (Email)",
+    "emailPlaceholder": "ban@example.com",
+    "date": "Ngày khởi hành",
+    "time": "Giờ",
+    "party": "Số khách",
+    "partySizes": [
+      "2 hành khách",
+      "3 hành khách",
+      "4 hành khách",
+      "5 hành khách",
+      "6 hành khách",
+      "7+ · toa riêng"
+    ],
+    "branch": "Chi nhánh",
+    "branchOptions": [
+      "The Villa — Điện Biên Phủ",
+      "Độc Lập — Nguyễn Thị Minh Khai",
+      "Diamond Plaza — Lê Duẩn"
+    ],
+    "notes": "Lời nhắn cho nhân viên phục vụ",
+    "notesPlaceholder": "Bàn cạnh cửa sổ, dị ứng, kỷ niệm…",
+    "terms": "Khi lên tàu, bạn đồng ý với các điều khoản của chúng tôi.",
+    "submit": "Đặt ngay",
+    "success": "✓ Đã nhận vé. Nhân viên của chúng tôi sẽ liên hệ bạn trong giây lát."
+  },
+  "location": {
+    "eyebrow": "— Bảng giờ khởi hành —",
+    "title": "Tìm The Terminal",
+    "subtitle": "Ba điểm dừng trên cùng tuyến — cùng giờ mở cửa, cùng một căn bếp, cùng những ngày Chủ Nhật dài.",
+    "departureBoard": "Bảng giờ khởi hành",
+    "hoursTitle": "Giờ hoạt động",
+    "hotline": "Đường dây nóng",
+    "hotlineTel": "19006403",
+    "hotlineDisplay": "1900 6403",
+    "emailLabel": "Email",
+    "email": "hello@theterminal.cafe",
+    "colDay": "Ngày",
+    "colWindow": "Khung giờ phục vụ",
+    "branches": [
+      {
+        "label": "Chi nhánh · 01",
+        "name": "The Villa",
+        "address": "290 Điện Biên Phủ,\nP. Xuân Hoà, TP.HCM",
+        "note": "(ngã ba Lê Ngô Cát & Điện Biên Phủ)",
+        "phone": "0944 56 55 57",
+        "tel": "+84944565557"
+      },
+      {
+        "label": "Chi nhánh · 02",
+        "name": "Độc Lập",
+        "address": "106 Nguyễn Thị Minh Khai,\nP. Xuân Hoà, TP.HCM",
+        "note": "(ngay góc Nam Kỳ Khởi Nghĩa)",
+        "phone": "0901 56 55 57",
+        "tel": "+84901565557"
+      },
+      {
+        "label": "Chi nhánh · 03",
+        "name": "Diamond Plaza",
+        "address": "Tầng 5, Diamond Plaza,\n34 Lê Duẩn, P. Sài Gòn, TP.HCM",
+        "note": "(rooftop terrace · skyline view)",
+        "phone": "0963 56 55 57",
+        "tel": "+84963565557"
+      }
+    ],
+    "hours": [
+      { "day": "Thứ Hai", "window": "11:00 — 22:00" },
+      { "day": "Thứ Ba", "window": "11:00 — 22:00" },
+      { "day": "Thứ Tư", "window": "11:00 — 22:00" },
+      { "day": "Thứ Năm", "window": "11:00 — 22:00" },
+      { "day": "Thứ Sáu", "window": "11:00 — 23:00" },
+      { "day": "Thứ Bảy", "window": "11:00 — 23:00" },
+      { "day": "Chủ Nhật", "window": "11:00 — 22:00" }
+    ]
+  },
+  "footer": {
+    "blurb": "Một quán cà phê nhà ga dành cho những tâm hồn thong thả — phục vụ những món ăn của châu Âu xưa dưới ánh đèn đồng và những bánh răng quay chậm rãi.",
+    "connections": "Kết nối",
+    "links": {
+      "home": "Trang chủ",
+      "about": "Về The Terminal",
+      "menu": "Thực đơn",
+      "reserve": "Đặt bàn",
+      "location": "Tìm chúng tôi"
+    },
+    "dispatchesTitle": "Nhận bản tin của chúng tôi",
+    "wire": "Thư tín",
+    "wirePlaceholder": "địa chỉ thư tín của bạn",
+    "send": "Gửi →",
+    "sent": "✓ Đã nhận tín hiệu · hết ·",
+    "copyright": "© 2024 · The Terminal — All Journeys Reserved",
+    "builtWith": "Dựng nên từ đồng, gỗ sồi & sự kiên nhẫn"
+  }
+}
