@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from "@/components/providers/locale-provider";
+import { BrandLogo } from "./brand-logo";
 import { cn } from "@/lib/utils";
 
 export function BrandWordmark({
@@ -12,15 +13,18 @@ export function BrandWordmark({
 }) {
   const { t } = useTranslation();
   return (
-    <a href="#home" className={cn("flex flex-col leading-tight", className)}>
-      <span className="text-grad-accent text-[13px] font-bold tracking-[.28em]">
-        {t("brand.name")}
-      </span>
-      {showSubtitle && (
-        <span className="hidden text-[10px] tracking-[.32em] text-quartz/65 md:block">
-          {t("brand.tagline")}
+    <a href="#home" className={cn("flex items-center gap-3", className)}>
+      <BrandLogo priority className="h-10 w-10" />
+      <span className="flex flex-col leading-tight">
+        <span className="text-grad-accent text-[13px] font-bold tracking-[.28em]">
+          {t("brand.name")}
         </span>
-      )}
+        {showSubtitle && (
+          <span className="hidden text-[10px] tracking-[.32em] text-quartz/65 md:block">
+            {t("brand.tagline")}
+          </span>
+        )}
+      </span>
     </a>
   );
 }

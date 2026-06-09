@@ -25,10 +25,36 @@ const pinyon = Pinyon_Script({
   display: "swap",
 });
 
+const SITE_TITLE = "THE TERMINAL — Cafe & European Kitchen";
+const SITE_DESCRIPTION =
+  "A small European kitchen at the end of an old freight line — slow mornings, lantern-lit evenings, and a kitchen that doesn't rush.";
+
 export const metadata: Metadata = {
-  title: "THE TERMINAL — Cafe & European Kitchen",
-  description:
-    "A small European kitchen at the end of an old freight line — slow mornings, lantern-lit evenings, and a kitchen that doesn't rush.",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  ),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    siteName: "THE TERMINAL",
+    type: "website",
+    images: [
+      {
+        url: "/images/logo-the-terminal.avif",
+        width: 1195,
+        height: 896,
+        alt: "THE TERMINAL",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/images/logo-the-terminal.avif"],
+  },
 };
 
 export const viewport: Viewport = {
