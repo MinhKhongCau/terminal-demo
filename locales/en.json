@@ -142,11 +142,17 @@
         "notes": "Garden greens, peppery rocket, sweet melon, cherry tomato, cold-smoked salmon, tossed in aged balsamic. Fresh, briny, elegant.",
         "pairing": "Chardonnay, lightly oaked."
       },
-      "soup-of-the-day": {
-        "name": "Soup of the Day",
-        "desc": "Creamy pumpkin soup or mushroom soup, bread",
-        "notes": "The kitchen's daily offering—either a silky roasted pumpkin bisque with nutmeg and ginger, or a trio of slow-cooked mushroom cream. Served with warm buttered bread.",
+      "pumpkin-soup": {
+        "name": "Creamy Pumpkin Soup",
+        "desc": "Roasted pumpkin bisque, nutmeg, ginger, bread",
+        "notes": "A silky roasted pumpkin bisque finished with nutmeg and a whisper of ginger, served with warm buttered bread. Comfort in a bowl.",
         "pairing": "Buttery Chardonnay."
+      },
+      "mushroom-soup": {
+        "name": "Creamy Mushroom Soup",
+        "desc": "Trio of slow-cooked mushrooms, cream, bread",
+        "notes": "Three kinds of mushroom slow-cooked into a velvety cream soup—earthy and deep—served with warm buttered bread.",
+        "pairing": "Lightly oaked Chardonnay."
       },
       "spinach-stuffed-chicken-breast": {
         "name": "Spinach Stuffed Chicken Breast",
@@ -407,12 +413,6 @@
       "6 passengers",
       "7+ · private car"
     ],
-    "branch": "Branch",
-    "branchOptions": [
-      "The Villa — Điện Biên Phủ",
-      "Độc Lập — Nguyễn Thị Minh Khai",
-      "Diamond Plaza — Lê Duẩn"
-    ],
     "notes": "Notes to the Conductor",
     "notesPlaceholder": "Window booth, allergies, anniversary…",
     "terms": "By boarding you accept our conductor's terms.",
@@ -421,8 +421,8 @@
   },
   "location": {
     "eyebrow": "— Departure Board —",
-    "title": "Find the Terminal",
-    "subtitle": "Three stops along the line — same hours, same kitchen, same long Sunday.",
+    "title": "The Terminal",
+    "subtitle": "One kitchen at the quiet end of the line — slow mornings, lantern-lit evenings, and long Sundays.",
     "departureBoard": "Departure Board",
     "hoursTitle": "Hours of Operation",
     "hotline": "Hotline",
@@ -435,37 +435,20 @@
     "branches": [
       {
         "label": "Branch · 01",
-        "name": "The Villa",
-        "address": "290 Điện Biên Phủ,\nP. Xuân Hoà, TP.HCM",
-        "note": "(ngã ba Lê Ngô Cát & Điện Biên Phủ)",
-        "phone": "0944 56 55 57",
-        "tel": "+84944565557"
-      },
-      {
-        "label": "Branch · 02",
-        "name": "Độc Lập",
-        "address": "106 Nguyễn Thị Minh Khai,\nP. Xuân Hoà, TP.HCM",
-        "note": "(ngay góc Nam Kỳ Khởi Nghĩa)",
-        "phone": "0901 56 55 57",
-        "tel": "+84901565557"
-      },
-      {
-        "label": "Branch · 03",
-        "name": "Diamond Plaza",
-        "address": "Tầng 5, Diamond Plaza,\n34 Lê Duẩn, P. Sài Gòn, TP.HCM",
-        "note": "(rooftop terrace · skyline view)",
-        "phone": "0963 56 55 57",
-        "tel": "+84963565557"
+        "name": "The Terminal",
+        "address": "03 Nguyen Cong Tru Street, Thu Duc City, HCM City",
+        "note": "",
+        "phone": "0886 128 008"      
       }
     ],
     "hours": [
-      { "day": "Monday", "window": "11:00 — 22:00" },
-      { "day": "Tuesday", "window": "11:00 — 22:00" },
-      { "day": "Wednesday", "window": "11:00 — 22:00" },
-      { "day": "Thursday", "window": "11:00 — 22:00" },
-      { "day": "Friday", "window": "11:00 — 23:00" },
-      { "day": "Saturday", "window": "11:00 — 23:00" },
-      { "day": "Sunday", "window": "11:00 — 22:00" }
+      { "day": "Monday", "window": "10:30AM — 22:00PM" },
+      { "day": "Tuesday", "window": "10:30AM — 22:00PM" },
+      { "day": "Wednesday", "window": "10:30AM — 22:00PM" },
+      { "day": "Thursday", "window": "10:30AM — 22:00PM" },
+      { "day": "Friday", "window": "10:30AM — 23:00PM" },
+      { "day": "Saturday", "window": "10:30AM — 23:00PM" },
+      { "day": "Sunday", "window": "10:30AM — 22:00PM" }
     ]
   },
   "footer": {

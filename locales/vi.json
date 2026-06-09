@@ -20,7 +20,7 @@
     "toggleLanguage": "Đổi ngôn ngữ"
   },
   "hero": {
-    "est": "EST · 2024",
+    "est": "EST · 2026",
     "subtitle": "Cafe · Bếp Âu",
     "tagline": "Một căn bếp Âu nhỏ nằm cuối một tuyến đường ray chở hàng năm xưa — những buổi sáng thong thả, những buổi tối lung linh ánh đèn, và một căn bếp không bao giờ vội vã.",
     "exploreMenu": "Khám phá thực đơn",
@@ -142,11 +142,17 @@
         "notes": "Rau xanh vườn nhà, rau rocket cay nhẹ, dưa lưới ngọt, cà chua bi, cá hồi xông khói lạnh, trộn cùng balsamic ủ lâu năm. Tươi mát, đậm vị biển, thanh lịch.",
         "pairing": "Chardonnay ủ gỗ sồi nhẹ."
       },
-      "soup-of-the-day": {
-        "name": "Súp trong ngày",
-        "desc": "Súp bí đỏ kem hoặc súp nấm, bánh mì",
-        "notes": "Món súp mỗi ngày của bếp — hoặc súp bí đỏ nướng béo mịn với nhục đậu khấu và gừng, hoặc súp kem ba loại nấm hầm chậm. Dùng kèm bánh mì bơ ấm.",
+      "pumpkin-soup": {
+        "name": "Súp bí đỏ kem",
+        "desc": "Súp bí đỏ nướng, nhục đậu khấu, gừng, bánh mì",
+        "notes": "Súp bí đỏ nướng béo mịn, hoàn thiện với nhục đậu khấu và chút gừng thoảng nhẹ, dùng kèm bánh mì bơ ấm. Sự ấm áp trong một tô súp.",
         "pairing": "Chardonnay vị bơ."
+      },
+      "mushroom-soup": {
+        "name": "Súp kem nấm",
+        "desc": "Ba loại nấm hầm chậm, kem, bánh mì",
+        "notes": "Ba loại nấm hầm chậm thành súp kem mịn như nhung — đậm vị đất — dùng kèm bánh mì bơ ấm.",
+        "pairing": "Chardonnay ủ gỗ sồi nhẹ."
       },
       "spinach-stuffed-chicken-breast": {
         "name": "Ức gà cuộn cải bó xôi",
@@ -407,12 +413,6 @@
       "6 hành khách",
       "7+ · toa riêng"
     ],
-    "branch": "Chi nhánh",
-    "branchOptions": [
-      "The Villa — Điện Biên Phủ",
-      "Độc Lập — Nguyễn Thị Minh Khai",
-      "Diamond Plaza — Lê Duẩn"
-    ],
     "notes": "Lời nhắn cho nhân viên phục vụ",
     "notesPlaceholder": "Bàn cạnh cửa sổ, dị ứng, kỷ niệm…",
     "terms": "Khi lên tàu, bạn đồng ý với các điều khoản của chúng tôi.",
@@ -421,8 +421,8 @@
   },
   "location": {
     "eyebrow": "— Bảng giờ khởi hành —",
-    "title": "Tìm The Terminal",
-    "subtitle": "Ba điểm dừng trên cùng tuyến — cùng giờ mở cửa, cùng một căn bếp, cùng những ngày Chủ Nhật dài.",
+    "title": "The Terminal",
+    "subtitle": "Một căn bếp ở đoạn cuối yên tĩnh của tuyến đường — những buổi sáng thong thả, những buổi tối ánh đèn, và những ngày Chủ Nhật dài.",
     "departureBoard": "Bảng giờ khởi hành",
     "hoursTitle": "Giờ hoạt động",
     "hotline": "Đường dây nóng",
@@ -435,37 +435,20 @@
     "branches": [
       {
         "label": "Chi nhánh · 01",
-        "name": "The Villa",
-        "address": "290 Điện Biên Phủ,\nP. Xuân Hoà, TP.HCM",
-        "note": "(ngã ba Lê Ngô Cát & Điện Biên Phủ)",
-        "phone": "0944 56 55 57",
-        "tel": "+84944565557"
-      },
-      {
-        "label": "Chi nhánh · 02",
-        "name": "Độc Lập",
-        "address": "106 Nguyễn Thị Minh Khai,\nP. Xuân Hoà, TP.HCM",
-        "note": "(ngay góc Nam Kỳ Khởi Nghĩa)",
-        "phone": "0901 56 55 57",
-        "tel": "+84901565557"
-      },
-      {
-        "label": "Chi nhánh · 03",
-        "name": "Diamond Plaza",
-        "address": "Tầng 5, Diamond Plaza,\n34 Lê Duẩn, P. Sài Gòn, TP.HCM",
-        "note": "(rooftop terrace · skyline view)",
-        "phone": "0963 56 55 57",
-        "tel": "+84963565557"
+        "name": "The Terminal",
+        "address": "03 Nguyen Cong Tru Street, Thu Duc City, HCM City",
+        "note": "",
+        "phone": "0886 128 008"
       }
     ],
     "hours": [
-      { "day": "Thứ Hai", "window": "11:00 — 22:00" },
-      { "day": "Thứ Ba", "window": "11:00 — 22:00" },
-      { "day": "Thứ Tư", "window": "11:00 — 22:00" },
-      { "day": "Thứ Năm", "window": "11:00 — 22:00" },
-      { "day": "Thứ Sáu", "window": "11:00 — 23:00" },
-      { "day": "Thứ Bảy", "window": "11:00 — 23:00" },
-      { "day": "Chủ Nhật", "window": "11:00 — 22:00" }
+      { "day": "Thứ Hai", "window": "10:30AM — 22:00PM" },
+      { "day": "Thứ Ba", "window": "10:30AM — 22:00PM" },
+      { "day": "Thứ Tư", "window": "10:30AM — 22:00PM" },
+      { "day": "Thứ Năm", "window": "10:30AM — 22:00PM" },
+      { "day": "Thứ Sáu", "window": "10:30AM — 23:00PM" },
+      { "day": "Thứ Bảy", "window": "10:30AM — 23:00PM" },
+      { "day": "Chủ Nhật", "window": "10:30AM — 22:00PM" }
     ]
   },
   "footer": {
@@ -483,7 +466,7 @@
     "wirePlaceholder": "địa chỉ thư tín của bạn",
     "send": "Gửi →",
     "sent": "✓ Đã nhận tín hiệu · hết ·",
-    "copyright": "© 2024 · The Terminal — All Journeys Reserved",
+    "copyright": "© 2026 · The Terminal — All Journeys Reserved",
     "builtWith": "Dựng nên từ đồng, gỗ sồi & sự kiên nhẫn"
   }
 }

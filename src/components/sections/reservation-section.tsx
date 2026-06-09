@@ -13,7 +13,6 @@ export function ReservationSection() {
   const [submitted, setSubmitted] = useState(false);
 
   const partySizes = (messages.reservation.partySizes ?? []) as string[];
-  const branchOptions = (messages.reservation.branchOptions ?? []) as string[];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -106,23 +105,12 @@ export function ReservationSection() {
               <input id="f-time" type="time" defaultValue="19:00" required />
             </div>
 
-            <div className="field">
+            <div className="field md:col-span-2">
               <label className="field-label" htmlFor="f-guests">
                 {t("reservation.party")}
               </label>
               <select id="f-guests">
                 {partySizes.map((option) => (
-                  <option key={option}>{option}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="field">
-              <label className="field-label" htmlFor="f-branch">
-                {t("reservation.branch")}
-              </label>
-              <select id="f-branch">
-                {branchOptions.map((option) => (
                   <option key={option}>{option}</option>
                 ))}
               </select>
