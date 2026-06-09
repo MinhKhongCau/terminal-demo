@@ -14,7 +14,7 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <MenuSection />
-        <ReservationSection />
+        {/* <ReservationSection /> */}
         <LocationSection />
         <FooterSection />
       </main>
