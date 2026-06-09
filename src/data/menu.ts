@@ -3,6 +3,10 @@
  * image, and allergen keys. All human-readable copy (name / description /
  * chef notes / pairing / allergen labels) lives in locales/{en,vi}.json and
  * is looked up by these ids — see useMenuItem() in the menu components.
+ *
+ * Images are local assets served from `public/images/` (Vite serves `public/`
+ * at the site root, so the path is `/images/<file>.jpg`). The `img()` Unsplash
+ * helper below remains only as a fallback for dishes that have no local photo.
  */
 
 export type MenuCategory =
@@ -46,67 +50,68 @@ export const MENU_CATEGORIES: MenuCategory[] = [
 
 export const MENU_ITEMS: MenuItem[] = [
   // ── Appetizers ──
-  { id: "cold-cut-plate", category: "appetizers", price: 279, allergens: ["gluten", "dairy", "nuts"], image: img("1541529086526-db283c563270") },
-  { id: "cheese-plate", category: "appetizers", price: 249, allergens: ["gluten", "dairy", "nuts"], image: img("1589985643862-6b19e87edb48") },
-  { id: "parma-burrata", category: "appetizers", price: 349, allergens: ["gluten", "dairy"], image: img("1514432324607-2e467f4af445") },
-  { id: "beef-carpaccio", category: "appetizers", price: 199, allergens: ["dairy"], image: img("1546069901-ba9599a7e63c") },
-  { id: "bruschetta-smoked-salmon", category: "appetizers", price: 79, allergens: ["gluten", "dairy", "fish"], image: img("1572656631137-7935297eff55") },
-  { id: "bruschetta-parma", category: "appetizers", price: 89, allergens: ["gluten", "dairy"], image: img("1504674900247-0877df9cc836") },
+  { id: "cold-cut-plate", category: "appetizers", price: 279, allergens: ["gluten", "dairy", "nuts"], image: "/images/cold_cut_plate.jpg" },
+  { id: "cheese-plate", category: "appetizers", price: 249, allergens: ["gluten", "dairy", "nuts"], image: "/images/cheese_plate.jpg" },
+  { id: "parma-burrata", category: "appetizers", price: 349, allergens: ["gluten", "dairy"], image: "/images/parma_burrata.jpg" },
+  { id: "beef-carpaccio", category: "appetizers", price: 199, allergens: ["dairy"], image: "/images/beef_carpaccio.jpg" },
+  { id: "bruschetta-smoked-salmon", category: "appetizers", price: 79, allergens: ["gluten", "dairy", "fish"], image: "/images/banh_mi_ca_hoi_xong_khoi.jpg" },
+  { id: "bruschetta-parma", category: "appetizers", price: 89, allergens: ["gluten", "dairy"], image: "/images/banh_mi_thit_heo_muoi.jpg" },
 
   // ── Salads ──
-  { id: "garden-salad", category: "salads", price: 89, allergens: [], image: img("1512621776951-a57141f2eefd") },
-  { id: "tropical-fruit-salad-burrata", category: "salads", price: 249, allergens: ["dairy"], image: img("1490645935967-10de6ba17061") },
-  { id: "smoked-salmon-salad", category: "salads", price: 139, allergens: ["fish"], image: img("1546069901-ba9599a7e63c") },
+  { id: "garden-salad", category: "salads", price: 89, allergens: [], image: "/images/garden_salad.jpg" },
+  { id: "tropical-fruit-salad-burrata", category: "salads", price: 249, allergens: ["dairy"], image: "/images/tropical_fruit_burata_salad.jpg" },
+  { id: "smoked-salmon-salad", category: "salads", price: 139, allergens: ["fish"], image: "/images/xalad_ca_hoi_xong_khoi.jpg" },
 
   // ── Soups ──
-  { id: "soup-of-the-day", category: "soups", price: 59, allergens: ["gluten", "dairy"], image: img("1476718406336-bb5a9690ee2a") },
+  { id: "pumpkin-soup", category: "soups", price: 59, allergens: ["gluten", "dairy"], image: "/images/xoup_bi_do.jpg" },
+  { id: "mushroom-soup", category: "soups", price: 59, allergens: ["gluten", "dairy"], image: "/images/xoup_kem_nam.jpg" },
 
   // ── Mains ──
-  { id: "spinach-stuffed-chicken-breast", category: "mains", price: 139, allergens: ["dairy", "nuts"], image: img("1598103442097-8b74394b95c6") },
-  { id: "pan-seared-salmon", category: "mains", price: 239, allergens: ["fish", "dairy"], image: img("1546069901-ba9599a7e63c") },
-  { id: "ribeye-hokube-steaks", category: "mains", price: 499, allergens: [], image: img("1544025162-d76694265947") },
-  { id: "usda-striploin-steaks", category: "mains", price: 499, allergens: [], image: img("1600888675559-8d3d20c3d4e7") },
-  { id: "top-blade-aukube-steaks", category: "mains", price: 299, allergens: ["dairy"], image: img("1544025162-d76694265947") },
-  { id: "german-sausage", category: "mains", price: 179, allergens: ["gluten"], image: img("1555939594-58d7cb561ad1") },
-  { id: "lamb-sausage", category: "mains", price: 209, allergens: ["gluten"], image: img("1555939594-58d7cb561ad1") },
-  { id: "hickory-sausage", category: "mains", price: 199, allergens: ["gluten"], image: img("1555939594-58d7cb561ad1") },
-  { id: "crispy-chicken-burger", category: "mains", price: 119, allergens: ["gluten", "dairy", "egg"], image: img("1550547659-c8a38175e3a7") },
-  { id: "beef-burger", category: "mains", price: 139, allergens: ["gluten", "dairy", "egg"], image: img("1568901346375-23c9450c58cd") },
-  { id: "seafood-pasta", category: "mains", price: 199, allergens: ["gluten", "shellfish", "dairy"], image: img("1621996346565-e3dbc646d9a9") },
-  { id: "shrimp-pasta", category: "mains", price: 159, allergens: ["gluten", "shellfish", "dairy"], image: img("1621996346565-e3dbc646d9a9") },
-  { id: "bolognese-pasta", category: "mains", price: 99, allergens: ["gluten", "dairy"], image: img("1621996346565-e3dbc646d9a9") },
-  { id: "pesto-pasta-chicken-panko", category: "mains", price: 159, allergens: ["gluten", "dairy", "nuts"], image: img("1621996346565-e3dbc646d9a9") },
-  { id: "carbonara-pasta", category: "mains", price: 139, allergens: ["gluten", "dairy", "egg"], image: img("1621996346565-e3dbc646d9a9") },
+  { id: "spinach-stuffed-chicken-breast", category: "mains", price: 139, allergens: ["dairy", "nuts"], image: "/images/uc_ga_nhoi_cai_bo_xoi.jpg" },
+  { id: "pan-seared-salmon", category: "mains", price: 239, allergens: ["fish", "dairy"], image: "/images/ca_hoi_ap_chao.jpg" },
+  { id: "ribeye-hokube-steaks", category: "mains", price: 499, allergens: [], image: "/images/rib_eye_hokube_steak.jpg" },
+  { id: "usda-striploin-steaks", category: "mains", price: 549, allergens: [], image: "/images/usda_striploin.jpg" },
+  { id: "top-blade-aukube-steaks", category: "mains", price: 299, allergens: ["dairy"], image: "/images/top_blade_steaks.jpg" },
+  { id: "german-sausage", category: "mains", price: 179, allergens: ["gluten"], image: "/images/xucxich3loai.jpg" },
+  { id: "lamb-sausage", category: "mains", price: 209, allergens: ["gluten"], image: "/images/xucxich3loai.jpg" },
+  { id: "hickory-sausage", category: "mains", price: 199, allergens: ["gluten"], image: "/images/xucxich3loai.jpg" },
+  { id: "crispy-chicken-burger", category: "mains", price: 119, allergens: ["gluten", "dairy", "egg"], image: "/images/burger_ga.jpg" },
+  { id: "beef-burger", category: "mains", price: 139, allergens: ["gluten", "dairy", "egg"], image: "/images/burger_bo.jpg" },
+  { id: "seafood-pasta", category: "mains", price: 199, allergens: ["gluten", "shellfish", "dairy"], image: "/images/sea_food_pasta.jpg" },
+  { id: "shrimp-pasta", category: "mains", price: 159, allergens: ["gluten", "shellfish", "dairy"], image: "/images/shrimp_pasta.jpg" },
+  { id: "bolognese-pasta", category: "mains", price: 99, allergens: ["gluten", "dairy"], image: "/images/bolognese_pasta.jpg" },
+  { id: "pesto-pasta-chicken-panko", category: "mains", price: 159, allergens: ["gluten", "dairy", "nuts"], image: "/images/pesto_pasta_chicken_panko.jpg" },
+  { id: "carbonara-pasta", category: "mains", price: 139, allergens: ["gluten", "dairy", "egg"], image: "/images/carbonara_pasta.jpg" },
 
-  // ── Desserts ──
+  // ── Desserts ── (no local photo yet — Unsplash fallback)
   { id: "pannacotta", category: "desserts", price: 59, allergens: ["dairy"], image: img("1488477181946-6281dee33e6d") },
-  { id: "tiramisu", category: "desserts", price: 79, allergens: ["gluten", "dairy", "egg"], image: img("1571115177098-24ec42ed204d") },
+  { id: "tiramisu", category: "desserts", price: 79, allergens: ["gluten", "dairy", "egg"], image: img("1488477181946-6281dee33e6d") },
 
   // ── Pizzas ──
-  { id: "pizza-four-cheese", category: "pizzas", price: 139, allergens: ["gluten", "dairy"], image: img("1604068549290-dea0e4a305ca") },
-  { id: "pizza-chicken-unagi", category: "pizzas", price: 139, allergens: ["gluten", "dairy", "fish", "soy"], image: img("1604068549290-dea0e4a305ca") },
-  { id: "pizza-shrimp-mayo", category: "pizzas", price: 199, allergens: ["gluten", "dairy", "shellfish", "egg"], image: img("1604068549290-dea0e4a305ca") },
-  { id: "pizza-soy-beef", category: "pizzas", price: 179, allergens: ["gluten", "dairy", "soy"], image: img("1604068549290-dea0e4a305ca") },
-  { id: "pizza-meatlove", category: "pizzas", price: 189, allergens: ["gluten", "dairy"], image: img("1604068549290-dea0e4a305ca") },
-  { id: "pizza-njuda-mushroom", category: "pizzas", price: 149, allergens: ["gluten", "dairy"], image: img("1604068549290-dea0e4a305ca") },
-  { id: "pizza-margherita", category: "pizzas", price: 99, allergens: ["gluten", "dairy"], image: img("1604068549290-dea0e4a305ca") },
-  { id: "pizza-veggie", category: "pizzas", price: 119, allergens: ["gluten", "dairy"], image: img("1604068549290-dea0e4a305ca") },
-  { id: "pizza-parma-burrata", category: "pizzas", price: 349, allergens: ["gluten", "dairy"], image: img("1604068549290-dea0e4a305ca") },
-  { id: "pizza-seafood", category: "pizzas", price: 209, allergens: ["gluten", "dairy", "shellfish"], image: img("1604068549290-dea0e4a305ca") },
+  { id: "pizza-four-cheese", category: "pizzas", price: 139, allergens: ["gluten", "dairy"], image: "/images/four_cheese_pizza.jpg" },
+  { id: "pizza-chicken-unagi", category: "pizzas", price: 139, allergens: ["gluten", "dairy", "fish", "soy"], image: "/images/chicken_unagi_pizza.jpg" },
+  { id: "pizza-shrimp-mayo", category: "pizzas", price: 199, allergens: ["gluten", "dairy", "shellfish", "egg"], image: "/images/shrimp_mayo_pizza.jpg" },
+  { id: "pizza-soy-beef", category: "pizzas", price: 179, allergens: ["gluten", "dairy", "soy"], image: "/images/beef_pizza.jpg" },
+  { id: "pizza-meatlove", category: "pizzas", price: 189, allergens: ["gluten", "dairy"], image: "/images/meatlove_pizza.jpg" },
+  { id: "pizza-njuda-mushroom", category: "pizzas", price: 149, allergens: ["gluten", "dairy"], image: "/images/njuda_mushroom_pizza.jpg" },
+  { id: "pizza-margherita", category: "pizzas", price: 99, allergens: ["gluten", "dairy"], image: "/images/margherita_pizza.jpg" },
+  { id: "pizza-veggie", category: "pizzas", price: 119, allergens: ["gluten", "dairy"], image: "/images/veggie_pizza.jpg" },
+  { id: "pizza-parma-burrata", category: "pizzas", price: 349, allergens: ["gluten", "dairy"], image: "/images/parma_burrata_pizza.jpg" },
+  { id: "pizza-seafood", category: "pizzas", price: 209, allergens: ["gluten", "dairy", "shellfish"], image: "/images/seafood_pizza.jpg" },
 
   // ── Tacos & Fries ──
-  { id: "smoked-beef-quesadillas", category: "tacos", price: 149, allergens: ["gluten", "dairy"], image: img("1565299585323-38d6b0865b47") },
-  { id: "chicken-quesadillas", category: "tacos", price: 149, allergens: ["gluten", "dairy"], image: img("1565299585323-38d6b0865b47") },
-  { id: "smoked-beef-burrito", category: "tacos", price: 179, allergens: ["gluten", "dairy"], image: img("1565299585323-38d6b0865b47") },
-  { id: "chicken-burritos", category: "tacos", price: 149, allergens: ["gluten", "dairy"], image: img("1565299585323-38d6b0865b47") },
-  { id: "smoked-beef-nachos", category: "tacos", price: 189, allergens: ["gluten", "dairy"], image: img("1535797993636-21bbd80d7a7f") },
-  { id: "chicken-nachos", category: "tacos", price: 169, allergens: ["gluten", "dairy"], image: img("1535797993636-21bbd80d7a7f") },
-  { id: "smoked-beef-tapas", category: "tacos", price: 109, allergens: ["gluten", "egg"], image: img("1585238341710-4dd0e06a3c91") },
-  { id: "smoked-beef-taco", category: "tacos", price: 99, allergens: ["gluten"], image: img("1565299585323-38d6b0865b47") },
-  { id: "chicken-taco", category: "tacos", price: 79, allergens: ["gluten"], image: img("1565299585323-38d6b0865b47") },
-  { id: "french-fries", category: "tacos", price: 69, allergens: ["egg"], image: img("1585238341710-4dd0e06a3c91") },
-  { id: "chicken-unagi", category: "tacos", price: 89, allergens: ["fish", "soy"], image: img("1598103442097-8b74394b95c6") },
-  { id: "chicken-popcorn", category: "tacos", price: 79, allergens: ["gluten", "egg"], image: img("1598103442097-8b74394b95c6") },
+  { id: "smoked-beef-quesadillas", category: "tacos", price: 149, allergens: ["gluten", "dairy"], image: "/images/chicken_quesidilas.jpg" },
+  { id: "chicken-quesadillas", category: "tacos", price: 149, allergens: ["gluten", "dairy"], image: "/images/chicken_quesidilas.jpg" },
+  { id: "smoked-beef-burrito", category: "tacos", price: 179, allergens: ["gluten", "dairy"], image: "/images/beef_smoke_burito.jpg" },
+  { id: "chicken-burritos", category: "tacos", price: 149, allergens: ["gluten", "dairy"], image: "/images/chicken_burito.jpg" },
+  { id: "smoked-beef-nachos", category: "tacos", price: 189, allergens: ["gluten", "dairy"], image: "/images/smoke_beef_nachos.jpg" },
+  { id: "chicken-nachos", category: "tacos", price: 169, allergens: ["gluten", "dairy"], image: "/images/chicken_nachos.jpg" },
+  { id: "smoked-beef-tapas", category: "tacos", price: 109, allergens: ["gluten", "egg"], image: "/images/beef_tapas.jpg" },
+  { id: "smoked-beef-taco", category: "tacos", price: 99, allergens: ["gluten"], image: "/images/beef_tacos.jpg" },
+  { id: "chicken-taco", category: "tacos", price: 79, allergens: ["gluten"], image: "/images/chicken_tacos.jpg" },
+  { id: "french-fries", category: "tacos", price: 69, allergens: ["egg"], image: img("1488477181946-6281dee33e6d") },
+  { id: "chicken-unagi", category: "tacos", price: 89, allergens: ["fish", "soy"], image: "/images/chicken_unagi.jpg" },
+  { id: "chicken-popcorn", category: "tacos", price: 79, allergens: ["gluten", "egg"], image: "/images/chicken_popcorn.jpg" },
 ];
 
 export const MENU_BY_CATEGORY: Record<MenuCategory, MenuItem[]> =
