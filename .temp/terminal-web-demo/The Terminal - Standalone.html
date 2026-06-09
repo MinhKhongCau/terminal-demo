@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1F1F1F" />
+<title>THE TERMINAL — Cafe & European Kitchen</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS Play CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          iron:    '#3A3A3A',
+          iron2:   '#2B2B2B',
+          iron3:   '#1d1d1d',
+          ink:     '#0f0f0f',
+          brass:   '#CFA93F',
+          'brass-hot': '#E7C463',
+          brass2:  '#8a6a1c',
+          quartz:  '#F5F5F5',
+          copper:  '#B8967A',
+          cream:   '#F5E6C8',
+          patina:  '#6D827D',
+          rust:    '#7B3F00',
+        },
+        fontFamily: {
+          display: ['Cinzel', 'serif'],
+          sans:    ['Inter', 'system-ui', 'sans-serif'],
+          mono:    ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          script:  ['"Pinyon Script"', 'cursive'],
+        },
+      }
+    }
+  }
+</script>
+
+<!-- Lucide icons (vector) -->
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+
+<style>
+  /* ───────── Base ───────── */
+  html, body { background:#1d1d1d; color:#F5F5F5; }
+  body {
+    font-family:'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(207,169,63,.06), transparent 55%),
+      radial-gradient(ellipse at 100% 100%, rgba(123,63,0,.08), transparent 50%),
+      linear-gradient(180deg, #1d1d1d 0%, #2B2B2B 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  ::selection { background:#CFA93F; color:#1f1308; }
+  :focus-visible { outline: 2px solid #CFA93F; outline-offset: 3px; border-radius: 2px; }
+
+  /* ───────── Paper-dark surface ───────── */
+  .paper-dark {
+    background-color:#2B2B2B;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 .85  0 0 0 0 .55  0 0 0 .04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23p)'/></svg>"),
+      radial-gradient(ellipse at center, rgba(58,58,58,.4) 0%, rgba(0,0,0,.4) 100%);
+    box-shadow: inset 0 0 60px rgba(0,0,0,.4);
+  }
+  .shadow-iron {
+    box-shadow:
+      inset 0 0 0 1px rgba(207,169,63,.18),
+      inset 0 1px 0 rgba(255,255,255,.04),
+      inset 0 -2px 0 rgba(0,0,0,.45),
+      0 18px 38px rgba(0,0,0,.5);
+  }
+
+  /* ───────── Atmospheric motion ───────── */
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  @keyframes spin-rev  { to { transform: rotate(-360deg); } }
+  .animate-spin-slow { animation: spin-slow 60s linear infinite; transform-origin: 50% 50%; }
+  .animate-spin-rev  { animation: spin-rev  80s linear infinite; transform-origin: 50% 50%; }
+
+  @keyframes ambient-glow {
+    0%, 100% { opacity:.42; transform: scale(1); }
+    50%      { opacity:.62; transform: scale(1.05); }
+  }
+  .ambient-glow { animation: ambient-glow 6.5s ease-in-out infinite; }
+
+  @keyframes bulb-flicker {
+    0%,100% { opacity:1; }
+    8%      { opacity:.85; }
+    20%     { opacity:.7;  }
+    22%     { opacity:1;   }
+    72%     { opacity:.78; }
+    74%     { opacity:1;   }
+  }
+  .bulb-flicker { animation: bulb-flicker 4.5s infinite; }
+
+  @keyframes steam-rise {
+    0%   { transform: translateY(0) scale(.6); opacity:0; }
+    20%  { opacity:.35; }
+    100% { transform: translateY(-180px) scale(1.5); opacity:0; }
+  }
+  .steam{
+    position:absolute; bottom:-10px; width:60px; height:60px; border-radius:50%;
+    background: radial-gradient(circle, rgba(245,230,200,.55), rgba(245,230,200,0) 70%);
+    filter: blur(8px);
+    animation: steam-rise 7s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes reveal {
+    from { opacity:0; transform: translateY(18px); }
+    to   { opacity:1; transform: none; }
+  }
+  .reveal { opacity:0; }
+  .reveal.in { animation: reveal .9s cubic-bezier(.22,1,.36,1) forwards; }
+
+  /* ───────── Track divider ───────── */
+  .track-divider{
+    position:relative; height:14px;
+    background:
+      linear-gradient(#CFA93F,#CFA93F) center/100% 1px no-repeat,
+      linear-gradient(#CFA93F,#CFA93F) center top 4px/100% 1px no-repeat,
+      linear-gradient(#CFA93F,#CFA93F) center bottom 4px/100% 1px no-repeat;
+    opacity:.45;
+  }
+  .track-divider::before{
+    content:''; position:absolute; inset:0;
+    background-image: repeating-linear-gradient(90deg, transparent 0 5px, #2B2B2B 5px 28px);
+  }
+
+  /* ───────── Buttons ───────── */
+  .btn-brass-solid {
+    display:inline-flex; align-items:center; justify-content:center;
+    background: linear-gradient(180deg,#E7C463 0%, #CFA93F 45%, #8a6a1c 100%);
+    color:#1f1308; font-family:'Cinzel',serif; font-weight:700; letter-spacing:.22em;
+    border:1px solid #5a4310;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), inset 0 -2px 0 rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.35);
+    transition: filter .2s, transform .15s, box-shadow .25s;
+  }
+  .btn-brass-solid:hover { filter: brightness(1.06); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 0 0 1px #CFA93F, 0 0 24px rgba(207,169,63,.5); }
+  .btn-brass-solid:active{ transform: translateY(1px) scale(.99); }
+
+  .btn-brass-outline {
+    display:inline-flex; align-items:center; justify-content:center;
+    background: transparent; color:#CFA93F; border:1.5px solid #CFA93F;
+    font-family:'Cinzel',serif; font-weight:700; letter-spacing:.22em;
+    transition: background .35s, color .35s, box-shadow .35s, transform .15s;
+  }
+  .btn-brass-outline:hover {
+    background: linear-gradient(180deg,#E7C463,#CFA93F);
+    color:#1f1308; box-shadow: 0 0 0 1px #CFA93F, 0 0 24px rgba(207,169,63,.45);
+  }
+  .btn-brass-outline:active{ transform: translateY(1px) scale(.99); }
+
+  /* ───────── Tabs ───────── */
+  .menu-tab {
+    position: relative; min-height: 44px; padding: 0 1.25rem;
+    font-family:'Cinzel',serif; letter-spacing:.22em; font-size: 11px;
+    color: rgba(245,230,200,.65); transition: color .2s;
+  }
+  .menu-tab:hover { color:#CFA93F; }
+  .menu-tab.active {
+    color:#1f1308;
+    background: linear-gradient(180deg,#E7C463,#8a6a1c);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -2px 0 rgba(0,0,0,.35);
+  }
+
+  /* ───────── Menu rows ───────── */
+  .menu-row {
+    position:relative; width:100%; text-align:left;
+    display:flex; align-items:flex-start; justify-content:space-between;
+    gap: 1.25rem;
+    padding: 1rem 1rem;
+    min-height: 64px;
+    border-bottom: 1px solid rgba(207,169,63,.10);
+    transition: background-color .3s ease, transform .15s;
+  }
+  @media (min-width: 768px) { .menu-row { padding: 1.25rem; } }
+  .menu-row:hover { background: rgba(207,169,63,.06); }
+  .menu-row:active{ transform: scale(.99); }
+  .menu-row::before{
+    content:''; position:absolute; left:0; top:50%; transform: translateY(-50%);
+    width:2px; height:0; background:#CFA93F; transition: height .3s;
+  }
+  .menu-row:hover::before, .menu-row:focus-visible::before { height: 66%; }
+  .menu-row::after{
+    content:''; position:absolute; left:1rem; right:1rem; bottom:0; height:1px;
+    transform: scaleX(0); transform-origin:left; transition: transform .55s cubic-bezier(.6,.05,.2,1);
+    background: linear-gradient(90deg, #CFA93F, transparent);
+  }
+  .menu-row:hover::after, .menu-row:focus-visible::after { transform: scaleX(1); }
+
+  /* No scrollbar */
+  .no-scrollbar::-webkit-scrollbar { display:none; }
+  .no-scrollbar { scrollbar-width: none; }
+
+  /* Modal animation */
+  @keyframes modal-in {
+    from { opacity:0; transform: translateY(28px) scale(.96); }
+    to   { opacity:1; transform: none; }
+  }
+  @keyframes fade-in { from { opacity:0 } to { opacity:1 } }
+  .modal-anim   { animation: modal-in .42s cubic-bezier(.22,1,.36,1) forwards; }
+  .backdrop-anim{ animation: fade-in   .3s ease forwards; }
+</style>
+</head>
+
+<body class="overflow-x-hidden">
+
+<!-- ═════════════════════════════════════════
+     HERO — Train Station
+═════════════════════════════════════════ -->
+<section id="hero" class="relative min-h-[100svh] overflow-hidden flex items-center">
+
+  <!-- Background photo + heavy overlay -->
+  <div class="absolute inset-0">
+    <img src="https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=2000&q=80"
+         alt="Vintage railway terminal at dusk"
+         class="absolute inset-0 w-full h-full object-cover"
+         style="filter: sepia(.5) saturate(.85) contrast(1.05) brightness(.6); transform: scale(1.05);" />
+    <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(29,29,29,.75) 0%, rgba(20,12,4,.85) 60%, rgba(15,10,4,.95) 100%);"></div>
+    <!-- Subtle grain -->
+    <div class="absolute inset-0 opacity-30 mix-blend-overlay"
+         style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/></svg>&quot;);"></div>
+  </div>
+
+  <!-- Ambient glow + slow-spinning gears -->
+  <div class="absolute -top-20 -right-20 w-[420px] h-[420px] rounded-full ambient-glow pointer-events-none"
+       style="background: radial-gradient(circle, rgba(207,169,63,.22), transparent 65%);"></div>
+  <svg viewBox="0 0 100 100" class="absolute -top-32 -left-20 w-[360px] h-[360px] text-brass/[.08] animate-spin-slow pointer-events-none" aria-hidden="true">
+    <g fill="currentColor">
+      <path d="M50 8l4 8 9-2 2 9 8 4-3 9 7 6-6 7 3 9-8 4-2 9-9-2-4 8-4-8-9 2-2-9-8-4 3-9-7-6 6-7-3-9 8-4 2-9 9 2z"/>
+      <circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" stroke-width="6"/>
+    </g>
+  </svg>
+  <svg viewBox="0 0 100 100" class="absolute -bottom-32 -right-24 w-[420px] h-[420px] text-brass/[.07] animate-spin-rev pointer-events-none" aria-hidden="true">
+    <g fill="currentColor">
+      <path d="M50 8l4 8 9-2 2 9 8 4-3 9 7 6-6 7 3 9-8 4-2 9-9-2-4 8-4-8-9 2-2-9-8-4 3-9-7-6 6-7-3-9 8-4 2-9 9 2z"/>
+      <circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" stroke-width="6"/>
+    </g>
+  </svg>
+
+  <!-- Steam particles -->
+  <div class="steam" style="left:10%;"></div>
+  <div class="steam" style="left:30%; animation-delay:-2s;"></div>
+  <div class="steam" style="left:65%; animation-delay:-4s;"></div>
+  <div class="steam" style="left:85%; animation-delay:-1s;"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 mx-auto w-full max-w-6xl px-6 md:px-10 py-24 md:py-32 text-center">
+
+    <!-- Top brass plate label -->
+    <div class="reveal flex items-center justify-center gap-3 mb-6 md:mb-8">
+      <span class="h-px w-12 md:w-24" style="background: linear-gradient(90deg, transparent, #CFA93F);"></span>
+      <span class="font-mono text-[10px] md:text-[11px] tracking-[.4em] text-brass">— EST · 2024 —</span>
+      <span class="h-px w-12 md:w-24" style="background: linear-gradient(90deg, #CFA93F, transparent);"></span>
+    </div>
+
+    <!-- Wordmark -->
+    <h1 class="reveal font-display font-black tracking-wide text-transparent bg-clip-text leading-none"
+        style="font-size: clamp(2.75rem, 8vw, 6.5rem);
+               background-image: linear-gradient(180deg, #F5E6BB 0%, #E7C463 30%, #CFA93F 60%, #8a6a1c 100%);
+               filter: drop-shadow(0 4px 0 rgba(0,0,0,.6)) drop-shadow(0 0 38px rgba(207,169,63,.25));">
+      THE&nbsp;TERMINAL
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="reveal mt-5 md:mt-7 font-mono tracking-[.32em] text-cream/85"
+       style="font-size: clamp(.7rem, 1.1vw, .9rem);">
+      CAFE &nbsp;·&nbsp; EUROPEAN KITCHEN
+    </p>
+
+    <!-- Tagline -->
+    <p class="reveal mt-8 md:mt-10 mx-auto font-serif italic text-cream/80 leading-relaxed"
+       style="font-size: clamp(1rem, 1.4vw, 1.2rem); max-width: 46ch; font-family:'Cormorant Garamond', serif;">
+      Where every meal feels like a journey — slow mornings, lantern-lit evenings, and a kitchen with long memory.
+    </p>
+
+    <!-- CTAs -->
+    <div class="reveal mt-10 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="#menu" class="btn-brass-outline px-7 md:px-9 py-4 text-[11px] md:text-[12px] min-w-[230px]">
+        <i data-lucide="utensils-crossed" class="w-4 h-4 mr-3"></i>
+        EXPLORE DIGITAL MENU
+      </a>
+      <a href="#reserve" class="btn-brass-solid px-7 md:px-9 py-4 text-[11px] md:text-[12px] min-w-[230px]">
+        RESERVE A TABLE
+      </a>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="reveal absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-brass/80">
+      <span class="font-mono text-[10px] tracking-[.32em]">SCROLL</span>
+      <i data-lucide="chevron-down" class="w-4 h-4 animate-bounce"></i>
+    </div>
+  </div>
+</section>
+
+<!-- track divider -->
+<div class="track-divider"></div>
+
+<!-- ═════════════════════════════════════════
+     DIGITAL MENU
+═════════════════════════════════════════ -->
+<section id="menu" class="relative px-5 md:px-12 py-20 md:py-28">
+
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto text-center reveal">
+    <div class="flex items-center justify-center gap-3 md:gap-4 mb-5">
+      <svg viewBox="0 0 100 100" class="w-7 h-7 text-brass animate-spin-slow" aria-hidden="true">
+        <g fill="currentColor">
+          <path d="M50 8l4 8 9-2 2 9 8 4-3 9 7 6-6 7 3 9-8 4-2 9-9-2-4 8-4-8-9 2-2-9-8-4 3-9-7-6 6-7-3-9 8-4 2-9 9 2z"/>
+          <circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" stroke-width="6"/>
+        </g>
+      </svg>
+      <span class="font-mono text-[10px] md:text-[11px] tracking-[.4em] text-brass">— BILL OF FARE —</span>
+      <svg viewBox="0 0 100 100" class="w-7 h-7 text-brass animate-spin-rev" aria-hidden="true">
+        <g fill="currentColor">
+          <path d="M50 8l4 8 9-2 2 9 8 4-3 9 7 6-6 7 3 9-8 4-2 9-9-2-4 8-4-8-9 2-2-9-8-4 3-9-7-6 6-7-3-9 8-4 2-9 9 2z"/>
+          <circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" stroke-width="6"/>
+        </g>
+      </svg>
+    </div>
+
+    <h2 class="font-display font-black text-transparent bg-clip-text leading-none tracking-wide"
+        style="font-size: clamp(2.25rem, 6vw, 4.5rem);
+               background-image: linear-gradient(180deg, #F5E6BB 0%, #E7C463 25%, #CFA93F 60%, #8a6a1c 100%);
+               filter: drop-shadow(0 2px 0 rgba(0,0,0,.4));">
+      Menu
+    </h2>
+    <p class="mt-4 italic text-copper" style="font-family:'Cormorant Garamond', serif; font-size: clamp(.95rem, 1.3vw, 1.1rem);">
+      A short kitchen with long memory. Tap any dish for the chef's notes.
+    </p>
+  </header>
+
+  <!-- Tabs -->
+  <div class="max-w-6xl mx-auto mt-10 md:mt-14 reveal">
+    <div role="tablist" aria-label="Menu category"
+         class="flex gap-1 overflow-x-auto no-scrollbar paper-dark border border-brass/25 p-1 mx-auto"
+         style="max-width: 520px;">
+      <button role="tab" aria-selected="true"  aria-controls="panel-appetizers" id="tab-appetizers" data-tab="appetizers" class="menu-tab active flex-1">APPETIZERS</button>
+      <button role="tab" aria-selected="false" aria-controls="panel-salads"     id="tab-salads"     data-tab="salads"     class="menu-tab      flex-1">SALADS</button>
+      <button role="tab" aria-selected="false" aria-controls="panel-soups"      id="tab-soups"      data-tab="soups"      class="menu-tab      flex-1">SOUPS</button>
+    </div>
+  </div>
+
+  <!-- Category panels -->
+  <div class="max-w-6xl mx-auto mt-12 md:mt-16">
+
+    <!-- ╔ APPETIZERS ╗ -->
+    <div id="panel-appetizers" role="tabpanel" aria-labelledby="tab-appetizers" class="menu-panel">
+      <div class="flex items-center gap-5 mb-8 md:mb-10">
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, rgba(207,169,63,.55));"></span>
+        <span class="font-script text-brass leading-none px-3"
+              style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(207,169,63,.18);">
+          Appetizer
+        </span>
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(207,169,63,.55), transparent);"></span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-16" id="grid-appetizers"></div>
+    </div>
+
+    <!-- ╔ SALADS ╗ -->
+    <div id="panel-salads" role="tabpanel" aria-labelledby="tab-salads" class="menu-panel hidden">
+      <div class="flex items-center gap-5 mb-8 md:mb-10">
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, rgba(207,169,63,.55));"></span>
+        <span class="font-script text-brass leading-none px-3"
+              style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(207,169,63,.18);">
+          Salad
+        </span>
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(207,169,63,.55), transparent);"></span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-16" id="grid-salads"></div>
+    </div>
+
+    <!-- ╔ SOUPS ╗ -->
+    <div id="panel-soups" role="tabpanel" aria-labelledby="tab-soups" class="menu-panel hidden">
+      <div class="flex items-center gap-5 mb-8 md:mb-10">
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, rgba(207,169,63,.55));"></span>
+        <span class="font-script text-brass leading-none px-3"
+              style="font-size: clamp(2.5rem, 5vw, 4rem); text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(207,169,63,.18);">
+          Soup
+        </span>
+        <span class="flex-1 h-px" style="background: linear-gradient(90deg, rgba(207,169,63,.55), transparent);"></span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-16" id="grid-soups"></div>
+    </div>
+  </div>
+
+  <!-- Fine print -->
+  <div class="max-w-6xl mx-auto mt-16 md:mt-20 pt-8 border-t border-brass/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-cream/55 font-mono text-[11px] tracking-[.2em]">
+    <span>PRICES IN ’000 VND</span>
+    <span class="text-brass/80">SERVICE &amp; VAT EXCLUSIVE</span>
+    <span>VEGETARIAN &amp; ALLERGEN OPTIONS — ASK YOUR CONDUCTOR</span>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════
+     RESERVE STRIP
+═════════════════════════════════════════ -->
+<section id="reserve" class="relative px-5 md:px-12 py-20 md:py-28 paper-dark border-y border-brass/20">
+  <div class="max-w-3xl mx-auto text-center reveal">
+    <div class="font-mono text-[11px] tracking-[.4em] text-brass mb-4">— PLATFORM 09 —</div>
+    <h3 class="font-display font-black tracking-wide text-cream leading-tight" style="font-size: clamp(1.75rem, 4vw, 2.75rem);">
+      Reserve your seat
+    </h3>
+    <p class="mt-4 italic text-cream/70" style="font-family:'Cormorant Garamond', serif; font-size: clamp(1rem, 1.3vw, 1.1rem);">
+      Tables fill quickly on weekends. We'll keep the lanterns lit for you.
+    </p>
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+      <a href="tel:+842855120924" class="btn-brass-solid px-7 py-4 text-[11px] min-w-[200px]">
+        <i data-lucide="phone" class="w-4 h-4 mr-3"></i>
+        +84 28 5512 0924
+      </a>
+      <a href="/cdn-cgi/l/email-protection#1179747d7d7e516579746574637c787f707d3f72707774" class="btn-brass-outline px-7 py-4 text-[11px] min-w-[200px]">
+        <i data-lucide="mail" class="w-4 h-4 mr-3"></i>
+        EMAIL THE STATION
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════
+     FOOTER
+═════════════════════════════════════════ -->
+<footer class="px-5 md:px-12 py-12 md:py-16 text-cream/65">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div>
+      <div class="font-display font-bold tracking-[.28em] text-brass text-[13px]">THE TERMINAL</div>
+      <div class="font-mono text-[10px] tracking-[.3em] text-cream/55 mt-1">CAFE · EUROPEAN KITCHEN</div>
+    </div>
+    <div class="font-mono text-[11px] tracking-[.22em] text-cream/55">
+      47 OLD FREIGHT LANE · DISTRICT 1 · HCMC
+    </div>
+    <div class="font-mono text-[11px] tracking-[.22em] text-cream/55">
+      © 2024 · ALL JOURNEYS RESERVED
+    </div>
+  </div>
+</footer>
+
+<!-- ═════════════════════════════════════════
+     DISH DETAIL MODAL
+═════════════════════════════════════════ -->
+<div id="dishModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 md:p-8" role="dialog" aria-modal="true" aria-labelledby="dish-modal-title">
+  <div id="dishBackdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md backdrop-anim"></div>
+
+  <div id="dishCard"
+       class="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto
+              paper-dark shadow-iron modal-anim
+              grid md:grid-cols-[1.05fr_1fr]"
+       style="border: 1.5px solid #CFA93F;">
+
+    <!-- Rivets -->
+    <span class="absolute top-2 left-2 w-2 h-2 rounded-full" style="background: radial-gradient(circle at 30% 30%, #CFA93F, #6b4d12 70%, #2a1d05);"></span>
+    <span class="absolute top-2 right-2 w-2 h-2 rounded-full" style="background: radial-gradient(circle at 30% 30%, #CFA93F, #6b4d12 70%, #2a1d05);"></span>
+    <span class="absolute bottom-2 left-2 w-2 h-2 rounded-full" style="background: radial-gradient(circle at 30% 30%, #CFA93F, #6b4d12 70%, #2a1d05);"></span>
+    <span class="absolute bottom-2 right-2 w-2 h-2 rounded-full" style="background: radial-gradient(circle at 30% 30%, #CFA93F, #6b4d12 70%, #2a1d05);"></span>
+
+    <!-- LEFT — Image / illustration -->
+    <div id="dishImage" class="relative min-h-[240px] md:min-h-[440px] overflow-hidden">
+      <!-- Placeholder fill set by JS -->
+      <div class="absolute inset-0 grid place-items-center">
+        <svg viewBox="0 0 200 200" class="w-24 h-24 text-brass/30 animate-spin-slow" aria-hidden="true">
+          <g fill="currentColor">
+            <path d="M100 30 l8 14 16-4 4 16 14 8 -4 16 12 12 -12 12 4 16 -14 8 -4 16 -16-4 -8 14 -8-14 -16 4 -4-16 -14-8 4-16 -12-12 12-12 -4-16 14-8 4-16 16 4z"/>
+          </g>
+        </svg>
+      </div>
+      <div class="absolute inset-0 ring-1 ring-inset ring-brass/30 pointer-events-none"></div>
+
+      <!-- Stamp -->
+      <div class="absolute top-4 left-4 rounded-full border-2 border-dashed border-brass/70 grid place-items-center w-16 h-16 -rotate-6"
+           style="background: rgba(0,0,0,.55); backdrop-filter: blur(2px);">
+        <div class="text-center leading-tight">
+          <div class="font-mono text-brass text-[8px] tracking-[.2em]">CHEF'S</div>
+          <div class="font-mono text-brass text-[8px] tracking-[.2em]">PICK</div>
+        </div>
+      </div>
+
+      <!-- Caption ribbon -->
+      <div id="dishRibbon" class="absolute bottom-0 inset-x-0 px-5 py-2 font-mono text-[10px] tracking-[.3em]"
+           style="background: linear-gradient(180deg, #CFA93F, #8a6a1c); color:#1f1308;">
+        DISH
+      </div>
+    </div>
+
+    <!-- RIGHT — Details -->
+    <div class="p-6 md:p-8 relative">
+      <button id="closeModal" aria-label="Close"
+              class="absolute top-4 right-4 w-10 h-10 grid place-items-center text-brass hover:bg-brass/15 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass/60">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div id="dishCategory" class="font-mono text-[10px] tracking-[.32em] text-brass">CATEGORY</div>
+
+      <h2 id="dish-modal-title"
+          class="font-display font-bold uppercase text-quartz tracking-[.06em] mt-2 leading-tight"
+          style="font-size: clamp(1.4rem, 3vw, 1.9rem);">
+        DISH NAME
+      </h2>
+
+      <p id="dishDesc" class="mt-3 italic text-copper" style="font-family:'Cormorant Garamond', serif; font-size: 15px; line-height: 1.55;">
+        Description
+      </p>
+
+      <div class="track-divider my-5"></div>
+
+      <div class="flex items-baseline justify-between mb-6">
+        <div>
+          <div class="font-mono text-[10px] tracking-[.3em] text-cream/50">FARE</div>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="dishPrice" class="font-display font-black text-brass leading-none"
+                  style="font-size: clamp(2.2rem, 4vw, 3rem); text-shadow: 0 2px 0 rgba(0,0,0,.45);">0</span>
+            <span class="font-mono text-brass/60 text-sm tracking-[.2em]">VND ’000</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="font-mono text-[10px] tracking-[.3em] text-cream/50">SERVES</div>
+          <div class="font-display text-quartz text-xl mt-1">1–2</div>
+        </div>
+      </div>
+
+      <!-- Chef notes -->
+      <div class="mb-4">
+        <div class="font-mono text-[10px] tracking-[.3em] text-cream/50 mb-2">CHEF'S NOTES</div>
+        <p id="dishNotes" class="text-cream/85 text-[14px] leading-relaxed">
+          Chef's notes…
+        </p>
+      </div>
+
+      <!-- Allergens -->
+      <div class="mb-5">
+        <div class="font-mono text-[10px] tracking-[.3em] text-cream/50 mb-2">CONTAINS</div>
+        <div id="dishAllergens" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- Pairing -->
+      <div class="mb-6">
+        <div class="font-mono text-[10px] tracking-[.3em] text-cream/50 mb-2">CHEF'S PAIRING</div>
+        <div class="flex items-start gap-3 p-3 bg-brass/[.06] border-l-2 border-brass/60">
+          <i data-lucide="wine" class="w-4 h-4 text-brass shrink-0 mt-0.5"></i>
+          <p id="dishPairing" class="text-cream/85 text-[13.5px] italic leading-snug">A glass of dry Riesling.</p>
+        </div>
+      </div>
+
+      <button id="closeModal2" class="w-full btn-brass-solid py-3 px-5 text-[12px]">
+        CLOSE TICKET
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═════════════════════════════════════════
+     SCRIPTS
+═════════════════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ───────── Menu data ───────── */
+const MENU = {
+  appetizers: [
+    { name: 'CALAMARI', price: 85,
+      desc: 'Mực chiên giòn dùng kèm với salad & sốt Tartar',
+      notes: 'Calamari rings hand-cut in the morning, dipped in seasoned semolina and flash-fried so the outside crackles while the inside stays milky and tender. Served with a green-leaf salad and a tartare sauce made daily with cornichons, capers, and chopped parsley.',
+      allergens: ['Gluten', 'Egg', 'Shellfish'],
+      pairing: 'A crisp Sauvignon Blanc to cut the batter.',
+      image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'GRILLED BEEF W. SPRING ONION OIL', price: 95,
+      desc: 'Bò nướng mỡ hành',
+      notes: 'Slices of marinated short rib charred over real charcoal, finished with a slow-rendered scallion-oil and a scatter of crushed peanuts. The Vietnamese countryside, plated for the dining car.',
+      allergens: ['Soy', 'Peanuts'],
+      pairing: 'A glass of light Pinot Noir, served just-cool.',
+      image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'HOI AN BRUSCHETTA', price: 85,
+      desc: 'Bánh mì nướng phủ pate gà, đùi heo muối & ớt rim',
+      notes: 'Toasted baguette layered with house chicken-liver pâté, slivers of cured ham, and a chilli jam we cook down each week. A nod to Hoi An mornings.',
+      allergens: ['Gluten', 'Egg'],
+      pairing: 'Sparkling rosé, served chilled.',
+      image: 'https://images.unsplash.com/photo-1572441713132-c542fc4fe282?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'BEEF BRUSCHETTA', price: 95,
+      desc: 'Bánh mì nướng dùng kèm thịt bò xào kiểu Nhật',
+      notes: 'Toasted sourdough piled with thin-sliced ribeye stir-fried in soy, mirin and grated ginger — a Japanese-style sauté on a European base. Finished with sesame and scallion.',
+      allergens: ['Gluten', 'Soy', 'Sesame'],
+      pairing: 'A glass of dry Junmai sake.',
+      image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'FORACCIA & CIABATTA', price: 45,
+      desc: 'Bánh mì dẹt & bánh mì tổ kén kiểu Ý dùng kèm với bơ miso',
+      notes: 'A board of two house breads — focaccia warm from the oven with rosemary salt, and an airy ciabatta — served with a slowly-whipped miso butter that bridges Tuscany and Tokyo.',
+      allergens: ['Gluten', 'Soy', 'Dairy'],
+      pairing: 'A double espresso, or a glass of cold Vermentino.',
+      image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'CHICKEN PATE & BREAD', price: 55,
+      desc: 'Bánh mì đen dùng kèm Pate gà',
+      notes: 'House chicken-liver pâté smoothed with brandy and brown butter, sealed under a layer of clarified butter and served with toasted seeded rye bread. Cornichons and red onion jam on the side.',
+      allergens: ['Gluten', 'Egg', 'Dairy'],
+      pairing: 'A glass of off-dry Riesling.',
+      image: 'https://images.unsplash.com/photo-1626844131082-256783844137?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'SEA URCHIN PATE & BREAD', price: 75,
+      desc: 'Bánh mì đen dùng kèm Pate nhum',
+      notes: 'Our sea-urchin pâté — uni folded into clarified butter and a whisper of yuzu, served cold on dark rye. Delicate, briny, and a quiet luxury.',
+      allergens: ['Gluten', 'Dairy', 'Shellfish'],
+      pairing: 'Brut Champagne, well-chilled.',
+      image: 'https://images.unsplash.com/photo-1606851179229-04bfe6e0bd75?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'COLD CUTS', price: 245,
+      desc: 'Đùi heo muối, phô mai, Pate nhum trải Olive & bánh mì đen',
+      notes: 'A platter for the table: 24-month aged ham, two cheeses (Comté and a soft blue), the kitchen\'s sea-urchin pâté, marinated olives, and dark seeded bread baked the same day.',
+      allergens: ['Gluten', 'Dairy', 'Shellfish'],
+      pairing: 'A bottle of Barolo or a vintage Tokaji.',
+      image: 'https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=1200&q=80'
+    },
+  ],
+  salads: [
+    { name: 'BALSAMIC SALAD', price: 55,
+      desc: 'Xà lách trộn sốt dầu giấm kiểu Âu thanh mát',
+      notes: 'Bitter leaves, sweet baby tomatoes, and a 12-year-aged balsamic emulsified with cold-pressed olive oil. Finished with shaved Parmigiano.',
+      allergens: ['Dairy'],
+      pairing: 'A light Pinot Grigio.',
+      image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'CAESAR SALAD', price: 75,
+      desc: 'Salad romaine sốt caesar, crouton & thịt ba rọi xông khói',
+      notes: 'Romaine hearts dressed tableside-style with anchovy, garlic and egg-yolk emulsion, smoky bacon lardons, garlic croutons, and a generous snowfall of aged Parmesan.',
+      allergens: ['Gluten', 'Egg', 'Dairy', 'Fish'],
+      pairing: 'A lightly-oaked Chardonnay.',
+      image: 'https://images.unsplash.com/photo-1551248429-40975aa4de74?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'SEAWEED SALAD', price: 75,
+      desc: 'Salad rong biển sốt mè',
+      notes: 'Marinated wakame and hijiki tossed with shaved cucumber, micro-shiso, and a sesame-soy dressing. Cold, clean, and full of the sea.',
+      allergens: ['Soy', 'Sesame'],
+      pairing: 'Cold Junmai sake or a pale lager.',
+      image: 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'FRUIT SALAD', price: 85,
+      desc: 'Salad trái cây theo mùa, hạnh nhân & sốt ya-ua',
+      notes: 'A bowl of the season\'s best fruit, tossed with toasted almonds and a soft yogurt dressing flavoured with orange-blossom honey.',
+      allergens: ['Dairy', 'Tree Nuts'],
+      pairing: 'A glass of Moscato d\'Asti, or a mimosa for brunch.',
+      image: 'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'GRILLED BEEF SALAD', price: 95,
+      desc: 'Salad bò Mỹ nướng',
+      notes: 'Slices of charcoal-grilled American beef over a bed of leaves, cherry tomatoes, pickled onion, and crispy shallot. Dressed with a fish-sauce vinaigrette that bridges hemispheres.',
+      allergens: ['Soy', 'Fish'],
+      pairing: 'A glass of Côtes du Rhône.',
+      image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80'
+    },
+  ],
+  soups: [
+    { name: 'PUMPKIN SOUP', price: 45,
+      desc: 'Súp bí đỏ dùng kèm bánh mì bơ tỏi',
+      notes: 'Roasted kabocha pumpkin blended with brown butter, a touch of nutmeg, and house chicken stock. Served with a slab of garlic-butter toast.',
+      allergens: ['Gluten', 'Dairy'],
+      pairing: 'A buttery Chardonnay.',
+      image: 'https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'CORN SOUP', price: 55,
+      desc: 'Súp bắp nấu cùng cần tây & baro',
+      notes: 'Sweet corn slowly stewed with celery and leek, finished with a touch of cream and a drizzle of chive oil. Summer in a bowl.',
+      allergens: ['Dairy'],
+      pairing: 'A glass of cool Riesling.',
+      image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'PRAWN SOUP', price: 65,
+      desc: 'Súp kem tôm dùng kèm bánh mì bơ tỏi',
+      notes: 'A bisque-style cream of prawn, made from a slow-roasted prawn-shell stock, finished with cognac and a generous pour of cream. Served with garlic-butter toast.',
+      allergens: ['Gluten', 'Dairy', 'Shellfish'],
+      pairing: 'A glass of Albariño.',
+      image: 'https://images.unsplash.com/photo-1605709303005-21ea24f9b1aa?auto=format&fit=crop&w=1200&q=80'
+    },
+    { name: 'MUSHROOM CREAM SOUP', price: 65,
+      desc: 'Súp kem nấm',
+      notes: 'A trio of mushrooms — porcini, cremini, oyster — coaxed slowly with shallot, thyme, and a finish of cream and Madeira. The Sunday-night soup of every European kitchen.',
+      allergens: ['Dairy'],
+      pairing: 'An earthy Pinot Noir.',
+      image: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80'
+    },
+  ],
+};
+
+/* ───────── Render menu grids ───────── */
+function rowMarkup(item, idx, category) {
+  return `
+    <button type="button" class="menu-row" data-category="${category}" data-idx="${idx}">
+      <div class="min-w-0 flex-1">
+        <h3 class="font-display font-bold tracking-[.08em] uppercase text-quartz text-[15px] md:text-[16px] leading-snug">
+          ${item.name}
+        </h3>
+        <p class="mt-1.5 italic text-copper text-[13px] md:text-[14px] leading-snug max-w-[44ch]" style="font-family:'Cormorant Garamond', serif;">
+          ${item.desc}
+        </p>
+      </div>
+      <div class="flex items-center gap-3 shrink-0 pt-0.5">
+        <span class="font-display font-bold text-brass tabular-nums text-[18px] md:text-[20px] tracking-wider"
+              style="text-shadow: 0 1px 0 rgba(0,0,0,.4);">
+          ${item.price}
+        </span>
+        <span class="font-mono text-brass/60 text-[11px] tracking-[.2em] hidden sm:inline">VND</span>
+      </div>
+    </button>
+  `;
+}
+function renderMenu() {
+  ['appetizers','salads','soups'].forEach(cat => {
+    document.getElementById('grid-' + cat).innerHTML = MENU[cat].map((it, i) => rowMarkup(it, i, cat)).join('');
+  });
+}
+
+/* ───────── Tabs ───────── */
+function setActiveTab(name) {
+  document.querySelectorAll('.menu-tab').forEach(b => {
+    const active = b.dataset.tab === name;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  document.querySelectorAll('.menu-panel').forEach(p => p.classList.add('hidden'));
+  document.getElementById('panel-' + name).classList.remove('hidden');
+}
+document.querySelectorAll('.menu-tab').forEach(b => b.addEventListener('click', () => setActiveTab(b.dataset.tab)));
+
+/* ───────── Modal ───────── */
+const modal      = document.getElementById('dishModal');
+const dishImage  = document.getElementById('dishImage');
+const dishRibbon = document.getElementById('dishRibbon');
+const dishCat    = document.getElementById('dishCategory');
+const dishTitle  = document.getElementById('dish-modal-title');
+const dishDesc   = document.getElementById('dishDesc');
+const dishPrice  = document.getElementById('dishPrice');
+const dishNotes  = document.getElementById('dishNotes');
+const dishAllg   = document.getElementById('dishAllergens');
+const dishPair   = document.getElementById('dishPairing');
+
+const CATEGORY_LABELS = { appetizers: 'Appetizer', salads: 'Salad', soups: 'Soup' };
+
+function openModal(category, idx) {
+  const item = MENU[category][idx];
+  if (!item) return;
+
+  dishImage.style.background =
+    `linear-gradient(135deg, rgba(0,0,0,.25), rgba(0,0,0,.65)), url('${item.image}') center/cover no-repeat`;
+  dishImage.style.filter = 'sepia(.25) saturate(.95) contrast(1.05)';
+
+  dishRibbon.textContent = `${CATEGORY_LABELS[category].toUpperCase()} · ${item.name.toUpperCase()}`;
+  dishCat.textContent    = CATEGORY_LABELS[category].toUpperCase();
+  dishTitle.textContent  = item.name;
+  dishDesc.textContent   = item.desc;
+  dishPrice.textContent  = item.price;
+  dishNotes.textContent  = item.notes;
+  dishPair.textContent   = item.pairing;
+
+  dishAllg.innerHTML = (item.allergens || []).map(a =>
+    `<span class="text-[11px] font-mono tracking-[.16em] text-brass border border-brass/40 px-2.5 py-1">${a.toUpperCase()}</span>`
+  ).join('') || '<span class="text-cream/55 italic text-[13px]">No allergens listed</span>';
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementById('closeModal')?.focus();
+}
+function closeModal() {
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+  document.documentElement.style.overflow = '';
+}
+document.addEventListener('click', e => {
+  const row = e.target.closest('.menu-row');
+  if (row) {
+    openModal(row.dataset.category, parseInt(row.dataset.idx, 10));
+    return;
+  }
+  if (e.target.id === 'dishBackdrop' || e.target.closest('#closeModal') || e.target.closest('#closeModal2')) {
+    closeModal();
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+});
+
+/* ───────── Reveal-on-scroll ───────── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 80);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ───────── Boot ───────── */
+renderMenu();
+if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

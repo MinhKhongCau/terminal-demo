@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The Terminal — Cafe & European Kitchen</title>
+
+<!-- Fraunces (display serif), Inter (body), JetBrains Mono (labels) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bone:     '#F5F0E6',
+          bone2:    '#EDE6D6',
+          charcoal: '#1F1F1F',
+          charcoal2:'#2A2A2A',
+          brass:    '#B8893E',
+          taupe:    '#8B7355',
+          patina:   '#6D827D',
+        },
+        fontFamily: {
+          serif: ['Fraunces','Georgia','serif'],
+          sans:  ['Inter','system-ui','sans-serif'],
+          mono:  ['"JetBrains Mono"','ui-monospace','monospace'],
+        },
+        letterSpacing: {
+          'wider2': '.22em',
+          'widest2': '.32em',
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background: #F5F0E6;
+    color: #1F1F1F;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Subtle grain (only on images) ── */
+  .grain { position:relative; }
+  .grain::after{
+    content:''; position:absolute; inset:0; pointer-events:none; opacity:.08; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* ── Single rotating gear in the hero ── */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .gear { animation: spin 30s linear infinite; transform-origin: 50% 50%; }
+
+  /* ── Animated underline for text links ── */
+  .ulink { position:relative; display:inline-block; }
+  .ulink::after{
+    content:''; position:absolute; left:0; right:100%; bottom:-3px; height:1px;
+    background: #B8893E; transition: right .35s ease;
+  }
+  .ulink:hover::after { right: 0; }
+
+  /* ── Reveal on scroll ── */
+  .reveal { opacity:0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity:1; transform:none; }
+
+  /* ── Menu row ── */
+  .row-menu{
+    display:grid; grid-template-columns: 1fr auto;
+    align-items: baseline; gap: 0 1rem;
+    padding: 22px 16px; margin: 0 -16px;
+    border-top: 1px solid rgba(31,31,31,.10);
+    transition: background-color .25s ease;
+  }
+  .row-menu:last-child { border-bottom: 1px solid rgba(31,31,31,.10); }
+  .row-menu:hover { background: rgba(184,137,62,.06); }
+  .leader{
+    flex:1; height: 1px; align-self:end; margin: 0 12px 8px;
+    background-image: radial-gradient(circle, rgba(31,31,31,.35) 1px, transparent 1.2px);
+    background-size: 6px 1px; background-repeat: repeat-x; background-position: 0 100%;
+  }
+
+  /* ── Form ── */
+  .field { position:relative; }
+  .field label{
+    display:block; font-family:'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing:.22em; text-transform:uppercase; color:#8B7355;
+    margin-bottom: 8px;
+  }
+  .field input, .field select, .field textarea{
+    width:100%; background: transparent; border:none; outline:none;
+    border-bottom: 1px solid rgba(31,31,31,.35);
+    padding: 10px 0; font-family:'Inter',sans-serif; font-size: 16px; color:#1F1F1F;
+    transition: border-color .25s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-bottom-color: #B8893E; }
+  .field input::placeholder{ color: rgba(31,31,31,.35); }
+
+  /* ── Brass solid button ── */
+  .btn-brass{
+    display:inline-flex; align-items:center; justify-content:center;
+    background:#B8893E; color:#F5F0E6;
+    padding: 14px 28px; font-family:'Inter',sans-serif; font-weight:500;
+    font-size: 14px; letter-spacing:.14em; text-transform: uppercase;
+    transition: transform .2s ease, box-shadow .25s ease, background .2s;
+  }
+  .btn-brass:hover{ transform: translateY(-2px); box-shadow: 0 10px 22px rgba(184,137,62,.25); background:#a87a33; }
+
+  /* ── Image rectangle (no frame) with mild grain ── */
+  .plate { position:relative; overflow:hidden; }
+  .plate img { display:block; width:100%; height:100%; object-fit:cover; }
+
+  /* ── Tabs ── */
+  .tab{
+    position:relative; padding: 6px 0; color:#8B7355;
+    font-size: 14px; transition: color .2s;
+  }
+  .tab:hover{ color:#1F1F1F; }
+  .tab.active{ color:#1F1F1F; }
+  .tab.active::after{
+    content:''; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:#B8893E;
+  }
+
+  /* utilities */
+  .hairline { background: rgba(31,31,31,.12); }
+  .hairline-bone { background: rgba(245,240,230,.18); }
+  .hairline-brass { background: #B8893E; }
+
+  /* Mobile overlay nav */
+  .menu-overlay { transform: translateY(-100%); transition: transform .45s cubic-bezier(.6,.05,.2,1); }
+  .menu-overlay.open { transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────
+     NAVIGATION
+───────────────────────────────────────── -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50 transition-colors duration-300">
+  <div id="nav-bg" class="absolute inset-0 -z-10 bg-bone/0 backdrop-blur-0 transition-all duration-300"></div>
+  <div id="nav-line" class="absolute bottom-0 left-0 right-0 h-px bg-charcoal/0 transition-colors duration-300"></div>
+
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 h-[72px] flex items-center justify-between">
+    <a href="#top" class="font-serif text-[17px] tracking-wider2 text-charcoal">The&nbsp;Terminal</a>
+
+    <nav class="hidden md:flex items-center gap-9 text-[14px] text-charcoal/85">
+      <a class="ulink" href="#story">Menu</a>
+      <a class="ulink" href="#story">Story</a>
+      <a class="ulink" href="#visit">Visit</a>
+      <a class="ulink" href="#reserve">Reserve</a>
+    </nav>
+
+    <a href="#reserve" class="hidden md:inline-flex btn-brass !py-2.5 !px-5 !text-[12px]">Reserve</a>
+
+    <button id="burger" class="md:hidden p-2 text-charcoal" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h18M3 17h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div id="overlay" class="menu-overlay fixed inset-0 z-[60] bg-bone md:hidden flex flex-col">
+  <div class="flex items-center justify-between px-6 h-[72px]">
+    <span class="font-serif text-[17px] tracking-wider2">The&nbsp;Terminal</span>
+    <button id="closeMenu" class="p-2 text-charcoal" aria-label="Close menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M6 18L18 6"/></svg>
+    </button>
+  </div>
+  <nav class="flex-1 flex flex-col items-center justify-center gap-8 font-serif text-4xl text-charcoal" id="overlayNav">
+    <a href="#story">Menu</a>
+    <a href="#story">Story</a>
+    <a href="#visit">Visit</a>
+    <a href="#reserve">Reserve</a>
+  </nav>
+  <div class="p-6">
+    <a href="#reserve" class="btn-brass w-full">Reserve a table</a>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ─────────────────────────────────────────
+     HERO
+───────────────────────────────────────── -->
+<section class="min-h-[100svh] pt-[120px] pb-16 px-6 lg:px-10">
+  <div class="max-w-[1320px] mx-auto grid lg:grid-cols-12 gap-10 lg:gap-16 items-center relative">
+
+    <!-- Left -->
+    <div class="lg:col-span-7 reveal">
+      <div class="font-mono text-[11px] tracking-widest2 text-brass uppercase">
+        Est. 2024 — Cafe &amp; European Kitchen
+      </div>
+
+      <h1 class="font-serif text-charcoal mt-7 lg:mt-9 leading-[0.95] tracking-[-0.01em]"
+          style="font-size: clamp(3rem, 8vw, 7rem); font-weight:400;">
+        A quiet stop<br/>
+        <em class="font-serif italic font-light" style="font-variation-settings: 'opsz' 144;">between journeys.</em>
+      </h1>
+
+      <p class="mt-10 max-w-[46ch] text-[17px] leading-relaxed text-charcoal/75">
+        A small café serving European classics, single-origin coffee, and unhurried mornings — set inside the bones of an old freight station.
+      </p>
+
+      <div class="mt-9 flex flex-wrap items-center gap-8 text-[15px]">
+        <a href="#story" class="ulink text-charcoal">View Menu&nbsp;→</a>
+        <a href="#reserve" class="ulink text-charcoal">Reserve a table</a>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="lg:col-span-5 reveal">
+      <div class="plate grain aspect-[4/5] bg-bone2">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80"
+             alt="A pour-over coffee being prepared in a warmly lit café." />
+      </div>
+    </div>
+
+    <!-- Single rotating gear, the only overt railway nod -->
+    <div class="absolute bottom-0 right-0 lg:right-2 text-charcoal/15 pointer-events-none" aria-hidden="true">
+      <svg viewBox="0 0 100 100" width="40" height="40" class="gear">
+        <path fill="currentColor" d="M50 8l4 7 8-2 2 8 7 4-2 8 6 6-6 6 2 8-7 4-2 8-8-2-4 7-4-7-8 2-2-8-7-4 2-8-6-6 6-6-2-8 7-4 2-8 8 2z"/>
+        <circle cx="50" cy="50" r="13" fill="#F5F0E6"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Scroll label -->
+  <div class="max-w-[1320px] mx-auto mt-16 lg:mt-24 flex items-center gap-3 text-charcoal/40">
+    <div class="hairline w-12 h-px"></div>
+    <span class="font-mono text-[10px] tracking-widest2 uppercase">Scroll</span>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────
+     01 / STORY
+───────────────────────────────────────── -->
+<section id="story" class="px-6 lg:px-10 py-28 lg:py-36">
+  <div class="max-w-[1320px] mx-auto">
+
+    <div class="font-mono text-[11px] tracking-widest2 uppercase text-taupe reveal">01 / Story</div>
+
+    <div class="mt-14 lg:mt-20 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-6 reveal">
+        <h2 class="font-serif text-charcoal leading-[1.05] tracking-[-0.01em]"
+            style="font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 400;">
+          Built inside an old<br/>
+          <em class="italic font-light">freight house.</em>
+        </h2>
+
+        <div class="mt-8 space-y-5 text-[17px] leading-relaxed text-charcoal/80 max-w-[52ch]">
+          <p>
+            The Terminal occupies a small brick building at the end of a forgotten railway line — once used to stage parcels for the morning train, now used to stage espresso and breakfast plates for the people who live nearby.
+          </p>
+          <p>
+            We borrow from the slowness of the old timetable. Our menu is short, our hours are kept, and the coffee is pulled by hand. The room does the rest.
+          </p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 reveal">
+        <div class="plate grain aspect-[5/6] bg-bone2">
+          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80"
+               alt="Warmly lit café interior with timber surfaces and soft daylight." />
+        </div>
+      </div>
+    </div>
+
+    <!-- Pull quote -->
+    <figure class="reveal mt-24 lg:mt-32 max-w-[62ch] mx-auto text-center">
+      <blockquote class="font-serif italic font-light text-charcoal leading-[1.2]"
+                  style="font-size: clamp(1.6rem, 3.4vw, 2.5rem);">
+        “We wanted a room that felt like a long Sunday — measured, generous, and in no hurry to be anywhere else.”
+      </blockquote>
+      <figcaption class="mt-7 font-mono text-[11px] tracking-widest2 uppercase text-taupe">— M. Kovács, Chef</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────
+     02 / MENU
+───────────────────────────────────────── -->
+<section id="menu" class="px-6 lg:px-10 py-28 lg:py-36">
+  <div class="max-w-[1320px] mx-auto">
+
+    <div class="flex items-end justify-between flex-wrap gap-6 reveal">
+      <div>
+        <div class="font-mono text-[11px] tracking-widest2 uppercase text-taupe">02 / Menu</div>
+        <h2 class="font-serif text-charcoal mt-5 leading-[1.05] tracking-[-0.01em]"
+            style="font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 400;">
+          Selected dishes.
+        </h2>
+      </div>
+
+      <!-- Filter -->
+      <div id="filters" class="flex flex-wrap gap-7 font-sans">
+        <button class="tab active" data-filter="all">All</button>
+        <button class="tab" data-filter="breakfast">Breakfast</button>
+        <button class="tab" data-filter="mains">Mains</button>
+        <button class="tab" data-filter="desserts">Desserts</button>
+        <button class="tab" data-filter="coffee">Coffee</button>
+      </div>
+    </div>
+
+    <div class="mt-12 grid lg:grid-cols-12 gap-12 reveal">
+      <!-- Menu list -->
+      <div class="lg:col-span-8" id="menuList"></div>
+
+      <!-- Side images -->
+      <aside class="lg:col-span-4 hidden lg:flex flex-col gap-10 pt-12">
+        <div class="plate grain aspect-[4/5] bg-bone2">
+          <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80" alt="Plated breakfast on a stoneware dish." />
+        </div>
+        <div class="plate grain aspect-square bg-bone2 ml-10">
+          <img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=900&q=80" alt="Cup of black coffee with steam." />
+        </div>
+        <div class="plate grain aspect-[4/5] bg-bone2">
+          <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=80" alt="Slice of layered chocolate cake on a small plate." />
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────
+     03 / SPACE
+───────────────────────────────────────── -->
+<section id="space" class="px-6 lg:px-10 py-28 lg:py-36">
+  <div class="max-w-[1320px] mx-auto">
+    <div class="font-mono text-[11px] tracking-widest2 uppercase text-taupe reveal">03 / Space</div>
+    <h2 class="font-serif text-charcoal mt-5 leading-[1.05] tracking-[-0.01em] reveal"
+        style="font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 400;">
+      Inside.
+    </h2>
+
+    <!-- Asymmetric grid: one large + three smaller -->
+    <div class="mt-14 grid grid-cols-6 grid-rows-[260px_260px] md:grid-rows-[320px_320px] gap-3 md:gap-5 reveal">
+      <div class="col-span-6 md:col-span-4 row-span-2 plate grain bg-bone2">
+        <img src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1600&q=80" alt="Long communal table by a window with soft afternoon light." />
+      </div>
+      <div class="col-span-3 md:col-span-2 plate grain bg-bone2">
+        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=900&q=80" alt="Hanging pendant lamp casting warm light." />
+      </div>
+      <div class="col-span-3 md:col-span-2 plate grain bg-bone2">
+        <img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=900&q=80" alt="A loaf of bread resting on linen." />
+      </div>
+    </div>
+
+    <p class="mt-10 font-mono text-[12px] tracking-[.2em] uppercase text-taupe max-w-[60ch] reveal">
+      <span class="text-charcoal">— Forty-eight seats.</span> Reclaimed oak, lime-washed brick, two skylights and a single brass lamp from the original station office.
+    </p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────
+     DETAILS STRIP — only dark section
+───────────────────────────────────────── -->
+<section class="bg-charcoal text-bone px-6 lg:px-10 py-28 lg:py-36">
+  <div class="max-w-[1320px] mx-auto grid md:grid-cols-3 gap-14">
+    <div class="reveal">
+      <div class="font-mono text-[11px] tracking-widest2 uppercase text-brass">01</div>
+      <h3 class="font-serif text-bone mt-5 leading-[1.1]" style="font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 400;">
+        European-leaning menu.
+      </h3>
+      <p class="mt-5 text-bone/65 leading-relaxed max-w-[34ch]">
+        Vienna, Lyon and Budapest by way of a short kitchen with long memory.
+      </p>
+    </div>
+    <div class="reveal">
+      <div class="font-mono text-[11px] tracking-widest2 uppercase text-brass">02</div>
+      <h3 class="font-serif text-bone mt-5 leading-[1.1]" style="font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 400;">
+        Single-origin coffee.
+      </h3>
+      <p class="mt-5 text-bone/65 leading-relaxed max-w-[34ch]">
+        Roasted weekly in small batches; pulled on a lever machine that's older than most of the staff.
+      </p>
+    </div>
+    <div class="reveal">
+      <div class="font-mono text-[11px] tracking-widest2 uppercase text-brass">03</div>
+      <h3 class="font-serif text-bone mt-5 leading-[1.1]" style="font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 400;">
+        Open daily, 7am–11pm.
+      </h3>
+      <p class="mt-5 text-bone/65 leading-relaxed max-w-[34ch]">
+        Same hours every day. Slow mornings, lingering evenings, and a kitchen that doesn't rush.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────
+     04 / VISIT
+───────────────────────────────────────── -->
+<section id="visit" class="px-6 lg:px-10 py-28 lg:py-36">
+  <div class="max-w-[1320px] mx-auto">
+    <div class="font-mono text-[11px] tracking-widest2 uppercase text-taupe reveal">04 / Visit</div>
+    <h2 class="font-serif text-charcoal mt-5 leading-[1.05] tracking-[-0.01em] reveal"
+        style="font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 400;">
+      Find&nbsp;us.
+    </h2>
+
+    <div class="mt-14 grid lg:grid-cols-12 gap-12 lg:gap-16">
+
+      <!-- Left -->
+      <div class="lg:col-span-5 reveal">
+        <div>
+          <div class="font-mono text-[11px] tracking-widest2 uppercase text-taupe">Address</div>
+          <p class="mt-3 text-charcoal text-[17px] leading-relaxed">
+            47 Old Freight Lane<br/>
+            Quarter 3, District One
+          </p>
+        </div>
+
+        <div class="mt-10">
+          <div class="font-mono text-[11px] tracking-widest2 uppercase text-taupe">Hours</div>
+          <dl class="mt-3 font-mono text-[14px] text-charcoal grid grid-cols-[auto_1fr] gap-x-10 gap-y-2">
+            <dt class="text-charcoal/70">Mon–Wed</dt><dd>07:00 — 22:00</dd>
+            <dt class="text-charcoal/70">Thursday</dt><dd>07:00 — 23:00</dd>
+            <dt class="text-charcoal/70">Friday</dt><dd>07:00 — 00:00</dd>
+            <dt class="text-charcoal/70">Saturday</dt><dd>08:00 — 00:00</dd>
+            <dt class="text-charcoal/70">Sunday</dt><dd>08:00 — 21:00</dd>
+          </dl>
+        </div>
+
+        <div class="mt-10 grid grid-cols-2 gap-8">
+          <div>
+            <div class="font-mono text-[11px] tracking-widest2 uppercase text-taupe">Phone</div>
+            <a href="tel:+842855120924" class="ulink mt-3 inline-block text-charcoal">+84 28 5512 0924</a>
+          </div>
+          <div>
+            <div class="font-mono text-[11px] tracking-widest2 uppercase text-taupe">Email</div>
+            <a href="mailto:hello@theterminal.cafe" class="ulink mt-3 inline-block text-charcoal">hello@theterminal.cafe</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: static map -->
+      <div class="lg:col-span-7 reveal">
+        <div class="plate grain aspect-[5/4] bg-bone2"
+             style="background-image: linear-gradient(0deg, rgba(245,240,230,.35), rgba(245,240,230,.35)), url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=80'); background-size: cover; background-position:center;">
+          <!-- pin -->
+          <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+            <svg width="20" height="26" viewBox="0 0 20 26" fill="none"><path d="M10 1c-4 0-7 3-7 7 0 6 7 17 7 17s7-11 7-17c0-4-3-7-7-7z" fill="#B8893E" stroke="#1F1F1F" stroke-width="1"/><circle cx="10" cy="8" r="2.5" fill="#1F1F1F"/></svg>
+            <span class="mt-2 font-mono text-[10px] tracking-widest2 uppercase text-charcoal bg-bone/80 px-2 py-1">The Terminal</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────
+     RESERVATION
+───────────────────────────────────────── -->
+<section id="reserve" class="px-6 lg:px-10 py-28 lg:py-36">
+  <div class="max-w-[720px] mx-auto text-center reveal">
+    <div class="font-mono text-[11px] tracking-widest2 uppercase text-taupe">05 / Reserve</div>
+    <h2 class="font-serif italic font-light text-charcoal mt-5 leading-[1.05] tracking-[-0.01em]"
+        style="font-size: clamp(2.25rem, 5vw, 3.75rem); font-weight: 300;">
+      Reserve a table.
+    </h2>
+    <p class="mt-5 text-charcoal/70 max-w-[48ch] mx-auto">
+      A short form. We'll write back within the day to confirm your seat.
+    </p>
+  </div>
+
+  <form id="resForm" class="max-w-[640px] mx-auto mt-14 reveal" novalidate>
+    <div class="grid sm:grid-cols-2 gap-x-10 gap-y-9">
+      <div class="field sm:col-span-2">
+        <label>Name</label>
+        <input type="text" placeholder="Your name" required>
+      </div>
+      <div class="field">
+        <label>Date</label>
+        <input type="date" required>
+      </div>
+      <div class="field">
+        <label>Time</label>
+        <input type="time" value="19:00" required>
+      </div>
+      <div class="field">
+        <label>Guests</label>
+        <select>
+          <option>2 guests</option><option>3 guests</option><option>4 guests</option>
+          <option>5 guests</option><option>6 guests</option><option>7+ — private</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Phone</label>
+        <input type="tel" placeholder="Optional">
+      </div>
+      <div class="field sm:col-span-2">
+        <label>Notes</label>
+        <input type="text" placeholder="Allergies, window booth, occasion…">
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col items-center gap-5">
+      <button type="submit" class="btn-brass">Confirm reservation</button>
+      <p id="resOk" class="hidden font-mono text-[12px] tracking-[.2em] uppercase text-brass">— Received. We'll be in touch shortly.</p>
+    </div>
+  </form>
+</section>
+
+<!-- ─────────────────────────────────────────
+     FOOTER
+───────────────────────────────────────── -->
+<footer class="bg-charcoal text-bone pt-24 pb-10 px-6 lg:px-10">
+  <div class="max-w-[1320px] mx-auto">
+
+    <!-- Big wordmark -->
+    <div class="reveal">
+      <div class="font-serif text-bone leading-none tracking-[-0.02em]"
+           style="font-size: clamp(4rem, 14vw, 12rem); font-weight: 400;">
+        The&nbsp;Terminal
+      </div>
+    </div>
+
+    <div class="mt-20 grid md:grid-cols-3 gap-14">
+      <div class="reveal">
+        <div class="font-mono text-[11px] tracking-widest2 uppercase text-bone/55">Address</div>
+        <p class="mt-4 leading-relaxed text-bone/85">
+          47 Old Freight Lane<br/>
+          Quarter 3, District One
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="font-mono text-[11px] tracking-widest2 uppercase text-bone/55">Hours</div>
+        <p class="mt-4 leading-relaxed text-bone/85 font-mono text-[14px]">
+          Mon–Wed&nbsp;&nbsp;07:00–22:00<br/>
+          Thursday&nbsp;&nbsp;&nbsp;&nbsp;07:00–23:00<br/>
+          Fri–Sat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;07:00–00:00<br/>
+          Sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;08:00–21:00
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="font-mono text-[11px] tracking-widest2 uppercase text-bone/55">Follow</div>
+        <ul class="mt-4 space-y-2 text-bone/85">
+          <li><a href="#" class="ulink">Instagram</a></li>
+          <li><a href="#" class="ulink">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <form id="newsletter" class="mt-20 max-w-[560px] reveal" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('.nl-ok').classList.remove('hidden');">
+      <div class="font-mono text-[11px] tracking-widest2 uppercase text-bone/55">Occasional dispatches</div>
+      <div class="mt-4 flex items-center gap-5 border-b border-bone/30 pb-3">
+        <input type="email" required placeholder="Your email" class="flex-1 bg-transparent outline-none text-bone placeholder:text-bone/35 py-2"/>
+        <button class="ulink text-bone text-[14px]" type="submit">Subscribe</button>
+      </div>
+      <p class="nl-ok hidden mt-4 font-mono text-[11px] tracking-widest2 uppercase text-brass">— Thank you. You'll hear from us occasionally.</p>
+    </form>
+
+    <!-- Bottom -->
+    <div class="mt-24">
+      <div class="hairline-brass h-px"></div>
+      <div class="mt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 font-mono text-[11px] tracking-widest2 uppercase text-bone/55">
+        <div>© 2024 The Terminal</div>
+        <div>All journeys reserved.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<script>
+/* ── Nav scroll state ── */
+const navBg = document.getElementById('nav-bg');
+const navLine = document.getElementById('nav-line');
+const onScroll = () => {
+  const y = window.scrollY;
+  if (y > 24) {
+    navBg.style.background = 'rgba(245,240,230,.92)';
+    navBg.style.backdropFilter = 'blur(10px)';
+    navLine.style.background = 'rgba(31,31,31,.12)';
+  } else {
+    navBg.style.background = 'transparent';
+    navBg.style.backdropFilter = 'blur(0px)';
+    navLine.style.background = 'transparent';
+  }
+};
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+/* ── Mobile menu ── */
+const overlay = document.getElementById('overlay');
+document.getElementById('burger').onclick = () => overlay.classList.add('open');
+document.getElementById('closeMenu').onclick = () => overlay.classList.remove('open');
+document.getElementById('overlayNav').addEventListener('click', e => {
+  if (e.target.tagName === 'A') overlay.classList.remove('open');
+});
+
+/* ── Reveal on scroll ── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── Menu data + render (list, not cards) ── */
+const MENU = [
+  { cat:'breakfast', name:'House croissant set',     desc:'Lacquered croissant, soft-boiled egg, apricot jam.',                    price:'9'  },
+  { cat:'breakfast', name:'Conductor\'s plate',      desc:'Two eggs, smoked sausage, brioche soldiers, paprika butter.',           price:'12' },
+  { cat:'mains',     name:'Wiener schnitzel',        desc:'Veal cutlet, golden bread crumb, lemon, lingonberry.',                  price:'24' },
+  { cat:'mains',     name:'Hungarian goulash',       desc:'Slow-braised beef, sweet paprika, smoked tomato, soft dumplings.',      price:'19' },
+  { cat:'mains',     name:'Duck confit du Lyon',     desc:'Twelve-hour leg of duck, white-bean cassoulet.',                        price:'27' },
+  { cat:'desserts',  name:'Sachertorte',             desc:'Dark chocolate sponge, apricot, glassy ganache, soft cream.',            price:'10' },
+  { cat:'desserts',  name:'Crème brûlée',            desc:'Madagascar vanilla custard, hand-torched amber sugar.',                  price:'9'  },
+  { cat:'coffee',    name:'Single-origin pour-over', desc:'Rotating weekly. Ask the bar for today\'s lot.',                         price:'5'  },
+  { cat:'coffee',    name:'Lever espresso',          desc:'House blend, pulled on the brass machine. Chocolate, burnt orange.',     price:'4'  },
+  { cat:'coffee',    name:'Vienna mélange',          desc:'Espresso, steamed milk, a thumbprint of foam.',                          price:'5'  },
+];
+
+const list = document.getElementById('menuList');
+function renderMenu(cat='all'){
+  const items = cat === 'all' ? MENU : MENU.filter(m => m.cat === cat);
+  list.innerHTML = items.map(m => `
+    <div class="row-menu" data-cat="${m.cat}">
+      <div class="flex items-baseline min-w-0">
+        <h3 class="font-serif text-charcoal text-[20px] md:text-[22px] leading-tight font-medium whitespace-nowrap">${m.name}</h3>
+        <span class="leader"></span>
+        <span class="font-mono text-brass text-[14px] tabular-nums whitespace-nowrap">€${m.price}</span>
+      </div>
+      <p class="col-span-2 mt-2 text-taupe text-[15px] leading-relaxed max-w-[60ch]">${m.desc}</p>
+    </div>
+  `).join('');
+}
+renderMenu();
+
+document.getElementById('filters').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  document.querySelectorAll('#filters .tab').forEach(t => t.classList.remove('active'));
+  b.classList.add('active');
+  renderMenu(b.dataset.filter);
+});
+
+/* ── Reservation submit ── */
+document.getElementById('resForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  document.getElementById('resOk').classList.remove('hidden');
+});
+</script>
+</body>
+</html>

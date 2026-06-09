@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#F5F0E6" />
+<title>The Terminal — Cafe & European Kitchen</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Tailwind Play CDN with custom screens + tokens -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        screens: {
+          'xs':  '375px',
+          '3xl': '1920px',
+          '4xl': '2560px',
+        },
+        colors: {
+          bone:'#F5F0E6', bone2:'#EDE6D6',
+          charcoal:'#1F1F1F', charcoal2:'#2A2A2A',
+          brass:'#B8893E', brass2:'#a07731',
+          taupe:'#8B7355', patina:'#6D827D',
+        },
+        fontFamily: {
+          serif:['Fraunces','Georgia','serif'],
+          sans: ['Inter','system-ui','sans-serif'],
+          mono: ['"JetBrains Mono"','ui-monospace','monospace'],
+        },
+      }
+    }
+  }
+</script>
+
+<!-- Motion libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.158.0/build/three.module.js" } }
+</script>
+
+<style>
+  /* ──────────────────────────────────────────
+     ROOT TOKENS & RESPONSIVE FOUNDATIONS
+  ────────────────────────────────────────── */
+  :root {
+    --bone:#F5F0E6; --bone2:#EDE6D6; --charcoal:#1F1F1F;
+    --brass:#B8893E; --taupe:#8B7355; --patina:#6D827D;
+
+    /* Fluid type scale */
+    --fs-h1:   clamp(2.5rem, 8vw, 7rem);
+    --fs-h2:   clamp(2rem, 5vw, 4.5rem);
+    --fs-h3:   clamp(1.5rem, 3vw, 2.5rem);
+    --fs-body: clamp(0.95rem, 1.1vw, 1.125rem);
+    --fs-mono: clamp(0.7rem, 0.85vw, 0.875rem);
+
+    /* Fluid spacing */
+    --pad-section-y: clamp(4rem, 10vw, 10rem);
+    --pad-x:         clamp(1.25rem, 5vw, 4rem);
+    --gap:           clamp(0.75rem, 2vw, 2rem);
+
+    --container: min(1440px, 100%);
+    --container-3xl: min(1680px, 100%);
+
+    --safe-x: max(env(safe-area-inset-left), var(--pad-x));
+    --safe-r: max(env(safe-area-inset-right), var(--pad-x));
+  }
+  @media (min-width: 1920px){
+    :root { --container: var(--container-3xl); }
+  }
+
+  html, body {
+    background: var(--bone);
+    color: var(--charcoal);
+    overscroll-behavior-y: none;
+  }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--brass); color: var(--bone); }
+
+  /* Remove tap highlights, allow tap feedback we control */
+  a, button, [role="button"] { -webkit-tap-highlight-color: transparent; }
+
+  /* Lenis */
+  html.lenis { height:auto; }
+  .lenis.lenis-smooth { scroll-behavior:auto !important; }
+
+  .container { max-width: var(--container); margin-inline:auto; padding-inline: var(--safe-x); }
+
+  /* ────────────── GRAIN OVERLAY ────────────── */
+  .grain-overlay{
+    position: fixed; inset:0; z-index: 90; pointer-events:none;
+    mix-blend-mode: multiply; opacity:.06;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    animation: grain-pulse 8s ease-in-out infinite;
+  }
+  @keyframes grain-pulse { 0%,100%{ opacity:.05 } 50%{ opacity:.09 } }
+
+  .grain { position:relative; }
+  .grain::after{
+    content:''; position:absolute; inset:0; pointer-events:none; opacity:.07; mix-blend-mode:multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .8 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* ────────────── CUSTOM CURSOR (desktop only) ────────────── */
+  .cursor, .cursor-ring { position: fixed; left:0; top:0; pointer-events:none; z-index: 100; transform: translate(-50%,-50%); will-change: transform; }
+  .cursor       { width:8px;  height:8px;  background: var(--brass); border-radius:50%; }
+  .cursor-ring  { width:36px; height:36px; border:1px solid var(--brass); border-radius:50%; opacity:0; transition: opacity .3s, width .3s, height .3s; }
+  body.cur-hover .cursor      { opacity: 0; }
+  body.cur-hover .cursor-ring { opacity: 1; width:48px; height:48px; }
+  @media not all and (hover: hover) and (pointer: fine) {
+    .cursor, .cursor-ring { display:none !important; }
+  }
+
+  /* Scroll progress */
+  .progress { position: fixed; top:0; left:0; height: 2px; width:0%; background: var(--brass); z-index: 95; }
+
+  /* ────────────── PRELOADER ────────────── */
+  .preloader{
+    position: fixed; inset:0; background: var(--bone); z-index: 200;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    padding-inline: var(--safe-x);
+  }
+  .preloader .pre-wm{
+    font-family:'Fraunces',serif; font-size: clamp(1.8rem, 8vw, 4rem); letter-spacing:.04em;
+    color: var(--charcoal); display:flex; gap:.02em; text-align:center;
+  }
+  .preloader .pre-wm span{ display:inline-block; opacity:0; transform: translateY(40%); }
+  .preloader .pre-line{ width:0; height:1px; background: var(--brass); margin-top: clamp(12px, 2vw, 18px); }
+  /* mobile: brass line 60vw, desktop 40vw — handled by target inside JS based on viewport */
+
+  /* ────────────── UI ATOMS ────────────── */
+  .ulink { position:relative; display:inline-block; }
+  .ulink::after{
+    content:''; position:absolute; left:0; right:100%; bottom:-3px; height:1px;
+    background: var(--brass); transition: right .45s cubic-bezier(.7,0,.2,1);
+  }
+  @media (hover: hover) { .ulink:hover::after { right:0; } }
+
+  .btn-brass{
+    display:inline-flex; align-items:center; justify-content:center;
+    background: var(--brass); color: var(--bone);
+    padding: clamp(0.85rem, 2vw, 1rem) clamp(1.25rem, 3.5vw, 2rem);
+    font-weight: 500; font-size: clamp(0.78rem, 1vw, 0.85rem);
+    letter-spacing: .18em; text-transform: uppercase;
+    min-height: 44px; min-width: 44px;
+    transition: transform .25s cubic-bezier(.6,.05,.2,1), box-shadow .35s, background .25s, filter .2s;
+    outline-offset: 2px;
+  }
+  @media (hover: hover) {
+    .btn-brass:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(184,137,62,.28); background:#a87a33; }
+  }
+  .btn-brass:active { transform: scale(.98); background:#8b6526; }
+  .btn-brass:focus-visible { outline: 2px solid var(--brass); }
+
+  /* Plates (images) */
+  .plate { position:relative; overflow:hidden; background: var(--bone2); }
+  .plate .img { position:absolute; inset:0; transform: scale(1.06); transition: transform .8s cubic-bezier(.6,.05,.2,1); }
+  .plate img { display:block; width:100%; height:100%; object-fit:cover; transition: transform .8s cubic-bezier(.6,.05,.2,1); }
+  @media (hover: hover) {
+    .plate-hover:hover .img { transform: scale(1.04); }
+    .plate-hover:hover img  { transform: scale(1.08); }
+  }
+
+  /* Tabs underline morph */
+  .tab{
+    position:relative; padding: 8px 0; color: var(--taupe);
+    font-size: clamp(0.85rem, 1vw, 0.95rem); transition: color .2s; cursor:pointer;
+    flex-shrink: 0; scroll-snap-align: start;
+  }
+  @media (hover: hover) { .tab:hover { color: var(--charcoal); } }
+  .tab.active { color: var(--charcoal); }
+  .tab-underline{
+    position:absolute; height:1px; background: var(--brass); bottom:2px;
+    transition: left .45s cubic-bezier(.7,0,.2,1), width .45s cubic-bezier(.7,0,.2,1);
+  }
+
+  /* Filters scroll on mobile */
+  .filters {
+    display:flex; gap: clamp(1rem, 3vw, 1.75rem);
+    overflow-x: auto; scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    padding-bottom: 8px;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+
+  /* ────────────── MENU ROWS ────────────── */
+  .row-menu{
+    position:relative;
+    padding: clamp(1rem, 2.4vw, 1.5rem) 0;
+    border-top: 1px solid rgba(31,31,31,.10);
+    transition: background-color .3s ease;
+  }
+  .row-menu:last-child { border-bottom: 1px solid rgba(31,31,31,.10); }
+  .row-menu .row-arrow{
+    position:absolute; right: 0; top: clamp(1rem, 2.4vw, 1.5rem); opacity:0; transform: translateX(-6px);
+    transition: opacity .35s, transform .35s; color: var(--brass);
+    font-family:'JetBrains Mono', monospace;
+  }
+  @media (hover: hover) {
+    .row-menu:hover { background: rgba(184,137,62,.06); padding-inline: 12px; margin-inline:-12px; }
+    .row-menu:hover .row-arrow { opacity:1; transform: translateX(0); }
+  }
+  .row-menu:active { background: rgba(184,137,62,.06); }
+
+  .row-top { display:flex; align-items:baseline; gap: .75rem; }
+  .leader{
+    flex:1; height:1px; align-self:end; margin: 0 12px 8px; min-width: 12px;
+    background-image: radial-gradient(circle, rgba(31,31,31,.35) 1px, transparent 1.2px);
+    background-size: 6px 1px; background-repeat: repeat-x; background-position: 0 100%;
+    background-position-x: 100%;
+    transition: background-position-x .9s cubic-bezier(.6,.05,.2,1) .15s;
+  }
+  /* On small screens we hide the leader entirely — name and price are flex-justified */
+  @media (max-width: 639px) {
+    .leader { display:none; }
+    .row-top { justify-content: space-between; }
+  }
+  .row-menu.in .leader{ background-position-x: 0%; }
+  .row-menu .name{
+    opacity:0; transform: translateX(-12px); transition: opacity .8s, transform .8s;
+    transition-timing-function: cubic-bezier(.6,.05,.2,1); font-family:'Fraunces',serif;
+    color: var(--charcoal); font-weight: 500; line-height: 1.2;
+    font-size: clamp(1.05rem, 1.6vw, 1.375rem);
+  }
+  .row-menu .price{
+    opacity:0; transform: translateX(12px); transition: opacity .8s, transform .8s;
+    transition-timing-function: cubic-bezier(.6,.05,.2,1);
+    font-family:'JetBrains Mono', monospace; color: var(--brass);
+    font-size: clamp(0.85rem, 1vw, 0.95rem); font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .row-menu .desc {
+    opacity:0; transform: translateY(8px); transition: opacity .8s ease .15s, transform .8s ease .15s;
+    color: var(--taupe); margin-top: .5rem; max-width: 60ch;
+    font-size: clamp(0.875rem, 1vw, 0.95rem); line-height: 1.6;
+  }
+  .row-menu.in .name, .row-menu.in .price, .row-menu.in .desc { opacity:1; transform:none; }
+
+  /* ────────────── FORM ────────────── */
+  .field { position:relative; padding-top: 22px; }
+  .field label{
+    position:absolute; left:0; top: 22px; font-family:'Inter';
+    font-size: 16px; color: rgba(31,31,31,.45); pointer-events:none;
+    transition: transform .35s cubic-bezier(.6,.05,.2,1), color .35s, font-size .35s, letter-spacing .35s;
+  }
+  .field input, .field select, .field textarea {
+    width:100%; background: transparent; border:none; outline:none;
+    border-bottom: 1px solid rgba(31,31,31,.30);
+    padding: 8px 0 12px;
+    font-family:'Inter',sans-serif;
+    /* iOS: 16px floor prevents zoom-in on focus */
+    font-size: 16px; color: var(--charcoal);
+  }
+  .field::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background: var(--brass);
+    transform: scaleX(0); transform-origin: left; transition: transform .55s cubic-bezier(.6,.05,.2,1);
+  }
+  .field.in::after { transform: scaleX(1); }
+  .field input:focus, .field select:focus, .field textarea:focus { border-bottom-color: transparent; }
+  .field.has-value label, .field input:focus + label, .field select:focus + label, .field textarea:focus + label {
+    transform: translateY(-26px); font-size: 11px; letter-spacing:.22em; text-transform: uppercase; color: var(--taupe);
+  }
+
+  /* Section number animated brass line */
+  .section-num { display:flex; align-items:center; gap: clamp(0.75rem, 1.5vw, 1.25rem); }
+  .num-line { display:inline-block; height:1px; background: var(--brass); width:0; }
+
+  /* Split text */
+  .splitline { display:block; overflow:hidden; }
+  .splitline > span { display:block; transform: translateY(110%); will-change: transform; }
+  .splitw { display: inline-block; overflow: hidden; vertical-align: bottom; }
+  .splitw > span { display: inline-block; transform: translateY(110%); will-change: transform; }
+
+  /* Hero scroll indicator */
+  @keyframes bob { 0%,100%{ transform: translateY(0) } 50% { transform: translateY(6px) } }
+  .bob { animation: bob 2.4s ease-in-out infinite; }
+
+  /* Mobile overlay */
+  .menu-overlay { transform: translateY(-100%); transition: transform .55s cubic-bezier(.6,.05,.2,1); }
+  .menu-overlay.open { transform: translateY(0); }
+
+  /* Nav defaults */
+  #nav { transition: transform .5s cubic-bezier(.6,.05,.2,1); }
+  #nav.hide { transform: translateY(-110%); }
+
+  /* Horizontal pinned panels (lg+) */
+  .h-track { display:flex; height: 100svh; }
+  .h-panel {
+    flex: 0 0 100vw; height: 100svh; display:flex; align-items:center; justify-content:center;
+    padding-inline: clamp(2rem, 6vw, 6rem);
+  }
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    .h-panel { flex-basis: 90vw; }
+  }
+
+  /* Mobile atmosphere carousel */
+  .atmo-carousel {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 78%;
+    gap: clamp(0.75rem, 3vw, 1rem);
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 0 var(--safe-x) 0 0;
+    scrollbar-width: none;
+  }
+  .atmo-carousel::-webkit-scrollbar { display:none; }
+  .atmo-carousel > * { scroll-snap-align: start; }
+
+  /* Footer wordmark wraps cleanly */
+  .foot-wm {
+    font-family:'Fraunces',serif; color: var(--bone);
+    font-size: clamp(2.6rem, 14vw, 12rem);
+    line-height: .92; letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+  }
+
+  /* Accessibility */
+  .skip-link {
+    position: absolute; left: -9999px; top: 0; z-index: 300;
+    background: var(--charcoal); color: var(--bone); padding: 10px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .2em;
+  }
+  .skip-link:focus { left: var(--safe-x); top: 8px; }
+  :focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Landscape mobile — let the hero breathe instead of forcing 100svh */
+  @media (orientation: landscape) and (max-height: 500px){
+    .hero-shell { min-height: auto; padding-top: clamp(6rem, 14vh, 8rem); padding-bottom: 4rem; }
+  }
+
+  /* Reduced motion — strip all transforms, keep opacity fades only */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.15s !important; }
+    .preloader { display:none; }
+    .splitline > span, .splitw > span { transform: none !important; }
+  }
+</style>
+</head>
+<body class="text-charcoal">
+
+<!-- Skip-to-content -->
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Preloader -->
+<div id="preloader" class="preloader" aria-hidden="true">
+  <div class="pre-wm" id="preWm"></div>
+  <div class="pre-line" id="preLine"></div>
+</div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cur" aria-hidden="true"></div>
+<div class="cursor-ring" id="curR" aria-hidden="true"></div>
+
+<!-- Scroll progress -->
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- Page grain -->
+<div class="grain-overlay" aria-hidden="true"></div>
+
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50 -translate-y-full" style="padding-top: env(safe-area-inset-top);">
+  <div id="nav-bg" class="absolute inset-0 -z-10 transition-all duration-300" style="background: transparent;"></div>
+  <div id="nav-line" class="absolute bottom-0 left-0 right-0 h-px transition-colors duration-300" style="background: transparent;"></div>
+
+  <div class="container flex items-center justify-between transition-[height] duration-300" id="navInner"
+       style="height: clamp(64px, 8vw, 84px);">
+    <a href="#top" class="interactive font-serif tracking-[.04em] text-charcoal"
+       style="font-size: clamp(1rem, 1.2vw, 1.125rem);">The&nbsp;Terminal</a>
+
+    <nav class="hidden lg:flex items-center gap-9 text-[14px] text-charcoal/85" aria-label="Primary">
+      <a class="ulink interactive" href="#menu">Menu</a>
+      <a class="ulink interactive" href="#story">Story</a>
+      <a class="ulink interactive" href="#visit">Visit</a>
+      <a class="ulink interactive" href="#reserve">Reserve</a>
+    </nav>
+
+    <a href="#reserve" class="hidden lg:inline-flex btn-brass interactive !py-2.5 !px-5">Reserve</a>
+
+    <button id="burger" class="lg:hidden p-2 text-charcoal interactive" aria-label="Open menu" aria-controls="overlay" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h18M3 17h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile overlay -->
+<div id="overlay" class="menu-overlay fixed inset-0 z-[60] bg-bone lg:hidden flex flex-col"
+     style="padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);" role="dialog" aria-modal="true" aria-label="Site navigation">
+  <div class="flex items-center justify-between container" style="height: clamp(64px, 8vw, 84px);">
+    <span class="font-serif tracking-[.04em]" style="font-size: clamp(1rem, 1.2vw, 1.125rem);">The&nbsp;Terminal</span>
+    <button id="closeMenu" class="p-2 text-charcoal" aria-label="Close menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M6 18L18 6"/></svg>
+    </button>
+  </div>
+  <nav class="flex-1 flex flex-col items-center justify-center gap-7 font-serif text-charcoal" id="overlayNav" aria-label="Site">
+    <a class="ov-link opacity-0" href="#menu" style="font-size: clamp(1.75rem, 7vw, 2.5rem);">Menu</a>
+    <a class="ov-link opacity-0" href="#story" style="font-size: clamp(1.75rem, 7vw, 2.5rem);">Story</a>
+    <a class="ov-link opacity-0" href="#visit" style="font-size: clamp(1.75rem, 7vw, 2.5rem);">Visit</a>
+    <a class="ov-link opacity-0" href="#reserve" style="font-size: clamp(1.75rem, 7vw, 2.5rem);">Reserve</a>
+  </nav>
+  <div class="container pb-6"><a href="#reserve" class="btn-brass w-full">Reserve a table</a></div>
+</div>
+
+<main id="main">
+<a id="top" tabindex="-1"></a>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero-shell relative overflow-hidden" style="min-height: 100svh; padding-top: clamp(7rem, 14vw, 9rem); padding-bottom: clamp(3rem, 8vw, 5rem);">
+  <div class="container grid lg:grid-cols-12 items-center" style="gap: clamp(2rem, 5vw, 4rem);">
+
+    <!-- LEFT: TEXT -->
+    <div class="lg:col-span-7 order-2 lg:order-1 relative z-10">
+      <div id="heroLabel" class="font-mono uppercase opacity-0"
+           style="font-size: clamp(0.65rem, 0.9vw, 0.78rem); letter-spacing:.32em; color: var(--brass);">
+        Est. 2024 — Cafe &amp; European Kitchen
+      </div>
+
+      <h1 id="heroHead" class="font-serif text-charcoal mt-6 lg:mt-9 tracking-[-0.01em]"
+          style="font-size: var(--fs-h1); line-height: .96; font-weight:400;">
+        <span class="block" id="heroLine1"></span>
+        <span class="block italic font-light" id="heroLine2"
+              style="font-variation-settings:'opsz' 144; position:relative;"></span>
+      </h1>
+
+      <p id="heroBody" class="mt-8 lg:mt-10 text-charcoal/75 opacity-0" style="max-width: 46ch; line-height: 1.6;">
+        A small café serving European classics, single-origin coffee, and unhurried mornings — set inside the bones of an old freight station.
+      </p>
+
+      <div id="heroCtas" class="mt-7 lg:mt-9 flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-4 xs:gap-8 opacity-0">
+        <a href="#menu" class="ulink interactive text-charcoal" style="font-size: clamp(0.95rem, 1.1vw, 1rem);">View Menu&nbsp;→</a>
+        <a href="#reserve" class="ulink interactive text-charcoal" style="font-size: clamp(0.95rem, 1.1vw, 1rem);">Reserve a table</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: 3D CANVAS -->
+    <div class="lg:col-span-5 order-1 lg:order-2">
+      <div id="three-wrap" class="relative w-full mx-auto lg:ml-auto"
+           style="aspect-ratio: 1; max-width: min(560px, 90vw); min-height: clamp(280px, 60vw, 560px);">
+        <canvas id="three-canvas" class="absolute inset-0 w-full h-full"></canvas>
+        <svg id="threeFallback" viewBox="0 0 200 200" class="absolute inset-0 w-full h-full text-brass/80" style="display:none;" aria-hidden="true">
+          <g fill="currentColor">
+            <path d="M100 30 l8 14 16-4 4 16 14 8 -4 16 12 12 -12 12 4 16 -14 8 -4 16 -16-4 -8 14 -8-14 -16 4 -4-16 -14-8 4-16 -12-12 12-12 -4-16 14-8 4-16 16 4z"/>
+          </g>
+          <circle cx="100" cy="100" r="22" fill="#F5F0E6"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator (desktop only — no room on mobile) -->
+  <a href="#story" class="hidden md:flex absolute bottom-8 text-charcoal/45 interactive"
+     style="left: var(--safe-x);">
+    <div class="bob flex items-center gap-3">
+      <span class="font-mono uppercase" style="font-size: 10px; letter-spacing:.32em;">Scroll</span>
+      <span class="w-10 h-px bg-charcoal/30"></span>
+    </div>
+  </a>
+</section>
+
+<!-- ═══════════════ 01 / STORY ═══════════════ -->
+<section id="story" class="container" style="padding-block: var(--pad-section-y);">
+
+  <div class="section-num">
+    <span class="font-mono uppercase text-taupe" style="font-size: var(--fs-mono); letter-spacing:.32em;">01 / Story</span>
+    <span class="num-line"></span>
+  </div>
+
+  <div class="mt-10 lg:mt-16 grid lg:grid-cols-12 items-start" style="gap: clamp(2rem, 5vw, 4rem);">
+    <div class="lg:col-span-6 order-2 lg:order-1">
+      <h2 class="font-serif text-charcoal tracking-[-0.01em] split-lines"
+          style="font-size: var(--fs-h2); line-height: 1.05; font-weight:400;">
+        <span class="splitline"><span>Built inside an old</span></span>
+        <span class="splitline"><span class="italic font-light">freight house.</span></span>
+      </h2>
+
+      <div class="mt-7 space-y-5 text-charcoal/80 split-lines" style="max-width: 52ch; line-height: 1.6;">
+        <p class="splitline"><span>The Terminal occupies a small brick building at the end of</span></p>
+        <p class="splitline"><span>a forgotten railway line — once used to stage parcels for the</span></p>
+        <p class="splitline"><span>morning train, now used to stage espresso and breakfast plates.</span></p>
+        <p class="splitline mt-5"><span>We borrow from the slowness of the old timetable. Our menu</span></p>
+        <p class="splitline"><span>is short, our hours are kept, and the coffee is pulled by hand.</span></p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6 order-1 lg:order-2">
+      <div class="plate plate-hover grain story-plate" style="aspect-ratio: 5/6; clip-path: inset(100% 0 0 0);">
+        <div class="img"><img loading="lazy"
+          src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80"
+          srcset="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=640&q=75 640w,
+                  https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1280&q=80 1280w,
+                  https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1920&q=82 1920w"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          alt="Warmly lit café interior with timber surfaces and soft daylight."/></div>
+      </div>
+    </div>
+  </div>
+
+  <figure class="mt-20 lg:mt-32 mx-auto text-center relative" style="max-width: min(62ch, 90vw);">
+    <span id="qmark" class="absolute -left-3 sm:-left-8 lg:-left-12 -top-4 sm:-top-6 font-serif italic text-brass leading-none"
+          style="opacity:0; transform: scale(.4); font-size: clamp(3rem, 8vw, 6rem);">"</span>
+    <blockquote class="font-serif italic font-light text-charcoal split-lines"
+                style="font-size: clamp(1.4rem, 3.4vw, 2.5rem); line-height: 1.2;">
+      <span class="splitline"><span>“We wanted a room that felt like a long Sunday —</span></span>
+      <span class="splitline"><span>measured, generous, in no hurry to be anywhere else.”</span></span>
+    </blockquote>
+    <figcaption class="mt-7 font-mono uppercase text-taupe reveal-fade opacity-0"
+                style="font-size: var(--fs-mono); letter-spacing:.32em;">— M. Kovács, Chef</figcaption>
+  </figure>
+</section>
+
+<!-- ═══════════════ 02 / MENU ═══════════════ -->
+<section id="menu" class="container" style="padding-block: var(--pad-section-y);">
+
+  <div class="flex items-end justify-between flex-wrap" style="gap: 1.5rem;">
+    <div>
+      <div class="section-num">
+        <span class="font-mono uppercase text-taupe" style="font-size: var(--fs-mono); letter-spacing:.32em;">02 / Menu</span>
+        <span class="num-line"></span>
+      </div>
+      <h2 class="font-serif text-charcoal mt-6 tracking-[-0.01em] split-lines"
+          style="font-size: var(--fs-h2); line-height: 1.05; font-weight:400;">
+        <span class="splitline"><span>Selected dishes.</span></span>
+      </h2>
+    </div>
+
+    <div id="filters" class="filters relative" role="tablist" aria-label="Menu filter">
+      <button class="tab active interactive" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button class="tab interactive" data-filter="breakfast" role="tab" aria-selected="false">Breakfast</button>
+      <button class="tab interactive" data-filter="mains" role="tab" aria-selected="false">Mains</button>
+      <button class="tab interactive" data-filter="desserts" role="tab" aria-selected="false">Desserts</button>
+      <button class="tab interactive" data-filter="coffee" role="tab" aria-selected="false">Coffee</button>
+      <span id="tabUL" class="tab-underline" style="left:0; width:24px;"></span>
+    </div>
+  </div>
+
+  <div class="mt-10 lg:mt-14 grid lg:grid-cols-12" style="gap: clamp(1.5rem, 4vw, 3rem);">
+    <div class="lg:col-span-8" id="menuList"></div>
+
+    <aside class="lg:col-span-4 hidden md:flex flex-col gap-10 pt-12" aria-hidden="true">
+      <div class="plate plate-hover grain side-plate" style="aspect-ratio: 4/5;" data-speed="0.08">
+        <div class="img"><img loading="lazy"
+          src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=80"
+          srcset="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=640&q=75 640w,
+                  https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1280&q=80 1280w"
+          sizes="(min-width: 1024px) 33vw, 50vw"
+          alt="Plated breakfast on stoneware."/></div>
+      </div>
+      <div class="plate plate-hover grain side-plate ml-10" style="aspect-ratio: 1;" data-speed="0.14">
+        <div class="img"><img loading="lazy"
+          src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=900&q=80"
+          srcset="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=640&q=75 640w,
+                  https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=1280&q=80 1280w"
+          sizes="(min-width: 1024px) 33vw, 50vw"
+          alt="Cup of coffee."/></div>
+      </div>
+      <div class="plate plate-hover grain side-plate" style="aspect-ratio: 4/5;" data-speed="0.06">
+        <div class="img"><img loading="lazy"
+          src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=80"
+          srcset="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=640&q=75 640w,
+                  https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1280&q=80 1280w"
+          sizes="(min-width: 1024px) 33vw, 50vw"
+          alt="Slice of chocolate cake."/></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ═══════════════ 03 / SPACE ═══════════════ -->
+<section id="space" class="container" style="padding-block: var(--pad-section-y);">
+  <div class="section-num">
+    <span class="font-mono uppercase text-taupe" style="font-size: var(--fs-mono); letter-spacing:.32em;">03 / Space</span>
+    <span class="num-line"></span>
+  </div>
+  <h2 class="font-serif text-charcoal mt-6 tracking-[-0.01em] split-lines"
+      style="font-size: var(--fs-h2); line-height: 1.05; font-weight:400;">
+    <span class="splitline"><span>Inside.</span></span>
+  </h2>
+
+  <!-- Desktop / tablet asymmetric grid -->
+  <div class="hidden md:grid mt-12 grid-cols-6" style="grid-template-rows: 280px 280px; gap: clamp(0.75rem, 1.5vw, 1.25rem);">
+    <div class="col-span-6 md:col-span-4 row-span-2 plate plate-hover grain space-plate" data-speed="0.05">
+      <div class="img"><img loading="lazy"
+        src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1600&q=80"
+        srcset="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=640&q=75 640w,
+                https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1280&q=80 1280w,
+                https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1920&q=82 1920w"
+        sizes="(min-width: 1024px) 66vw, 100vw"
+        alt="A long communal table beside a tall window."/></div>
+    </div>
+    <div class="col-span-3 md:col-span-2 plate plate-hover grain space-plate" data-speed="0.10">
+      <div class="img"><img loading="lazy"
+        src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=900&q=80"
+        srcset="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=640&q=75 640w,
+                https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1280&q=80 1280w"
+        sizes="(min-width: 1024px) 33vw, 50vw"
+        alt="A hanging pendant lamp."/></div>
+    </div>
+    <div class="col-span-3 md:col-span-2 plate plate-hover grain space-plate" data-speed="0.14">
+      <div class="img"><img loading="lazy"
+        src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=900&q=80"
+        srcset="https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=640&q=75 640w,
+                https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=1280&q=80 1280w"
+        sizes="(min-width: 1024px) 33vw, 50vw"
+        alt="A loaf of bread resting on linen."/></div>
+    </div>
+  </div>
+
+  <!-- Mobile carousel -->
+  <div class="md:hidden mt-10 atmo-carousel" role="region" aria-label="Photos of the room">
+    <div class="plate grain" style="aspect-ratio: 4/5;">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1280&q=80" alt="A long communal table beside a window."/>
+    </div>
+    <div class="plate grain" style="aspect-ratio: 4/5;">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1280&q=80" alt="A hanging pendant lamp."/>
+    </div>
+    <div class="plate grain" style="aspect-ratio: 4/5;">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=1280&q=80" alt="A loaf of bread on linen."/>
+    </div>
+    <div class="plate grain" style="aspect-ratio: 4/5;">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1280&q=80" alt="Pour-over coffee being prepared."/>
+    </div>
+  </div>
+
+  <p class="mt-8 lg:mt-10 font-mono uppercase text-taupe opacity-0 reveal-fade"
+     style="font-size: var(--fs-mono); letter-spacing:.2em; max-width: 60ch;">
+    <span class="text-charcoal">— Forty-eight seats.</span> Reclaimed oak, lime-washed brick, two skylights and a single brass lamp from the original station office.
+  </p>
+</section>
+
+<!-- ═══════════════ HORIZONTAL JOURNEY ═══════════════ -->
+<section id="hScroll" class="relative" aria-label="Editorial: pace, craft, room, table">
+  <!-- Desktop / tablet pinned -->
+  <div class="hidden md:block">
+    <div id="hOuter" class="relative">
+      <div id="hTrack" class="h-track">
+        <div class="h-panel">
+          <div class="grid grid-cols-12 w-full items-center" style="max-width: var(--container); gap: clamp(2rem, 4vw, 3rem);">
+            <div class="col-span-7">
+              <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">— Pace · 01</div>
+              <div class="font-serif text-charcoal mt-5"
+                   style="font-size: clamp(3rem, 12vw, 9rem); line-height:.95; font-weight:400;">Slow.</div>
+              <p class="mt-7 text-charcoal/70" style="max-width: 44ch; font-size: clamp(0.95rem, 1.1vw, 1.0625rem); line-height:1.6;">Service moves at the pace of the room. Coffee is pulled the moment it's ordered, never before.</p>
+            </div>
+            <div class="col-span-5">
+              <div class="plate grain ml-auto" style="aspect-ratio: 4/5; max-width: 440px;">
+                <img loading="lazy" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1100&q=80" alt="Pour-over coffee."/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-panel">
+          <div class="grid grid-cols-12 w-full items-center" style="max-width: var(--container); gap: clamp(2rem, 4vw, 3rem);">
+            <div class="col-span-5">
+              <div class="plate grain" style="aspect-ratio: 1; max-width: 440px;">
+                <img loading="lazy" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1100&q=80" alt="Plated breakfast."/>
+              </div>
+            </div>
+            <div class="col-span-7">
+              <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">— Craft · 02</div>
+              <div class="font-serif italic font-light text-charcoal mt-5"
+                   style="font-size: clamp(3rem, 12vw, 9rem); line-height:.95;">Considered.</div>
+              <p class="mt-7 text-charcoal/70" style="max-width: 44ch; font-size: clamp(0.95rem, 1.1vw, 1.0625rem); line-height:1.6;">Short menu, long memory. Each dish is one chef's argument for one way of doing it well.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-panel">
+          <div class="grid grid-cols-12 w-full items-center" style="max-width: var(--container); gap: clamp(2rem, 4vw, 3rem);">
+            <div class="col-span-7">
+              <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">— Room · 03</div>
+              <div class="font-serif text-charcoal mt-5"
+                   style="font-size: clamp(3rem, 12vw, 9rem); line-height:.95; font-weight:400;">Warm.</div>
+              <p class="mt-7 text-charcoal/70" style="max-width: 44ch; font-size: clamp(0.95rem, 1.1vw, 1.0625rem); line-height:1.6;">Reclaimed oak, lime-washed brick, two skylights. A single brass lamp from the original station office.</p>
+            </div>
+            <div class="col-span-5">
+              <div class="plate grain ml-auto" style="aspect-ratio: 4/5; max-width: 440px;">
+                <img loading="lazy" src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1100&q=80" alt="Warm pendant light."/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-panel">
+          <div class="grid grid-cols-12 w-full items-center" style="max-width: var(--container); gap: clamp(2rem, 4vw, 3rem);">
+            <div class="col-span-5">
+              <div class="plate grain" style="aspect-ratio: 1; max-width: 440px;">
+                <img loading="lazy" src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1100&q=80" alt="Table by the window."/>
+              </div>
+            </div>
+            <div class="col-span-7">
+              <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">— Table · 04</div>
+              <div class="font-serif italic font-light text-charcoal mt-5"
+                   style="font-size: clamp(3rem, 12vw, 9rem); line-height:.95;">Yours.</div>
+              <p class="mt-7 text-charcoal/70" style="max-width: 44ch; font-size: clamp(0.95rem, 1.1vw, 1.0625rem); line-height:1.6;">Forty-eight seats, a long communal table, the right window for a long afternoon.</p>
+              <a href="#reserve" class="ulink interactive inline-block mt-7 text-charcoal" style="font-size: clamp(0.95rem, 1.1vw, 1rem);">Reserve a table&nbsp;→</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile stacked sequence -->
+  <div class="md:hidden flex flex-col" style="padding: 4rem var(--safe-x); gap: 4rem;">
+    <article class="reveal-fade opacity-0">
+      <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">— Pace · 01</div>
+      <h3 class="font-serif text-charcoal mt-3" style="font-size: clamp(3rem, 16vw, 5rem); line-height:.95;">Slow.</h3>
+      <p class="mt-5 text-charcoal/70" style="line-height: 1.6;">Service moves at the pace of the room. Coffee is pulled the moment it's ordered.</p>
+    </article>
+    <article class="reveal-fade opacity-0">
+      <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">— Craft · 02</div>
+      <h3 class="font-serif italic font-light text-charcoal mt-3" style="font-size: clamp(3rem, 16vw, 5rem); line-height:.95;">Considered.</h3>
+      <p class="mt-5 text-charcoal/70" style="line-height: 1.6;">Short menu, long memory. Each dish is one chef's argument for one way.</p>
+    </article>
+    <article class="reveal-fade opacity-0">
+      <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">— Room · 03</div>
+      <h3 class="font-serif text-charcoal mt-3" style="font-size: clamp(3rem, 16vw, 5rem); line-height:.95;">Warm.</h3>
+      <p class="mt-5 text-charcoal/70" style="line-height: 1.6;">Reclaimed oak, lime-washed brick, two skylights and a single brass lamp.</p>
+    </article>
+    <article class="reveal-fade opacity-0">
+      <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">— Table · 04</div>
+      <h3 class="font-serif italic font-light text-charcoal mt-3" style="font-size: clamp(3rem, 16vw, 5rem); line-height:.95;">Yours.</h3>
+      <p class="mt-5 text-charcoal/70" style="line-height: 1.6;">Forty-eight seats, a long table, the right window for the afternoon.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ═══════════════ DETAILS STRIP ═══════════════ -->
+<section id="details" class="text-bone" style="background: var(--bone); padding-block: var(--pad-section-y);">
+  <div class="container grid md:grid-cols-3" style="gap: clamp(2.5rem, 5vw, 4rem);">
+    <div class="det-item">
+      <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">
+        <span class="count" data-target="01">00</span>
+      </div>
+      <h3 class="font-serif mt-5"
+          style="font-size: clamp(1.5rem, 2.6vw, 2rem); line-height:1.15; font-weight:400;">European-leaning menu.</h3>
+      <p class="mt-4 text-bone/65" style="max-width: 34ch; line-height: 1.65;">Vienna, Lyon and Budapest, by way of a short kitchen with long memory.</p>
+    </div>
+    <div class="det-item">
+      <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">
+        <span class="count" data-target="02">00</span>
+      </div>
+      <h3 class="font-serif mt-5"
+          style="font-size: clamp(1.5rem, 2.6vw, 2rem); line-height:1.15; font-weight:400;">Single-origin coffee.</h3>
+      <p class="mt-4 text-bone/65" style="max-width: 34ch; line-height: 1.65;">Roasted weekly in small batches; pulled on a lever machine that's older than most of the staff.</p>
+    </div>
+    <div class="det-item">
+      <div class="font-mono uppercase" style="font-size: var(--fs-mono); letter-spacing:.32em; color: var(--brass);">
+        <span class="count" data-target="03">00</span>
+      </div>
+      <h3 class="font-serif mt-5"
+          style="font-size: clamp(1.5rem, 2.6vw, 2rem); line-height:1.15; font-weight:400;">Open daily, 7am–11pm.</h3>
+      <p class="mt-4 text-bone/65" style="max-width: 34ch; line-height: 1.65;">Same hours every day. Slow mornings, lingering evenings, a kitchen that doesn't rush.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 04 / VISIT ═══════════════ -->
+<section id="visit" class="container" style="padding-block: var(--pad-section-y);">
+  <div class="section-num">
+    <span class="font-mono uppercase text-taupe" style="font-size: var(--fs-mono); letter-spacing:.32em;">04 / Visit</span>
+    <span class="num-line"></span>
+  </div>
+  <h2 class="font-serif text-charcoal mt-6 tracking-[-0.01em] split-lines"
+      style="font-size: var(--fs-h2); line-height: 1.05; font-weight:400;">
+    <span class="splitline"><span>Find us.</span></span>
+  </h2>
+
+  <div class="mt-10 lg:mt-14 grid lg:grid-cols-12" style="gap: clamp(2rem, 5vw, 4rem);">
+    <div class="lg:col-span-5 space-y-8 visit-text">
+      <div>
+        <div class="font-mono uppercase text-taupe" style="font-size: var(--fs-mono); letter-spacing:.32em;">Address</div>
+        <p class="mt-3 text-charcoal" style="line-height: 1.6;">47 Old Freight Lane<br/>Quarter 3, District One</p>
+      </div>
+
+      <div>
+        <div class="font-mono uppercase text-taupe" style="font-size: var(--fs-mono); letter-spacing:.32em;">Hours</div>
+        <dl class="mt-3 font-mono text-charcoal grid grid-cols-[auto_1fr] gap-x-6 sm:gap-x-10 gap-y-2"
+            style="font-size: clamp(0.78rem, 1vw, 0.875rem);">
+          <dt class="text-charcoal/70">Mon–Wed</dt><dd class="type-row" data-text="07:00 — 22:00"></dd>
+          <dt class="text-charcoal/70">Thursday</dt><dd class="type-row" data-text="07:00 — 23:00"></dd>
+          <dt class="text-charcoal/70">Friday</dt><dd class="type-row" data-text="07:00 — 00:00"></dd>
+          <dt class="text-charcoal/70">Saturday</dt><dd class="type-row" data-text="08:00 — 00:00"></dd>
+          <dt class="text-charcoal/70">Sunday</dt><dd class="type-row" data-text="08:00 — 21:00"></dd>
+        </dl>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <div class="font-mono uppercase text-taupe" style="font-size: var(--fs-mono); letter-spacing:.32em;">Phone</div>
+          <a href="tel:+842855120924" class="ulink interactive mt-2 inline-block text-charcoal">+84 28 5512 0924</a>
+        </div>
+        <div>
+          <div class="font-mono uppercase text-taupe" style="font-size: var(--fs-mono); letter-spacing:.32em;">Email</div>
+          <a href="mailto:hello@theterminal.cafe" class="ulink interactive mt-2 inline-block text-charcoal break-all">hello@theterminal.cafe</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-7">
+      <div class="plate grain map-plate" style="aspect-ratio: 5/4; min-height: clamp(280px, 50vw, 540px); filter: saturate(.1) brightness(1.05);">
+        <div class="img"><img loading="lazy"
+          src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=80"
+          srcset="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=640&q=75 640w,
+                  https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1280&q=80 1280w,
+                  https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1920&q=82 1920w"
+          sizes="(min-width: 1024px) 58vw, 100vw"
+          alt="Tinted map of the surrounding district."/></div>
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+          <svg width="20" height="26" viewBox="0 0 20 26" fill="none" aria-hidden="true"><path d="M10 1c-4 0-7 3-7 7 0 6 7 17 7 17s7-11 7-17c0-4-3-7-7-7z" fill="#B8893E" stroke="#1F1F1F" stroke-width="1"/><circle cx="10" cy="8" r="2.5" fill="#1F1F1F"/></svg>
+          <span class="mt-2 font-mono uppercase text-charcoal bg-bone/85 px-2 py-1" style="font-size: 10px; letter-spacing:.3em;">The Terminal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ RESERVATION ═══════════════ -->
+<section id="reserve" class="container" style="padding-block: var(--pad-section-y);">
+  <div class="mx-auto text-center" style="max-width: min(720px, 100%);">
+    <div class="section-num justify-center">
+      <span class="num-line"></span>
+      <span class="font-mono uppercase text-taupe" style="font-size: var(--fs-mono); letter-spacing:.32em;">05 / Reserve</span>
+      <span class="num-line"></span>
+    </div>
+    <h2 class="font-serif italic font-light text-charcoal mt-6 tracking-[-0.01em] split-lines"
+        style="font-size: clamp(2rem, 5vw, 3.75rem); line-height: 1.05; font-weight:300;">
+      <span class="splitline"><span>Reserve a table.</span></span>
+    </h2>
+    <p class="mt-4 text-charcoal/70 reveal-fade opacity-0" style="max-width: 48ch; margin-inline: auto;">
+      A short form. We'll write back within the day to confirm your seat.
+    </p>
+  </div>
+
+  <form id="resForm" class="mx-auto mt-12 lg:mt-14" style="max-width: min(640px, 100%);" novalidate>
+    <div class="grid sm:grid-cols-2" style="column-gap: clamp(1.5rem, 4vw, 2.5rem); row-gap: clamp(1.75rem, 3.5vw, 2.25rem);">
+      <div class="field sm:col-span-2">
+        <input type="text" id="f-name" required autocomplete="name">
+        <label for="f-name">Name</label>
+      </div>
+      <div class="field">
+        <input type="date" id="f-date" required>
+        <label for="f-date" class="opacity-0">Date</label>
+      </div>
+      <div class="field">
+        <input type="time" id="f-time" value="19:00" required>
+        <label for="f-time" class="opacity-0">Time</label>
+      </div>
+      <div class="field">
+        <select id="f-guests">
+          <option>2 guests</option><option>3 guests</option><option>4 guests</option>
+          <option>5 guests</option><option>6 guests</option><option>7+ — private</option>
+        </select>
+        <label for="f-guests" class="opacity-0">Guests</label>
+      </div>
+      <div class="field">
+        <input type="tel" id="f-phone" autocomplete="tel">
+        <label for="f-phone">Phone</label>
+      </div>
+      <div class="field sm:col-span-2">
+        <input type="text" id="f-notes">
+        <label for="f-notes">Notes</label>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col items-center gap-5">
+      <button type="submit" class="btn-brass interactive w-full sm:w-auto">Confirm reservation</button>
+      <p id="resOk" class="hidden font-mono uppercase text-brass" style="font-size: var(--fs-mono); letter-spacing:.22em;">— Received. We'll be in touch shortly.</p>
+    </div>
+  </form>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="bg-charcoal text-bone" style="padding-top: clamp(3rem, 8vw, 6rem); padding-bottom: clamp(1.5rem, 3vw, 2.5rem); padding-bottom: max(env(safe-area-inset-bottom), clamp(1.5rem, 3vw, 2.5rem));">
+  <div class="container">
+    <div class="overflow-hidden">
+      <div id="footWm" class="foot-wm" style="transform: translateY(100%);">
+        The&nbsp;Terminal
+      </div>
+    </div>
+
+    <div class="mt-12 lg:mt-20 grid md:grid-cols-3 foot-cols" style="gap: clamp(2rem, 5vw, 4rem);">
+      <div>
+        <div class="font-mono uppercase text-bone/55" style="font-size: var(--fs-mono); letter-spacing:.32em;">Address</div>
+        <p class="mt-4 text-bone/85" style="line-height: 1.6;">47 Old Freight Lane<br/>Quarter 3, District One</p>
+      </div>
+      <div>
+        <div class="font-mono uppercase text-bone/55" style="font-size: var(--fs-mono); letter-spacing:.32em;">Hours</div>
+        <p class="mt-4 text-bone/85 font-mono" style="font-size: clamp(0.78rem, 1vw, 0.875rem); line-height: 1.7;">
+          Mon–Wed&nbsp;&nbsp;07:00–22:00<br/>
+          Thursday&nbsp;&nbsp;&nbsp;&nbsp;07:00–23:00<br/>
+          Fri–Sat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;07:00–00:00<br/>
+          Sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;08:00–21:00
+        </p>
+      </div>
+      <div>
+        <div class="font-mono uppercase text-bone/55" style="font-size: var(--fs-mono); letter-spacing:.32em;">Follow</div>
+        <ul class="mt-4 space-y-2 text-bone/85">
+          <li><a href="#" class="ulink interactive">Instagram</a></li>
+          <li><a href="#" class="ulink interactive">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <form class="mt-16 lg:mt-20" style="max-width: 560px;"
+          onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('.nl-ok').classList.remove('hidden');">
+      <div class="font-mono uppercase text-bone/55" style="font-size: var(--fs-mono); letter-spacing:.32em;">Occasional dispatches</div>
+      <div class="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-5 border-b border-bone/30 pb-3">
+        <input type="email" required placeholder="Your email" class="flex-1 bg-transparent outline-none text-bone placeholder:text-bone/35 py-2"
+               style="font-size: 16px;"/>
+        <button class="ulink interactive text-bone text-left sm:text-right" type="submit" style="font-size: clamp(0.875rem, 1vw, 0.95rem);">Subscribe</button>
+      </div>
+      <p class="nl-ok hidden mt-4 font-mono uppercase text-brass" style="font-size: var(--fs-mono); letter-spacing:.32em;">— Thank you. We'll write occasionally.</p>
+    </form>
+
+    <div class="mt-16 lg:mt-24 pt-6 border-t border-brass/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 font-mono uppercase text-bone/55"
+         style="font-size: var(--fs-mono); letter-spacing:.32em;">
+      <div>© 2024 The Terminal</div>
+      <div>All journeys reserved.</div>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<!-- Three.js ESM bridge -->
+<script type="module">
+import * as THREE from 'three';
+window.__THREE = THREE;
+</script>
+
+<script>
+/* ───── Setup ───── */
+const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IS_TOUCH = matchMedia('(pointer: coarse)').matches || !matchMedia('(hover: hover)').matches;
+const IS_LG    = () => window.matchMedia('(min-width: 1024px)').matches;
+const IS_MD    = () => window.matchMedia('(min-width: 768px)').matches;
+
+/* ───── Cursor (desktop only) ───── */
+(function cursor(){
+  if (IS_TOUCH) { document.getElementById('cur').remove(); document.getElementById('curR').remove(); return; }
+  const dot = document.getElementById('cur'), ring = document.getElementById('curR');
+  let x=0,y=0,rx=0,ry=0;
+  window.addEventListener('mousemove', e => { x = e.clientX; y = e.clientY; dot.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`; });
+  function loop(){ rx += (x-rx)*.18; ry += (y-ry)*.18; ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }
+  loop();
+  document.addEventListener('mouseover', e => { if (e.target.closest('.interactive, a, button')) document.body.classList.add('cur-hover'); });
+  document.addEventListener('mouseout',  e => { if (e.target.closest('.interactive, a, button')) document.body.classList.remove('cur-hover'); });
+})();
+
+/* ───── Preloader ───── */
+(function preloader(){
+  if (PREFERS_REDUCED){ document.getElementById('preloader').remove(); kickOffEntrance(); return; }
+  const wm = document.getElementById('preWm');
+  const word = 'THE TERMINAL';
+  wm.innerHTML = word.split('').map(c => `<span>${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+  const letters = wm.querySelectorAll('span');
+  const line = document.getElementById('preLine');
+  const lineW = IS_LG() ? '40vw' : '60vw';
+  const tl = gsap.timeline({ onComplete(){ const p = document.getElementById('preloader'); if (p) p.remove(); kickOffEntrance(); }});
+  tl.to(letters, { opacity:1, y:0, duration:.7, ease:'power3.out', stagger:.05 })
+    .to(line, { width: lineW, duration:.6, ease:'power2.out' }, '-=.25')
+    .to('#preloader', { opacity:0, duration:.5, ease:'power2.inOut', delay:.25 })
+    .to('#preloader', { clipPath:'inset(100% 0 0 0)', duration:.7, ease:'power3.inOut' }, '-=.45');
+})();
+
+/* ───── Hero entrance ───── */
+function splitWordsInto(el, html){
+  el.innerHTML = html.split(' ').map(w => `<span class="splitw"><span>${w}&nbsp;</span></span>`).join('');
+}
+function kickOffEntrance(){
+  splitWordsInto(document.getElementById('heroLine1'), 'A quiet stop');
+  splitWordsInto(document.getElementById('heroLine2'), 'between journeys.');
+
+  const l1 = document.querySelectorAll('#heroLine1 .splitw > span');
+  const l2 = document.querySelectorAll('#heroLine2 .splitw > span');
+  const stag = IS_LG() ? .08 : .07;
+
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' }});
+  tl.to('#nav', { y:0, duration:.7 })
+    .to('#heroLabel', { opacity:1, y:0, duration:.7 }, 0.05)
+    .to(l1, { y: 0, duration: 1.0, stagger: stag }, '-=.45')
+    .to(l2, { y: 0, duration: 1.0, stagger: stag }, '-=.6')
+    .fromTo('#heroLine2', { '--ul':0 }, { '--ul':1, duration:.7, ease:'power2.out', onUpdate(){
+      const p = this.targets()[0]; const v = gsap.getProperty(p,'--ul');
+      let bar = p.querySelector('.brassBar');
+      if (!bar){ bar = document.createElement('span'); bar.className='brassBar'; bar.style.cssText='position:absolute;left:0;bottom:-.05em;height:2px;background:#B8893E;'; p.appendChild(bar); }
+      bar.style.width = (v*100) + '%';
+    }}, '-=.4')
+    .to('#heroBody', { opacity:1, duration:.7 }, '-=.55')
+    .to('#heroCtas', { opacity:1, duration:.7 }, '-=.5')
+    // Once the words have settled, release the overflow clip so italic glyphs
+    // (Fraunces opsz 144 has noticeable ink-overhang) aren't trimmed on the right.
+    .set([...document.querySelectorAll('#heroLine1 .splitw, #heroLine2 .splitw')], { overflow: 'visible' });
+}
+
+/* ───── Lenis ───── */
+const lenis = new Lenis({
+  duration: 1.15,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  lerp: IS_TOUCH ? 0.1 : 0.08,
+  smoothTouch: false,
+});
+function raf(t){ lenis.raf(t); requestAnimationFrame(raf); } requestAnimationFrame(raf);
+
+gsap.registerPlugin(ScrollTrigger);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href'); if (id.length < 2) return;
+    const el = document.querySelector(id); if (!el) return;
+    e.preventDefault(); lenis.scrollTo(el, { offset: -60, duration: 1.2 });
+  });
+});
+
+/* ───── Scroll progress ───── */
+const progress = document.getElementById('progress');
+ScrollTrigger.create({ start:0, end:'max', onUpdate: self => progress.style.width = (self.progress*100)+'%' });
+
+/* ───── Nav scroll state ───── */
+const navBg = document.getElementById('nav-bg');
+const navLine = document.getElementById('nav-line');
+const navInner = document.getElementById('navInner');
+const nav = document.getElementById('nav');
+let lastY = 0;
+ScrollTrigger.create({
+  start: 0, end: 'max',
+  onUpdate(self){
+    const y = self.scroll();
+    if (y > 30) {
+      navBg.style.background = 'rgba(245,240,230,.92)';
+      navBg.style.backdropFilter = 'blur(10px)';
+      navLine.style.background = 'rgba(31,31,31,.12)';
+      navInner.style.height = IS_LG() ? '64px' : '56px';
+    } else {
+      navBg.style.background = 'transparent';
+      navBg.style.backdropFilter = 'blur(0px)';
+      navLine.style.background = 'transparent';
+      navInner.style.height = '';
+    }
+    if (y > lastY + 6 && y > 200) nav.classList.add('hide');
+    else if (y < lastY - 6) nav.classList.remove('hide');
+    lastY = y;
+  }
+});
+
+/* ───── Mobile overlay menu ───── */
+const overlay = document.getElementById('overlay');
+const burger = document.getElementById('burger');
+burger.onclick = () => {
+  overlay.classList.add('open');
+  burger.setAttribute('aria-expanded','true');
+  gsap.to('.ov-link', { opacity:1, y:0, duration:.6, stagger:.07, ease:'power3.out' });
+  gsap.fromTo('.ov-link', { y: 30 }, { y:0 });
+  document.body.style.overflow = 'hidden';
+};
+function closeOverlay(){
+  overlay.classList.remove('open');
+  burger.setAttribute('aria-expanded','false');
+  document.body.style.overflow = '';
+}
+document.getElementById('closeMenu').onclick = closeOverlay;
+document.getElementById('overlayNav').addEventListener('click', e => { if (e.target.tagName === 'A') closeOverlay(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeOverlay(); });
+
+/* ───── Section number lines ───── */
+document.querySelectorAll('.section-num').forEach(g => {
+  const lines = g.querySelectorAll('.num-line');
+  gsap.to(lines, { width: '80px', ease:'none',
+    scrollTrigger: { trigger: g, start:'top 85%', end:'top 60%', scrub:.5 } });
+});
+
+/* ───── Split-lines reveal ───── */
+document.querySelectorAll('.split-lines').forEach(group => {
+  const lines = group.querySelectorAll('.splitline > span');
+  const wrappers = group.querySelectorAll('.splitline');
+  gsap.to(lines, { y: 0, duration: 1.1, ease:'power3.out', stagger: .09,
+    scrollTrigger: { trigger: group, start:'top 85%', once:true },
+    // Release the clipping mask after the reveal completes so italic descenders
+    // and overhangs render fully.
+    onComplete: () => gsap.set(wrappers, { overflow: 'visible' })
+  });
+});
+
+document.querySelectorAll('.reveal-fade').forEach(el => {
+  gsap.to(el, { opacity:1, y:0, duration:.9, ease:'power2.out',
+    scrollTrigger: { trigger: el, start:'top 88%', once:true }});
+});
+
+/* ───── Story plate reveal + parallax (desktop only) ───── */
+gsap.to('.story-plate', { clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease:'power3.out',
+  scrollTrigger: { trigger:'.story-plate', start:'top 85%', once:true }});
+gsap.to('.story-plate .img', { scale: 1, duration: 1.4, ease:'power2.out',
+  scrollTrigger: { trigger:'.story-plate', start:'top 85%', once:true }});
+if (IS_LG() && !PREFERS_REDUCED) {
+  gsap.to('.story-plate img', { yPercent: -8, ease:'none',
+    scrollTrigger:{ trigger:'.story-plate', start:'top bottom', end:'bottom top', scrub:true }});
+}
+gsap.to('#qmark', { opacity:1, scale:1, duration:1.1, ease:'power3.out',
+  scrollTrigger:{ trigger:'#qmark', start:'top 85%', once:true }});
+
+/* ───── Menu data + render ───── */
+const MENU = [
+  { cat:'breakfast', name:'House croissant set',     desc:'Lacquered croissant, soft-boiled egg, apricot jam.',                price:'9'  },
+  { cat:'breakfast', name:'Conductor\'s plate',      desc:'Two eggs, smoked sausage, brioche soldiers, paprika butter.',        price:'12' },
+  { cat:'mains',     name:'Wiener schnitzel',        desc:'Veal cutlet, golden bread crumb, lemon, lingonberry.',              price:'24' },
+  { cat:'mains',     name:'Hungarian goulash',       desc:'Slow-braised beef, sweet paprika, smoked tomato, soft dumplings.',  price:'19' },
+  { cat:'mains',     name:'Duck confit du Lyon',     desc:'Twelve-hour leg of duck, white-bean cassoulet.',                    price:'27' },
+  { cat:'desserts',  name:'Sachertorte',             desc:'Dark chocolate sponge, apricot, glassy ganache, soft cream.',       price:'10' },
+  { cat:'desserts',  name:'Crème brûlée',            desc:'Madagascar vanilla custard, hand-torched amber sugar.',             price:'9'  },
+  { cat:'coffee',    name:'Single-origin pour-over', desc:'Rotating weekly. Ask the bar for today\'s lot.',                    price:'5'  },
+  { cat:'coffee',    name:'Lever espresso',          desc:'House blend, pulled on the brass machine. Chocolate, burnt orange.', price:'4'  },
+  { cat:'coffee',    name:'Vienna mélange',          desc:'Espresso, steamed milk, a thumbprint of foam.',                     price:'5'  },
+];
+const list = document.getElementById('menuList');
+function renderMenu(cat='all'){
+  const items = (cat === 'all') ? MENU : MENU.filter(m => m.cat === cat);
+  list.innerHTML = items.map(m => `
+    <article class="row-menu interactive" data-cat="${m.cat}">
+      <div class="row-top">
+        <h3 class="name">${m.name}</h3>
+        <span class="leader" aria-hidden="true"></span>
+        <span class="price">€${m.price}</span>
+      </div>
+      <p class="desc">${m.desc}</p>
+      <span class="row-arrow" aria-hidden="true">→</span>
+    </article>
+  `).join('');
+  observeMenuRows();
+}
+function observeMenuRows(){
+  const rio = new IntersectionObserver((es) => {
+    es.forEach((e,i) => { if (e.isIntersecting){ setTimeout(()=> e.target.classList.add('in'), i*60); rio.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.row-menu').forEach(r => rio.observe(r));
+}
+renderMenu();
+
+/* ───── Tabs underline ───── */
+const filters = document.getElementById('filters');
+const tabUL = document.getElementById('tabUL');
+function moveUL(el){
+  if (!el) return;
+  const r = el.getBoundingClientRect();
+  const pr = filters.getBoundingClientRect();
+  gsap.to(tabUL, { left: r.left - pr.left + filters.scrollLeft, width: r.width, duration:.45, ease:'power2.inOut' });
+}
+function activeTab(){ return filters.querySelector('.tab.active'); }
+window.addEventListener('load', () => moveUL(activeTab()));
+window.addEventListener('resize', () => moveUL(activeTab()));
+filters.addEventListener('scroll', () => moveUL(activeTab()));
+
+filters.addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  filters.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+  b.classList.add('active'); b.setAttribute('aria-selected','true');
+  moveUL(b);
+  renderMenu(b.dataset.filter);
+});
+
+/* ───── Side plates parallax + scroll reveal ───── */
+ScrollTrigger.batch('.side-plate, .space-plate, .map-plate', {
+  onEnter: (els) => gsap.fromTo(els, { clipPath:'inset(100% 0 0 0)', scale:1.12 }, { clipPath:'inset(0% 0 0 0)', scale:1, duration: 1.2, ease:'power3.out', stagger:.12 }),
+  start: 'top 88%', once: true
+});
+if (IS_LG() && !PREFERS_REDUCED) {
+  document.querySelectorAll('.side-plate, .space-plate').forEach(el => {
+    const speed = parseFloat(el.dataset.speed || '.08');
+    const img = el.querySelector('img');
+    if (img) gsap.to(img, { yPercent: -10 - speed*40, ease:'none',
+      scrollTrigger: { trigger: el, start:'top bottom', end:'bottom top', scrub:true }});
+  });
+}
+gsap.to('.map-plate', { filter: 'saturate(1) brightness(1)', duration: 1.6, ease:'power2.out',
+  scrollTrigger:{ trigger:'.map-plate', start:'top 80%', once:true }});
+
+/* ───── Horizontal pinned scroll (md+ only) ───── */
+ScrollTrigger.matchMedia({
+  '(min-width: 768px)': function(){
+    const track = document.getElementById('hTrack');
+    const outer = document.getElementById('hOuter');
+    if (!track || !outer) return;
+    const panels = track.querySelectorAll('.h-panel');
+    const dist = () => Array.from(panels).reduce((acc,p) => acc + p.offsetWidth, 0) - window.innerWidth;
+    const tween = gsap.to(track, {
+      x: () => -dist(), ease:'none',
+      scrollTrigger: {
+        trigger: outer, pin: true, scrub: 1,
+        end: () => '+=' + dist(), invalidateOnRefresh: true,
+      }
+    });
+    // ambient bg warm
+    gsap.to('body', {
+      backgroundColor: '#EDE6D6', ease:'none',
+      scrollTrigger: { trigger: outer, start:'top top', end: () => '+=' + dist(), scrub:true,
+        onLeaveBack: ()=> document.body.style.background='#F5F0E6',
+        onLeave: () => document.body.style.background='#F5F0E6' }
+    });
+  }
+});
+
+/* ───── Details strip bg + counters ───── */
+gsap.to('#details', { backgroundColor: '#1F1F1F', color:'#F5F0E6', ease:'none',
+  scrollTrigger: { trigger:'#details', start:'top 80%', end:'top 30%', scrub:true }});
+document.querySelectorAll('.count').forEach(el => {
+  const target = el.dataset.target;
+  ScrollTrigger.create({ trigger: el, start:'top 80%', once:true,
+    onEnter(){
+      const tn = parseInt(target,10);
+      const obj = { v: 0 };
+      gsap.to(obj, { v: tn, duration: 1.2, ease:'power2.out',
+        onUpdate: () => el.textContent = String(Math.floor(obj.v)).padStart(2,'0') });
+    }
+  });
+});
+gsap.from('.det-item', { y: 30, opacity:0, duration: 1, ease:'power3.out', stagger:.12,
+  scrollTrigger: { trigger:'#details', start:'top 75%', once:true }});
+
+/* ───── Typewriter hours ───── */
+document.querySelectorAll('.type-row').forEach(row => {
+  const text = row.dataset.text;
+  ScrollTrigger.create({ trigger: row, start:'top 88%', once:true,
+    onEnter(){
+      let i = 0; const t = setInterval(() => {
+        row.textContent = text.slice(0, ++i);
+        if (i >= text.length) clearInterval(t);
+      }, 22);
+    }
+  });
+});
+
+/* ───── Reservation fields ───── */
+gsap.utils.toArray('.field').forEach((f) => {
+  ScrollTrigger.create({ trigger: f, start:'top 85%', once:true,
+    onEnter(){ setTimeout(()=> f.classList.add('in'), 100); }});
+  const input = f.querySelector('input, select, textarea');
+  if (!input) return;
+  const sync = () => f.classList.toggle('has-value', !!input.value);
+  input.addEventListener('input', sync); input.addEventListener('change', sync); sync();
+});
+document.getElementById('resForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  gsap.fromTo(btn, { scale:1 }, { scale:.96, duration:.12, yoyo:true, repeat:1 });
+  document.getElementById('resOk').classList.remove('hidden');
+});
+
+/* ───── Footer wordmark ───── */
+gsap.to('#footWm', { y: 0, duration: 1.3, ease:'power3.out',
+  scrollTrigger:{ trigger:'#footWm', start:'top 90%', once:true }});
+gsap.from('.foot-cols > div', { y: 20, opacity:0, duration:.9, stagger:.1, ease:'power2.out',
+  scrollTrigger:{ trigger:'.foot-cols', start:'top 90%', once:true }});
+
+window.addEventListener('load', () => setTimeout(()=> ScrollTrigger.refresh(), 250));
+</script>
+
+<!-- Three.js scene — deferred until after critical paint -->
+<script type="module">
+import * as THREE from 'three';
+
+const canvas = document.getElementById('three-canvas');
+const wrap = document.getElementById('three-wrap');
+const fallback = document.getElementById('threeFallback');
+const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IS_MOBILE = window.matchMedia('(max-width: 767.98px)').matches;
+
+try {
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias: !IS_MOBILE });
+  renderer.setPixelRatio(Math.min(IS_MOBILE ? 1.5 : 2, window.devicePixelRatio));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 100);
+  camera.position.set(0, 0, 8);
+
+  function resize(){
+    const r = wrap.getBoundingClientRect();
+    renderer.setSize(r.width, r.height, false);
+    camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+
+  scene.add(new THREE.AmbientLight(0xfff2e0, 0.55));
+  const key = new THREE.DirectionalLight(0xffd9a3, 1.1); key.position.set(3,4,5); scene.add(key);
+  const rim = new THREE.DirectionalLight(0x9fb5b8, 0.55); rim.position.set(-4,-1,-3); scene.add(rim);
+
+  const brass = new THREE.MeshStandardMaterial({ color: 0xB8893E, metalness: 0.85, roughness: 0.38 });
+  const brassDark = new THREE.MeshStandardMaterial({ color: 0x8a6429, metalness: 0.85, roughness: 0.45 });
+
+  // Lower segment counts on mobile for perf
+  const SEG = IS_MOBILE ? 32 : 64;
+
+  function makeGear({ radius=1, teeth=18, toothH=0.18, toothW=0.18, thickness=0.22, hub=0.28, spokes=6 }){
+    const g = new THREE.Group();
+    const ringGeo = new THREE.CylinderGeometry(radius, radius, thickness, SEG);
+    const ring = new THREE.Mesh(ringGeo, brass); ring.rotation.x = Math.PI/2;
+    for (let i=0; i<teeth; i++){
+      const a = (i / teeth) * Math.PI * 2;
+      const t = new THREE.Mesh(new THREE.BoxGeometry(toothW, thickness, toothH), brass);
+      t.position.set(Math.cos(a)*(radius+toothH/2 - 0.02), Math.sin(a)*(radius+toothH/2 - 0.02), 0);
+      t.rotation.z = a; g.add(t);
+    }
+    g.add(ring);
+    const hubM = new THREE.Mesh(new THREE.CylinderGeometry(hub, hub, thickness*1.4, Math.max(16, SEG/2)), brassDark);
+    hubM.rotation.x = Math.PI/2; g.add(hubM);
+    for (let i=0; i<spokes; i++){
+      const a = (i/spokes) * Math.PI * 2;
+      const s = new THREE.Mesh(new THREE.BoxGeometry(radius*0.65, thickness*0.55, 0.07), brassDark);
+      s.position.set(Math.cos(a)*radius*0.35, Math.sin(a)*radius*0.35, 0);
+      s.rotation.z = a; g.add(s);
+    }
+    return g;
+  }
+
+  const big = makeGear({ radius: 1.6, teeth: 22, toothH: 0.22, toothW: 0.22, thickness: 0.26, hub: 0.36, spokes: 6 });
+  big.position.set(-0.4, 0.2, 0); scene.add(big);
+  const small = makeGear({ radius: 0.9, teeth: 14, toothH: 0.18, toothW: 0.18, thickness: 0.20, hub: 0.24, spokes: 5 });
+  small.position.set(1.55, -1.05, 0.05); scene.add(small);
+
+  let tx=0, ty=0;
+  wrap.addEventListener('mousemove', e => {
+    const r = wrap.getBoundingClientRect();
+    tx = ((e.clientX - r.left)/r.width - 0.5) * 0.18;
+    ty = ((e.clientY - r.top)/r.height - 0.5) * 0.18;
+  });
+  wrap.addEventListener('mouseleave', () => { tx = 0; ty = 0; });
+
+  let scrollFactor = 0;
+  window.addEventListener('scroll', () => { scrollFactor = Math.min(1, window.scrollY / 800); }, { passive:true });
+
+  let rotY=0, rotX=0;
+  // FPS cap on mobile (~30fps)
+  const frameMs = IS_MOBILE ? 1000/30 : 0;
+  let lastT = 0;
+  function animate(t){
+    if (PREFERS_REDUCED){ renderer.render(scene, camera); return; }
+    if (t - lastT < frameMs){ requestAnimationFrame(animate); return; }
+    lastT = t;
+    rotY += (tx - rotY) * 0.06;
+    rotX += (ty - rotX) * 0.06;
+    big.rotation.z   += 0.0035 + scrollFactor*0.004;
+    small.rotation.z -= 0.0055 + scrollFactor*0.006;
+    scene.rotation.y = rotY;
+    scene.rotation.x = -rotX;
+    const s = 1 - scrollFactor*0.18;
+    scene.scale.setScalar(s);
+    scene.position.y = scrollFactor * 0.6;
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+  resize(); requestAnimationFrame(animate);
+} catch(err){
+  console.warn('Three.js failed; showing fallback', err);
+  fallback.style.display = 'block';
+  canvas.style.display = 'none';
+}
+</script>
+
+</body>
+</html>
