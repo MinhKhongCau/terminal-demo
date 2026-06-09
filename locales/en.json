@@ -413,12 +413,6 @@
       "6 passengers",
       "7+ · private car"
     ],
-    "branch": "Branch",
-    "branchOptions": [
-      "The Villa — Điện Biên Phủ",
-      "Độc Lập — Nguyễn Thị Minh Khai",
-      "Diamond Plaza — Lê Duẩn"
-    ],
     "notes": "Notes to the Conductor",
     "notesPlaceholder": "Window booth, allergies, anniversary…",
     "terms": "By boarding you accept our conductor's terms.",
@@ -427,8 +421,8 @@
   },
   "location": {
     "eyebrow": "— Departure Board —",
-    "title": "Find the Terminal",
-    "subtitle": "Three stops along the line — same hours, same kitchen, same long Sunday.",
+    "title": "The Terminal",
+    "subtitle": "One kitchen at the quiet end of the line — slow mornings, lantern-lit evenings, and long Sundays.",
     "departureBoard": "Departure Board",
     "hoursTitle": "Hours of Operation",
     "hotline": "Hotline",

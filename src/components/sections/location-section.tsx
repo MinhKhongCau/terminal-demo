@@ -13,9 +13,9 @@ interface Branch {
   label: string;
   name: string;
   address: string;
-  note: string;
+  note?: string;
   phone: string;
-  tel: string;
+  tel?: string;
 }
 
 interface HoursRow {
@@ -49,9 +49,9 @@ export function LocationSection() {
         </p>
       </Reveal>
 
-      <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:mt-16 md:grid-cols-3 md:gap-8">
+      <div className="mx-auto mt-12 flex max-w-6xl flex-wrap justify-center gap-6 md:mt-16 md:gap-8">
         {branches.map((branch) => (
-          <Reveal as="article" key={branch.label} className="paper-card relative rounded-md p-6">
+          <Reveal as="article" key={branch.label} className="paper-card relative w-full max-w-md rounded-md p-6">
             <CornerRivets inset={8} />
             <div className="flex items-start gap-3">
               <MapPin className="mt-1 h-5 w-5 shrink-0 text-accent" />
@@ -70,11 +70,15 @@ export function LocationSection() {
             <RustDivider className="my-4" />
             <p className="whitespace-pre-line text-[14px] leading-relaxed text-foreground/85">
               {branch.address}
-              {"\n"}
-              <span className="text-[13px] italic text-muted-foreground">{branch.note}</span>
+              {branch.note && (
+                <>
+                  {"\n"}
+                  <span className="text-[13px] italic text-muted-foreground">{branch.note}</span>
+                </>
+              )}
             </p>
             <a
-              href={`tel:${branch.tel}`}
+              href={`tel:${branch.tel ?? branch.phone.replace(/[^\d+]/g, "")}`}
               className="mt-4 inline-flex items-center gap-2 text-[14px] font-semibold tabular-nums text-accent transition-colors hover:text-rust-deep dark:hover:text-brass-pale"
             >
               <PhoneCall className="h-4 w-4" />

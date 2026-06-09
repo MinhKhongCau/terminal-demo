@@ -413,12 +413,6 @@
       "6 hành khách",
       "7+ · toa riêng"
     ],
-    "branch": "Chi nhánh",
-    "branchOptions": [
-      "The Villa — Điện Biên Phủ",
-      "Độc Lập — Nguyễn Thị Minh Khai",
-      "Diamond Plaza — Lê Duẩn"
-    ],
     "notes": "Lời nhắn cho nhân viên phục vụ",
     "notesPlaceholder": "Bàn cạnh cửa sổ, dị ứng, kỷ niệm…",
     "terms": "Khi lên tàu, bạn đồng ý với các điều khoản của chúng tôi.",
@@ -427,8 +421,8 @@
   },
   "location": {
     "eyebrow": "— Bảng giờ khởi hành —",
-    "title": "Tìm The Terminal",
-    "subtitle": "Ba điểm dừng trên cùng tuyến — cùng giờ mở cửa, cùng một căn bếp, cùng những ngày Chủ Nhật dài.",
+    "title": "The Terminal",
+    "subtitle": "Một căn bếp ở đoạn cuối yên tĩnh của tuyến đường — những buổi sáng thong thả, những buổi tối ánh đèn, và những ngày Chủ Nhật dài.",
     "departureBoard": "Bảng giờ khởi hành",
     "hoursTitle": "Giờ hoạt động",
     "hotline": "Đường dây nóng",
@@ -441,7 +435,7 @@
     "branches": [
       {
         "label": "Chi nhánh · 01",
-        "name": "The Villa",
+        "name": "The Terminal",
         "address": "03 Nguyen Cong Tru Street, Thu Duc City, HCM City",
         "note": "",
         "phone": "0886 128 008"
