@@ -67,7 +67,9 @@
       "mains": "Món chính",
       "desserts": "Tráng miệng",
       "pizzas": "Pizza",
-      "tacos": "Taco & Khoai chiên"
+      "tacos": "Taco & Khoai chiên",
+      "beers": "Bia & Rượu vang",
+      "softdrinks": "Nước giải khát"
     },
     "sectionHeaders": {
       "appetizers": "Khai vị",
@@ -76,7 +78,9 @@
       "mains": "Món chính",
       "desserts": "Tráng miệng",
       "pizzas": "Pizza",
-      "tacos": "Taco & Khoai chiên"
+      "tacos": "Taco & Khoai chiên",
+      "beers": "Bia & Rượu vang",
+      "softdrinks": "Nước giải khát"
     },
     "allergens": {
       "gluten": "Gluten",
@@ -387,6 +391,66 @@
         "desc": "Đùi gà, sốt mayo tỏi",
         "notes": "Những miếng đùi gà chiên giòn cỡ vừa miệng, tẩm gia vị hoàn hảo và dùng kèm sốt mayo tỏi cay nhà làm. Một món được lòng tất cả.",
         "pairing": "Bia."
+      },
+      "ruou-vang-uccello-dl-sole": {
+        "name": "Rượu Vang UCCELLO DL SOLE",
+        "desc": "Vang đỏ Italy",
+        "notes": "Rượu vang đỏ Italy đậm vị từ nhãn UCCELLO DL SOLE — hương trái cây tối đậm đà, tannin mềm mại và dư vị kéo dài. Uống tốt nhất ở nhiệt độ hầm rượu.",
+        "pairing": "Kết hợp với thịt đỏ, phô mai ủ lâu năm và mì Ý."
+      },
+      "corona-extra": {
+        "name": "Corona Extra 4.5%",
+        "desc": "Bia lager Mexico, 330ml",
+        "notes": "Bia lager Mexico nhẹ nhàng và sảng khoái với hậu vị thanh khiết. Uống tốt nhất khi ướp lạnh kèm một miếng chanh. Dòng bia biển đình đám nguyên bản.",
+        "pairing": "Vắt chanh và nhâm nhi snack nhẹ."
+      },
+      "kistoffel-brune": {
+        "name": "Kistoffel Brune 6%",
+        "desc": "Bia nâu Bỉ, 330ml",
+        "notes": "Bia nâu Bỉ đậm đà với hương caramel, trái cây tối và chút gia vị nhẹ từ men. Mịn màng và ấm áp.",
+        "pairing": "Đĩa phô mai và thịt nguội."
+      },
+      "arcobrau-zwicklbier": {
+        "name": "Arcobrau Zwicklbier 5.2%",
+        "desc": "Bia lager không lọc Đức, 330ml",
+        "notes": "Bia Zwickl truyền thống Bavaria — đục tự nhiên, chưa lọc, với vị men tươi mát và chút đắng hop nhẹ. Được nấu ủ tại Bavaria từ năm 1567.",
+        "pairing": "Xúc xích Đức hoặc bánh pretzel."
+      },
+      "schnerider-weisse-tap": {
+        "name": "Schneider Weisse TAP 12%",
+        "desc": "Bia lúa mì Đức, 330ml",
+        "notes": "Weizenbock Bavaria xuất sắc — màu hổ phách sâu, đậm mạch nha với hương chuối, đinh hương và độ cồn ấm áp. Thức uống mùa đông lý tưởng.",
+        "pairing": "Thịt nướng đậm đà và phô mai xanh."
+      },
+      "budweiser-budvar-dark": {
+        "name": "Budweiser Budvar Dark 4.7%",
+        "desc": "Bia lager đen Séc, 330ml",
+        "notes": "Tmavý ležák cổ điển Séc — bia lager đen mịn màng với hương mạch nha rang, caramel và hậu vị đắng ngọt dịu. Được ủ tại České Budějovice.",
+        "pairing": "Các món hầm đậm đà và thịt nướng."
+      },
+      "kronenbourg-1664-blanc": {
+        "name": "Kronenbourg 1664 Blanc 5%",
+        "desc": "Bia lúa mì Pháp, 330ml",
+        "notes": "Bia lúa mì Pháp chế tác từ hoa bia Strisselspalt — hương hoa cỏ và cam quýt đặc trưng, mịn màng và sảng khoái với màu vàng nhạt.",
+        "pairing": "Hải sản, salad và các món nhẹ."
+      },
+      "nuoc-khoang-vikola": {
+        "name": "Nước Khoáng Vikola",
+        "desc": "Nước khoáng không gas, 500ml",
+        "notes": "Nước khoáng Việt Nam tinh khiết, được lọc tự nhiên qua các tầng đá sâu. Trong sạch, mát lạnh và sảng khoái.",
+        "pairing": "Phù hợp với mọi món ăn."
+      },
+      "nuoc-khoang-co-gas-vikoda": {
+        "name": "Nước Khoáng Có Gas Vikoda",
+        "desc": "Nước khoáng có gas, 430ml",
+        "notes": "Nước khoáng có gas Vikoda với bọt khí mịn và liên tục. Sảng khoái và thanh lịch — làm mới vị giác hoàn hảo giữa các món.",
+        "pairing": "Giữa các món hoặc với đồ ăn nhẹ."
+      },
+      "coca-cola": {
+        "name": "Coca Cola",
+        "desc": "Nước ngọt có gas, 330ml",
+        "notes": "Thức uống có ga huyền thoại — vị caramel đậm đà đặc trưng, bọt khí sôi động và hậu vị sảng khoái. Dùng lạnh.",
+        "pairing": "Burger, pizza và các món chiên giòn."
       }
     }
   },
