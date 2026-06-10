@@ -67,7 +67,9 @@
       "mains": "Mains",
       "desserts": "Desserts",
       "pizzas": "Pizzas",
-      "tacos": "Tacos & Fries"
+      "tacos": "Tacos & Fries",
+      "beers": "Beer & Wine",
+      "softdrinks": "Soft Drinks"
     },
     "sectionHeaders": {
       "appetizers": "Appetizer",
@@ -76,7 +78,9 @@
       "mains": "Main Course",
       "desserts": "Dessert",
       "pizzas": "Pizza",
-      "tacos": "Taco & Fries"
+      "tacos": "Taco & Fries",
+      "beers": "Beer & Wine",
+      "softdrinks": "Soft Drinks"
     },
     "allergens": {
       "gluten": "Gluten",
@@ -387,6 +391,66 @@
         "desc": "Chicken thigh, garlic mayo sauce",
         "notes": "Bite-sized pieces of crispy fried chicken thigh, perfectly seasoned and served with our house spiced garlic mayo. A crowd-pleaser.",
         "pairing": "Beer."
+      },
+      "ruou-vang-uccello-dl-sole": {
+        "name": "Rượu Vang UCCELLO DL SOLE",
+        "desc": "Italian red wine",
+        "notes": "A full-bodied Italian red wine from the UCCELLO DL SOLE label — rich dark fruit, gentle tannins, and a long finish. Best served at cellar temperature.",
+        "pairing": "Pairs with red meat, aged cheese, and pasta."
+      },
+      "corona-extra": {
+        "name": "Corona Extra 4.5%",
+        "desc": "Mexican lager, 330ml",
+        "notes": "Light and refreshing Mexican lager with a clean crisp finish. Best served ice-cold with a wedge of lime. The original beach beer.",
+        "pairing": "Squeeze of lime and a light snack."
+      },
+      "kistoffel-brune": {
+        "name": "Kistoffel Brune 6%",
+        "desc": "Belgian brown ale, 330ml",
+        "notes": "A robust Belgian brown ale with notes of caramel, dark fruit, and a subtle spice from the yeast. Smooth and warming.",
+        "pairing": "Cheese plates and cured meats."
+      },
+      "arcobrau-zwicklbier": {
+        "name": "Arcobrau Zwicklbier 5.2%",
+        "desc": "German unfiltered lager, 330ml",
+        "notes": "A traditional Bavarian Zwickl — cloudy, unfiltered, with a yeasty freshness and mild hoppy bite. Brewed in the heart of Bavaria since 1567.",
+        "pairing": "German sausage or pretzels."
+      },
+      "schnerider-weisse-tap": {
+        "name": "Schneider Weisse TAP 12%",
+        "desc": "German wheat wine, 330ml",
+        "notes": "An exceptional Bavarian Weizenbock — deep amber, intensely malty with notes of banana, clove, and warming alcohol. A true winter warmer.",
+        "pairing": "Rich roasted meats and blue cheese."
+      },
+      "budweiser-budvar-dark": {
+        "name": "Budweiser Budvar Dark 4.7%",
+        "desc": "Czech dark lager, 330ml",
+        "notes": "A classic Czech tmavý ležák — smooth dark lager with notes of roasted malt, caramel, and a clean bittersweet finish. Brewed in České Budějovice.",
+        "pairing": "Hearty stews and grilled meats."
+      },
+      "kronenbourg-1664-blanc": {
+        "name": "Kronenbourg 1664 Blanc 5%",
+        "desc": "French wheat beer, 330ml",
+        "notes": "A French wheat beer crafted with Strisselspalt hops for a distinctive floral citrus aroma, smooth and refreshing with a light golden hue.",
+        "pairing": "Seafood, salads, and light dishes."
+      },
+      "nuoc-khoang-vikola": {
+        "name": "Nước Khoáng Vikola",
+        "desc": "Still mineral water, 500ml",
+        "notes": "Pure Vietnamese still mineral water, naturally filtered through deep rock layers. Clean, crisp, and refreshing.",
+        "pairing": "Complements any dish."
+      },
+      "nuoc-khoang-co-gas-vikoda": {
+        "name": "Nước Khoáng Có Gas Vikoda",
+        "desc": "Sparkling mineral water, 430ml",
+        "notes": "Vietnamese sparkling mineral water with fine, persistent bubbles. Light and effervescent — a classic palate cleanser between courses.",
+        "pairing": "Between courses or with light fare."
+      },
+      "coca-cola": {
+        "name": "Coca Cola",
+        "desc": "Carbonated soft drink, 330ml",
+        "notes": "The iconic carbonated soft drink — bold caramel sweetness, lively bubbles, and a clean refreshing finish. Served ice-cold.",
+        "pairing": "Burgers, pizza, and fried dishes."
       }
     }
   },

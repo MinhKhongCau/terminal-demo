@@ -16,7 +16,9 @@ export type MenuCategory =
   | "mains"
   | "desserts"
   | "pizzas"
-  | "tacos";
+  | "tacos"
+  | "beers"
+  | "softdrinks";
 
 export type AllergenKey =
   | "gluten"
@@ -46,6 +48,8 @@ export const MENU_CATEGORIES: MenuCategory[] = [
   "desserts",
   "pizzas",
   "tacos",
+  "beers",
+  "softdrinks",
 ];
 
 export const MENU_ITEMS: MenuItem[] = [
@@ -112,6 +116,20 @@ export const MENU_ITEMS: MenuItem[] = [
   { id: "french-fries", category: "tacos", price: 69, allergens: ["egg"], image: img("1488477181946-6281dee33e6d") },
   { id: "chicken-unagi", category: "tacos", price: 89, allergens: ["fish", "soy"], image: "/images/chicken_unagi.avif" },
   { id: "chicken-popcorn", category: "tacos", price: 79, allergens: ["gluten", "egg"], image: "/images/chicken_popcorn.avif" },
+
+  // ── Beers & Wine ──
+  { id: "ruou-vang-uccello-dl-sole", category: "beers", price: 899, allergens: [], image: img("1510812431401-41d2bd2722f3") },
+  { id: "corona-extra", category: "beers", price: 89, allergens: ["gluten"], image: img("1535958636474-b021ee887b13") },
+  { id: "kistoffel-brune", category: "beers", price: 99, allergens: ["gluten"], image: img("1566633806827-5b5dd14ae24a") },
+  { id: "arcobrau-zwicklbier", category: "beers", price: 139, allergens: ["gluten"], image: img("1566633806827-5b5dd14ae24a") },
+  { id: "schnerider-weisse-tap", category: "beers", price: 199, allergens: ["gluten"], image: img("1566633806827-5b5dd14ae24a") },
+  { id: "budweiser-budvar-dark", category: "beers", price: 139, allergens: ["gluten"], image: img("1535958636474-b021ee887b13") },
+  { id: "kronenbourg-1664-blanc", category: "beers", price: 89, allergens: ["gluten"], image: img("1535958636474-b021ee887b13") },
+
+  // ── Soft Drinks ──
+  { id: "nuoc-khoang-vikola", category: "softdrinks", price: 55, allergens: [], image: img("1548839140-29a749e1cf4d") },
+  { id: "nuoc-khoang-co-gas-vikoda", category: "softdrinks", price: 55, allergens: [], image: img("1558618666-fcd25c85cd64") },
+  { id: "coca-cola", category: "softdrinks", price: 35, allergens: [], image: img("1554866585-cd94860890b7") },
 ];
 
 export const MENU_BY_CATEGORY: Record<MenuCategory, MenuItem[]> =
