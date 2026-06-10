@@ -68,7 +68,7 @@ function MenuApp() {
 
         {/* Footer plate */}
         <footer className="mt-20 mx-5 md:mx-12 pt-10 border-t border-brass/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-cream/55 font-mono text-[11px] tracking-[.2em]">
-          <div>© 2024 THE TERMINAL · ALL JOURNEYS RESERVED.</div>
+          <div>© 2026 THE TERMINAL · ALL JOURNEYS RESERVED.</div>
           <div className="text-brass">PRICES IN ’000 VND · SERVICE & VAT EXCLUSIVE</div>
         </footer>
       </main>

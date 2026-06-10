@@ -52,7 +52,7 @@ function MenuHeader({ branches, hotline, hours }) {
         {/* Brass underline */}
         <div className="mt-5 md:mt-7 flex items-center gap-4">
           <span className="h-px flex-1 max-w-[200px]" style={{ background: 'linear-gradient(90deg, transparent, #CFA93F, transparent)' }}></span>
-          <span className="font-mono text-[10px] tracking-[.4em] text-brass">— EST · 2024 —</span>
+          <span className="font-mono text-[10px] tracking-[.4em] text-brass">— EST · 2026 —</span>
           <span className="h-px flex-1 max-w-[200px]" style={{ background: 'linear-gradient(90deg, transparent, #CFA93F, transparent)' }}></span>
         </div>
       </div>
