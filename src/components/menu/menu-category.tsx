@@ -29,7 +29,7 @@ export function MenuCategoryPanel({
           aria-hidden
         />
         <span
-          className="font-script leading-none text-brass-light px-4"
+          className="font-script leading-none text-primary px-4"
           style={{
             fontSize: "clamp(2.5rem, 5vw, 4rem)",
             textShadow: "0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.2)",

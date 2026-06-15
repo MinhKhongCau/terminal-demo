@@ -69,7 +69,7 @@ export function NavigationSheet({ open, onClose }: NavigationSheetProps) {
             type="button"
             onClick={onClose}
             aria-label={t("nav.closeMenu")}
-            className="rounded-full p-2 text-brass-light transition-colors hover:bg-white/5"
+            className="rounded-full p-2 text-primary transition-colors hover:bg-white/5"
           >
             <X className="h-6 w-6" />
           </button>
@@ -84,7 +84,7 @@ export function NavigationSheet({ open, onClose }: NavigationSheetProps) {
               href={link.href}
               onClick={onClose}
               className={cn(
-                "font-display text-quartz uppercase tracking-[.22em] transition-colors duration-300 hover:text-brass-light",
+                "font-display text-quartz uppercase tracking-[.22em] transition-colors duration-300 hover:text-primary",
                 i < NAV_LINKS.length - 1 && "border-b border-brass/10 pb-2",
               )}
               style={{ fontSize: "1.35rem" }}

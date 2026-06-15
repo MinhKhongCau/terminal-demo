@@ -33,14 +33,14 @@ export function FooterSection() {
 
         {/* Quick links */}
         <div>
-          <div className="text-[11px] font-medium uppercase tracking-[.28em] text-brass-light">
+          <div className="text-[11px] font-medium uppercase tracking-[.28em] text-primary">
             {t("footer.connections")}
           </div>
           <BrandDivider className="mt-3" style={{ maxWidth: "200px" }} />
           <ul className="mt-5 space-y-3 text-quartz/80">
             {NAV_LINKS.map((link) => (
               <li key={link.id}>
-                <a href={link.href} className="hover:text-brass-light">
+                <a href={link.href} className="hover:text-primary">
                   {t(`footer.links.${link.id}`)}
                 </a>
               </li>
@@ -50,7 +50,7 @@ export function FooterSection() {
 
         {/* Newsletter */}
         <div>
-          <div className="text-[11px] font-medium uppercase tracking-[.28em] text-brass-light">
+          <div className="text-[11px] font-medium uppercase tracking-[.28em] text-primary">
             {t("footer.dispatchesTitle")}
           </div>
           <BrandDivider className="mt-3" style={{ maxWidth: "240px" }} />
@@ -63,7 +63,7 @@ export function FooterSection() {
             }}
           >
             <div className="flex items-center gap-3 border-b border-brass/40 pb-2">
-              <span className="shrink-0 text-[10px] font-medium uppercase tracking-[.3em] text-brass-light">
+              <span className="shrink-0 text-[10px] font-medium uppercase tracking-[.3em] text-primary">
                 {t("footer.wire")}
               </span>
               <input
@@ -74,14 +74,14 @@ export function FooterSection() {
               />
               <button
                 type="submit"
-                className="text-[12px] font-medium uppercase tracking-[.22em] text-brass-light hover:text-brass-pale"
+                className="text-[12px] font-medium uppercase tracking-[.22em] text-primary hover:text-brass-pale"
               >
                 {t("footer.send")}
               </button>
             </div>
             {subscribed && (
               <p
-                className="text-[11px] font-medium uppercase tracking-[.22em] text-brass-light"
+                className="text-[11px] font-medium uppercase tracking-[.22em] text-primary"
                 role="status"
               >
                 {t("footer.sent")}
@@ -93,7 +93,7 @@ export function FooterSection() {
 
       <div className="relative mx-auto mt-14 flex max-w-6xl flex-col items-start justify-between gap-3 border-t border-brass/30 pt-6 text-[11px] uppercase tracking-[.22em] text-quartz/55 md:flex-row md:items-center">
         <span>{t("footer.copyright")}</span>
-        <span className="text-brass-light/70">{t("footer.builtWith")}</span>
+        <span className="text-primary/70">{t("footer.builtWith")}</span>
       </div>
     </footer>
   );

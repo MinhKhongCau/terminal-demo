@@ -47,7 +47,7 @@ export function AboutSection() {
 
         {/* RIGHT — story */}
         <Reveal>
-          <div className="text-[11px] font-medium uppercase tracking-[.4em] text-accent">
+          <div className="text-[11px] font-medium uppercase tracking-[.4em] text-primary">
             {t("about.eyebrow")}
           </div>
 
@@ -70,12 +70,12 @@ export function AboutSection() {
 
           <figure className="mt-8 border-l-2 border-accent pl-5">
             <blockquote
-              className="font-serif italic leading-snug text-rust-deep dark:text-brass-light"
+              className="font-serif italic leading-snug text-rust-deep dark:text-primary"
               style={{ fontSize: "clamp(1.1rem, 1.6vw, 1.25rem)" }}
             >
               {t("about.quote")}
             </blockquote>
-            <figcaption className="mt-3 text-[11px] font-medium uppercase tracking-[.32em] text-accent">
+            <figcaption className="mt-3 text-[11px] font-medium uppercase tracking-[.32em] text-primary">
               {t("about.quoteAuthor")}
             </figcaption>
           </figure>

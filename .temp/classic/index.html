@@ -58,7 +58,7 @@
   :focus-visible { outline: 2px solid #CFA93F; outline-offset: 3px; border-radius: 2px; }
 
   /* ─────────────────── BRAND TEXT GRADIENTS (LIGHTER) ─────────────────── */
-  .text-grad-primary {
+  .text-primary box-shadow {
     background-image: linear-gradient(0deg, #fff6dc 0%, #ffe199 25%, #f4c14f 55%, #ffe9b3 80%, #fff4d4 100%);
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent; color: transparent;
@@ -414,17 +414,17 @@
 
     <!-- Center nav -->
     <nav class="hidden lg:flex items-center gap-9 text-[12px]" aria-label="Primary">
-      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#home">Home</a>
-      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#about">About</a>
-      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#menu">Menu</a>
-      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#reserve">Reservation</a>
-      <a class="nav-link text-quartz hover:text-brass-light tracking-[.22em] uppercase font-medium" href="#location">Location</a>
+      <a class="nav-link text-quartz hover:text-primary tracking-[.22em] uppercase font-medium" href="#home">Home</a>
+      <a class="nav-link text-quartz hover:text-primary tracking-[.22em] uppercase font-medium" href="#about">About</a>
+      <a class="nav-link text-quartz hover:text-primary tracking-[.22em] uppercase font-medium" href="#menu">Menu</a>
+      <a class="nav-link text-quartz hover:text-primary tracking-[.22em] uppercase font-medium" href="#reserve">Reservation</a>
+      <a class="nav-link text-quartz hover:text-primary tracking-[.22em] uppercase font-medium" href="#location">Location</a>
     </nav>
 
     <a href="#reserve" class="hidden lg:inline-flex btn-brass px-5 py-2.5 text-[11px]">Reserve a Table</a>
 
     <!-- Mobile burger -->
-    <button id="burger" class="lg:hidden p-2 text-brass-light" aria-label="Open menu" aria-controls="overlay" aria-expanded="false">
+    <button id="burger" class="lg:hidden p-2 text-primary" aria-label="Open menu" aria-controls="overlay" aria-expanded="false">
       <i data-lucide="menu" class="w-6 h-6"></i>
     </button>
   </div>
@@ -442,19 +442,19 @@
         <span class="text-grad-accent font-bold tracking-[.28em] text-[13px]">THE TERMINAL</span>
         <span class="hidden md:block text-quartz/65 text-[9px] tracking-[.32em] mt-0.5">CAFE · EUROPEAN KITCHEN</span>
       </div>
-      <button id="closeMenu" class="text-brass-light p-2 hover:bg-white/5 rounded-full transition-colors" aria-label="Close menu">
+      <button id="closeMenu" class="text-primary p-2 hover:bg-white/5 rounded-full transition-colors" aria-label="Close menu">
         <i data-lucide="x" class="w-6 h-6"></i>
       </button>
     </div>
     
     <div class="brand-divider my-6" style="opacity: 0.3;"></div>
     
-    <nav class="mt-4 flex flex-col gap-6 text-grad-primary" id="overlayNav" aria-label="Site">
-      <a href="#home"     class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">Home</a>
-      <a href="#about"    class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">About</a>
-      <a href="#menu"     class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">Menu</a>
-      <a href="#reserve"  class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">Reservation</a>
-      <a href="#location" class="mobile-nav-link text-quartz hover:text-brass-light font-display tracking-[.22em] uppercase transition-colors duration-300 py-2" style="font-size:1.35rem;">Location</a>
+    <nav class="mt-4 flex flex-col gap-6 text-primary box-shadow" id="overlayNav" aria-label="Site">
+      <a href="#home"     class="mobile-nav-link text-quartz hover:text-primary font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">Home</a>
+      <a href="#about"    class="mobile-nav-link text-quartz hover:text-primary font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">About</a>
+      <a href="#menu"     class="mobile-nav-link text-quartz hover:text-primary font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">Menu</a>
+      <a href="#reserve"  class="mobile-nav-link text-quartz hover:text-primary font-display tracking-[.22em] uppercase transition-colors duration-300 py-2 border-b border-brass/5" style="font-size:1.35rem;">Reservation</a>
+      <a href="#location" class="mobile-nav-link text-quartz hover:text-primary font-display tracking-[.22em] uppercase transition-colors duration-300 py-2" style="font-size:1.35rem;">Location</a>
     </nav>
     <a href="#reserve" class="btn-brass mt-auto py-4 text-[12px] uppercase tracking-[.2em] font-semibold">Reserve a Table</a>
   </div>
@@ -511,7 +511,7 @@
           <span class="h-px w-10 md:w-16" style="background: linear-gradient(90deg, #ffe9a3, #c88d2b 30%, transparent);"></span>
         </div>
 
-        <h1 class="text-grad-primary font-black uppercase leading-[.9] tracking-[.04em]"
+        <h1 class="text-primary box-shadow font-black uppercase leading-[.9] tracking-[.04em]"
             style="font-size: clamp(2.5rem, 8vw, 6rem);">
           THE TERMINAL
         </h1>
@@ -544,7 +544,7 @@
     </div>
 
     <!-- Scroll cue -->
-    <div class="reveal mt-12 md:mt-16 flex flex-col items-center gap-2 text-brass-light/85">
+    <div class="reveal mt-12 md:mt-16 flex flex-col items-center gap-2 text-primary/85">
       <span class="font-mono tracking-[.32em] text-[10px]">SCROLL</span>
       <i data-lucide="chevron-down" class="w-4 h-4 animate-bounce"></i>
     </div>
@@ -845,26 +845,26 @@
         <div class="flex items-center gap-3 mb-2">
           <span class="text-grad-accent uppercase tracking-[.4em] text-[10px] font-medium">Departure Board</span>
         </div>
-        <h3 class="text-grad-primary font-black uppercase leading-none" style="font-size: clamp(2rem, 4vw, 3rem);">
+        <h3 class="text-primary box-shadow font-black uppercase leading-none" style="font-size: clamp(2rem, 4vw, 3rem);">
           Hours of<br/>Operation
         </h3>
         <div class="brand-divider mt-5" style="max-width: 220px;"></div>
 
         <div class="mt-7 grid grid-cols-1 gap-4">
           <div>
-            <div class="text-brass-light uppercase tracking-[.32em] text-[10px] font-medium">Hotline</div>
+            <div class="text-primary uppercase tracking-[.32em] text-[10px] font-medium">Hotline</div>
             <a href="tel:19006403" class="text-grad-accent font-bold tabular-nums" style="font-size: clamp(1.25rem, 2vw, 1.5rem);">1900 6403</a>
           </div>
           <div>
-            <div class="text-brass-light uppercase tracking-[.32em] text-[10px] font-medium">Email</div>
-            <a href="/cdn-cgi/l/email-protection#9bf3fef7f7f4dbeff3feeffee9f6f2f5faf7b5f8fafdfe" class="text-quartz hover:text-brass-light text-[14px]"><span class="__cf_email__" data-cfemail="9df5f8f1f1f2dde9f5f8e9f8eff0f4f3fcf1b3fefcfbf8">[email&#160;protected]</span></a>
+            <div class="text-primary uppercase tracking-[.32em] text-[10px] font-medium">Email</div>
+            <a href="/cdn-cgi/l/email-protection#9bf3fef7f7f4dbeff3feeffee9f6f2f5faf7b5f8fafdfe" class="text-quartz hover:text-primary text-[14px]"><span class="__cf_email__" data-cfemail="9df5f8f1f1f2dde9f5f8e9f8eff0f4f3fcf1b3fefcfbf8">[email&#160;protected]</span></a>
           </div>
         </div>
       </div>
 
       <!-- Timetable -->
       <div>
-        <div class="grid grid-cols-2 pb-2 border-b border-brass/30 text-brass-light uppercase tracking-[.22em] text-[11px] font-medium">
+        <div class="grid grid-cols-2 pb-2 border-b border-brass/30 text-primary uppercase tracking-[.22em] text-[11px] font-medium">
           <span>Day</span><span class="text-right">Service Window</span>
         </div>
         <div class="timetable-row"><span>Monday</span><span class="dep">11:00 — 22:00</span></div>
@@ -904,29 +904,29 @@
 
     <!-- Quick links -->
     <div>
-      <div class="text-brass-light uppercase tracking-[.28em] text-[11px] font-medium">Connections</div>
+      <div class="text-primary uppercase tracking-[.28em] text-[11px] font-medium">Connections</div>
       <div class="brand-divider mt-3" style="max-width: 200px;"></div>
       <ul class="mt-5 space-y-3 text-quartz/80">
-        <li><a href="#home"     class="hover:text-brass-light">Home</a></li>
-        <li><a href="#about"    class="hover:text-brass-light">About the Terminal</a></li>
-        <li><a href="#menu"     class="hover:text-brass-light">Menu</a></li>
-        <li><a href="#reserve"  class="hover:text-brass-light">Reserve a Table</a></li>
-        <li><a href="#location" class="hover:text-brass-light">Find Us</a></li>
+        <li><a href="#home"     class="hover:text-primary">Home</a></li>
+        <li><a href="#about"    class="hover:text-primary">About the Terminal</a></li>
+        <li><a href="#menu"     class="hover:text-primary">Menu</a></li>
+        <li><a href="#reserve"  class="hover:text-primary">Reserve a Table</a></li>
+        <li><a href="#location" class="hover:text-primary">Find Us</a></li>
       </ul>
     </div>
 
     <!-- Telegram newsletter -->
     <div>
-      <div class="text-brass-light uppercase tracking-[.28em] text-[11px] font-medium">Receive Our Dispatches</div>
+      <div class="text-primary uppercase tracking-[.28em] text-[11px] font-medium">Receive Our Dispatches</div>
       <div class="brand-divider mt-3" style="max-width: 240px;"></div>
       <form id="newsForm" class="mt-5 flex flex-col gap-3" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('.tg-ok').classList.remove('hidden');">
         <div class="flex items-center gap-3 border-b border-brass/40 pb-2">
-          <span class="text-brass-light uppercase tracking-[.3em] text-[10px] font-medium shrink-0">Wire</span>
+          <span class="text-primary uppercase tracking-[.3em] text-[10px] font-medium shrink-0">Wire</span>
           <input type="email" required placeholder="your wire address"
                  class="flex-1 bg-transparent outline-none text-quartz placeholder:text-quartz/35 py-2 text-[14px]" />
-          <button class="text-brass-light hover:text-brass-pale text-[12px] uppercase tracking-[.22em] font-medium" type="submit">Send →</button>
+          <button class="text-primary hover:text-brass-pale text-[12px] uppercase tracking-[.22em] font-medium" type="submit">Send →</button>
         </div>
-        <p class="tg-ok hidden text-brass-light text-[11px] uppercase tracking-[.22em] font-medium">✓ Transmission received · stop ·</p>
+        <p class="tg-ok hidden text-primary text-[11px] uppercase tracking-[.22em] font-medium">✓ Transmission received · stop ·</p>
       </form>
 
       <!-- Social medallions removed -->
@@ -935,7 +935,7 @@
 
   <div class="relative max-w-6xl mx-auto mt-14 pt-6 border-t border-brass/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-quartz/55 text-[11px] tracking-[.22em] uppercase">
     <span>© 2026 · The Terminal — All Journeys Reserved</span>
-    <span class="text-brass-light/70">Built with brass, oak &amp; patience</span>
+    <span class="text-primary/70">Built with brass, oak &amp; patience</span>
   </div>
 </footer>
 
@@ -1212,7 +1212,7 @@ function MenuApp() {
           <span className="h-px w-10 md:w-16" style={{ background: 'linear-gradient(90deg, #ffe9a3, #c88d2b 30%, transparent)' }}></span>
         </div>
 
-        <h2 className="text-grad-primary font-black uppercase leading-none tracking-tight font-display"
+        <h2 className="text-primary box-shadow font-black uppercase leading-none tracking-tight font-display"
             style={{ fontSize: 'clamp(2.75rem, 8vw, 6rem)' }}>
           Menu
         </h2>
@@ -1273,7 +1273,7 @@ function MenuApp() {
       {/* Fine print */}
       <div className="relative max-w-6xl mx-auto mt-12 md:mt-16 pt-6 border-t border-brass/15 flex flex-col md:flex-row gap-3 items-start md:items-center justify-between text-quartz/55 text-[12px] tracking-[.22em] uppercase">
         <span>Prices in ’000 VND</span>
-        <span className="text-brass-light/80">Service &amp; VAT exclusive</span>
+        <span className="text-primary/80">Service &amp; VAT exclusive</span>
         <span>Allergens — ask your conductor</span>
       </div>
 
@@ -1298,7 +1298,7 @@ function MenuSection({ category, items, onItemClick }) {
     <div className="menu-panel">
       <div className="flex items-center gap-5 mb-7">
         <span className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(184,119,22,.55))' }}></span>
-        <span className="font-script text-brass-light leading-none px-4"
+        <span className="font-script text-primary leading-none px-4"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', textShadow: '0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.2)' }}>
           {headerText}
         </span>
@@ -1343,7 +1343,7 @@ function DishCard({ item, onClick }) {
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-black/35 via-black/55 to-black/65 transition-colors duration-300 group-hover:from-black/35 group-hover:via-black/55 group-hover:to-black/55" />
 
       <div className="relative z-10 min-w-0 flex-1 flex flex-col justify-center py-2.5">
-        <h4 className="text-grad-primary font-bold uppercase tracking-[.05em] leading-tight group-hover:text-brass transition-colors duration-300" style={{ fontSize: 'clamp(0.75rem, 2.5vw, 0.95rem)' }}>
+        <h4 className="text-primary box-shadow font-bold uppercase tracking-[.05em] leading-tight group-hover:text-brass transition-colors duration-300" style={{ fontSize: 'clamp(0.75rem, 2.5vw, 0.95rem)' }}>
           {item.name}
         </h4>
         <p className="desc mt-1 text-copper/85 leading-snug group-hover:text-cream/90 transition-colors duration-300" style={{ fontSize: 'clamp(10px, 1.8vw, 13px)', maxWidth: '42ch' }}>
@@ -1352,7 +1352,7 @@ function DishCard({ item, onClick }) {
       </div>
 
       <div className="relative z-10 flex items-center gap-1.5 shrink-0 pt-0.5">
-        <span className="text-grad-primary font-black tabular-nums tracking-wide leading-none" style={{ fontSize: 'clamp(1rem, 2vw, 1.3rem)' }}>
+        <span className="text-primary box-shadow font-black tabular-nums tracking-wide leading-none" style={{ fontSize: 'clamp(1rem, 2vw, 1.3rem)' }}>
           {item.price}
         </span>
       </div>
@@ -1401,7 +1401,7 @@ function DishModal({ dish, category, onClose }) {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
           <div className="absolute inset-0 grid place-items-center pointer-events-none opacity-40">
-            <div className="font-script text-brass-light" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', textShadow: '0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.18)' }}>The&nbsp;Terminal</div>
+            <div className="font-script text-primary" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', textShadow: '0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.18)' }}>The&nbsp;Terminal</div>
           </div>
           <div className="absolute inset-0 ring-1 ring-inset ring-brass/30 pointer-events-none"></div>
           <div className="absolute top-4 left-4 rounded-full border-2 border-dashed border-brass/70 grid place-items-center w-16 h-16 -rotate-6"
@@ -1422,7 +1422,7 @@ function DishModal({ dish, category, onClose }) {
           <button 
             onClick={onClose}
             aria-label="Close"
-            className="absolute top-4 right-4 w-10 h-10 grid place-items-center rounded-full text-quartz/80 hover:text-brass-light hover:bg-white/5 transition-colors"
+            className="absolute top-4 right-4 w-10 h-10 grid place-items-center rounded-full text-quartz/80 hover:text-primary hover:bg-white/5 transition-colors"
           >
             <i data-lucide="x" className="w-5 h-5"></i>
           </button>
@@ -1438,7 +1438,7 @@ function DishModal({ dish, category, onClose }) {
             <div>
               <div className="text-[10px] tracking-[.3em] uppercase text-quartz/55 font-medium">Fare</div>
               <div className="flex items-baseline gap-2 mt-1.5">
-                <span className="text-grad-primary font-black leading-none" style={{ fontSize: 'clamp(2.2rem, 4vw, 3rem)' }}>{dish.price}</span>
+                <span className="text-primary box-shadow font-black leading-none" style={{ fontSize: 'clamp(2.2rem, 4vw, 3rem)' }}>{dish.price}</span>
                 <span className="text-grad-accent text-[12px] tracking-[.22em] font-semibold">VND ’000</span>
               </div>
             </div>
@@ -1466,7 +1466,7 @@ function DishModal({ dish, category, onClose }) {
             <div className="text-[10px] tracking-[.3em] uppercase text-quartz/55 mb-2 font-medium">Chef's Pairing</div>
             <div className="flex items-start gap-3 p-3 border-l-2 rounded-sm"
                  style={{ background: 'rgba(255, 233, 163, .06)', borderLeftColor: '#fcd16e' }}>
-              <i data-lucide="wine" className="w-4 h-4 text-brass-light shrink-0 mt-0.5"></i>
+              <i data-lucide="wine" className="w-4 h-4 text-primary shrink-0 mt-0.5"></i>
               <p className="text-quartz/85 text-[13.5px] italic leading-snug">{dish.pairing}</p>
             </div>
           </div>

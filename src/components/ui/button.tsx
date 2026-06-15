@@ -17,7 +17,7 @@ const VARIANTS: Record<ButtonVariant, string> = {
   brass: "btn-brass",
   outline: "btn-brass-outline",
   ghost:
-    "inline-flex items-center justify-center font-display uppercase tracking-[.22em] text-brass-light hover:text-brass-pale transition-colors",
+    "inline-flex items-center justify-center font-display uppercase tracking-[.22em] text-primary hover:text-brass-pale transition-colors",
 };
 
 const SIZES: Record<ButtonSize, string> = {

@@ -44,7 +44,7 @@ export function MenuSection() {
         </div>
 
         <h2
-          className="text-grad-primary font-display font-black uppercase leading-none tracking-tight"
+          className="text-primary box-shadow font-display font-black uppercase leading-none tracking-tight"
           style={{ fontSize: "clamp(2.75rem, 8vw, 6rem)" }}
         >
           {t("menu.title")}
@@ -73,7 +73,7 @@ export function MenuSection() {
 
       <div className="relative mx-auto mt-12 flex max-w-6xl flex-col items-start justify-between gap-3 border-t border-brass/15 pt-6 text-[12px] uppercase tracking-[.22em] text-quartz/55 md:mt-16 md:flex-row md:items-center">
         <span>{t("menu.finePrice")}</span>
-        <span className="text-brass-light/80">{t("menu.fineService")}</span>
+        <span className="text-primary/80">{t("menu.fineService")}</span>
         <span>{t("menu.fineAllergens")}</span>
       </div>
 

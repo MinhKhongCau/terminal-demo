@@ -6,7 +6,7 @@ import type { Config } from "tailwindcss";
  * utilities (bg-background, text-primary, text-brass, border-border, …),
  * which keeps theming (light/dark) and rebrands a single-file change.
  */
-const withAlpha = (variable: string) => `rgb(var(${variable}) / <alpha-value>)`;
+const withAlpha = (variable: string) => `hsl(var(${variable}) / <alpha-value>)`;
 
 const config: Config = {
   darkMode: "class",
@@ -51,10 +51,7 @@ const config: Config = {
           DEFAULT: withAlpha("--iron"),
           2: withAlpha("--iron-2"),
         },
-        rust: {
-          DEFAULT: withAlpha("--rust"),
-          deep: withAlpha("--rust-deep"),
-        },
+        rust: withAlpha("--rust"),
         brass: {
           DEFAULT: withAlpha("--brass"),
           light: withAlpha("--brass-light"),

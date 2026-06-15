@@ -32,7 +32,7 @@ export function ReservationSection() {
 
       <div className="relative mx-auto max-w-5xl">
         <Reveal as="header" className="text-center">
-          <div className="text-[11px] font-medium uppercase tracking-[.4em] text-accent">
+          <div className="text-[11px] font-medium uppercase tracking-[.4em] text-primary">
             {t("reservation.eyebrow")}
           </div>
           <h2
@@ -59,11 +59,11 @@ export function ReservationSection() {
             style={{ background: "radial-gradient(circle, rgba(207,169,63,.16), transparent 70%)" }}
           >
             <div className="text-center leading-tight">
-              <div className="text-[9px] font-bold uppercase tracking-[.2em] text-accent">
+              <div className="text-[9px] font-bold uppercase tracking-[.2em] text-primary">
                 {t("reservation.stampTop")}
               </div>
-              <div className="text-2xl font-black leading-none text-accent">09</div>
-              <div className="text-[8px] font-bold uppercase tracking-[.2em] text-accent">
+              <div className="text-2xl font-black leading-none text-primary">09</div>
+              <div className="text-[8px] font-bold uppercase tracking-[.2em] text-primary">
                 {t("reservation.stampBottom")}
               </div>
             </div>
@@ -124,7 +124,7 @@ export function ReservationSection() {
             </div>
 
             <div className="mt-2 flex flex-col items-start justify-between gap-5 md:col-span-2 sm:flex-row sm:items-center">
-              <div className="text-[12px] font-medium uppercase leading-tight tracking-[.18em] text-accent">
+              <div className="text-[12px] font-medium uppercase leading-tight tracking-[.18em] text-primary">
                 {t("reservation.terms")}
               </div>
               <button type="submit" className="btn-brass min-w-[220px] px-10 py-4 text-[12px]">
@@ -135,7 +135,7 @@ export function ReservationSection() {
 
             {submitted && (
               <div
-                className="mt-4 border-2 border-dashed border-accent p-4 font-medium text-rust-deep dark:text-brass-light md:col-span-2"
+                className="mt-4 border-2 border-dashed border-accent p-4 font-medium text-rust-deep dark:text-primary md:col-span-2"
                 style={{ background: "rgba(255, 233, 163, .18)" }}
                 role="status"
               >

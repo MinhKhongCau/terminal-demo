@@ -54,7 +54,7 @@ export function HeroSection() {
             </div>
 
             <h1
-              className="text-grad-primary font-black uppercase leading-[.9] tracking-[.04em]"
+              className="text-primary box-shadow font-black uppercase leading-[.9] tracking-[.04em]"
               style={{ fontSize: "clamp(2.5rem, 8vw, 6rem)" }}
             >
               {t("brand.name")}
@@ -95,7 +95,7 @@ export function HeroSection() {
           </a>
         </Reveal>
 
-        <Reveal className="mt-12 flex flex-col items-center gap-2 text-brass-light/85 md:mt-16">
+        <Reveal className="mt-12 flex flex-col items-center gap-2 text-primary/85 md:mt-16">
           <span className="font-mono text-[10px] tracking-[.32em]">{t("hero.scroll")}</span>
           <ChevronDown className="h-4 w-4 animate-bounce" />
         </Reveal>

@@ -34,7 +34,7 @@ utilities — never raw hex:
 ```tsx
 <h2 className="text-foreground" />
 <button className="btn-brass" />
-<div className="bg-card border-border text-brass-light" />
+<div className="bg-card border-border text-primary" />
 ```
 
 Colours are stored as `R G B` channels so Tailwind's `/<alpha>` opacity modifiers

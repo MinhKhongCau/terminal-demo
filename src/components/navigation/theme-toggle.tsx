@@ -21,7 +21,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={t("controls.toggleTheme")}
       className={cn(
-        "grid h-9 w-9 place-items-center rounded-full border border-brass/40 text-brass-light transition-colors hover:bg-brass/10",
+        "grid h-9 w-9 place-items-center rounded-full border border-brass/40 text-primary transition-colors hover:bg-brass/10",
         className,
       )}
     >

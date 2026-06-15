@@ -68,7 +68,7 @@ export function Navbar() {
                 key={link.id}
                 href={link.href}
                 className={cn(
-                  "nav-link font-medium uppercase tracking-[.22em] text-quartz transition-colors hover:text-brass-light",
+                  "nav-link font-medium uppercase tracking-[.22em] text-quartz transition-colors hover:text-primary",
                   active === link.id && "active",
                 )}
               >
@@ -93,7 +93,7 @@ export function Navbar() {
               aria-label={t("nav.openMenu")}
               aria-controls="overlay"
               aria-expanded={sheetOpen}
-              className="p-2 text-brass-light"
+              className="p-2 text-primary"
             >
               <Menu className="h-6 w-6" />
             </button>

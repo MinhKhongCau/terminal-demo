@@ -28,7 +28,7 @@ export function LocaleToggle({ className }: { className?: string }) {
               "rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[.18em] transition-colors",
               active
                 ? "bg-brass text-[#3b241b]"
-                : "text-brass-light/70 hover:text-brass-light",
+                : "text-primary/70 hover:text-primary",
             )}
           >
             {LOCALE_LABELS[code].short}

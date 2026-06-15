@@ -67,7 +67,7 @@ export function DishModal({ item, category, onClose }: DishModalProps) {
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           <div className="pointer-events-none absolute inset-0 grid place-items-center opacity-40">
             <div
-              className="font-script text-brass-light"
+              className="font-script text-primary"
               style={{
                 fontSize: "clamp(2.5rem, 5vw, 4rem)",
                 textShadow: "0 2px 0 rgba(0,0,0,.4), 0 0 24px rgba(255,225,153,.18)",
@@ -108,7 +108,7 @@ export function DishModal({ item, category, onClose }: DishModalProps) {
             type="button"
             onClick={onClose}
             aria-label={t("menu.close")}
-            className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full text-quartz/80 transition-colors hover:bg-white/5 hover:text-brass-light"
+            className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full text-quartz/80 transition-colors hover:bg-white/5 hover:text-primary"
           >
             <X className="h-5 w-5" />
           </button>
@@ -133,7 +133,7 @@ export function DishModal({ item, category, onClose }: DishModalProps) {
               </div>
               <div className="mt-1.5 flex items-baseline gap-2">
                 <span
-                  className="text-grad-primary font-black leading-none"
+                  className="text-primary box-shadow font-black leading-none"
                   style={{ fontSize: "clamp(2.2rem, 4vw, 3rem)" }}
                 >
                   {item.price}
@@ -184,7 +184,7 @@ export function DishModal({ item, category, onClose }: DishModalProps) {
               className="flex items-start gap-3 rounded-sm border-l-2 p-3"
               style={{ background: "rgba(255, 233, 163, .06)", borderLeftColor: "#fcd16e" }}
             >
-              <Wine className="mt-0.5 h-4 w-4 shrink-0 text-brass-light" />
+              <Wine className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <p className="text-[13.5px] italic leading-snug text-quartz/85">{pairing}</p>
             </div>
           </div>

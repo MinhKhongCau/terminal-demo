@@ -30,7 +30,7 @@ export function DishCard({ item, onClick }: DishCardProps) {
 
       <div className="relative z-10 flex min-w-0 flex-1 flex-col justify-center py-2.5">
         <h4
-          className="text-grad-primary font-bold uppercase leading-tight tracking-[.05em]"
+          className="text-primary box-shadow font-bold uppercase leading-tight tracking-[.05em]"
           style={{ fontSize: "clamp(0.75rem, 2.5vw, 0.95rem)" }}
         >
           {name}
@@ -45,7 +45,7 @@ export function DishCard({ item, onClick }: DishCardProps) {
 
       <div className="relative z-10 flex shrink-0 items-center gap-1.5 pt-0.5">
         <span
-          className="text-grad-primary font-black leading-none tracking-wide tabular-nums"
+          className="text-primary box-shadow font-black leading-none tracking-wide tabular-nums"
           style={{ fontSize: "clamp(1rem, 2vw, 1.3rem)" }}
         >
           {item.price}

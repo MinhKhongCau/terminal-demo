@@ -39,7 +39,7 @@ export function MenuTabs({ value, onChange }: MenuTabsProps) {
                 "menu-tab relative min-w-[100px] flex-1 overflow-hidden py-3 text-center transition-all duration-300",
                 active
                   ? "font-semibold text-[#1f1308]"
-                  : "text-muted-gold hover:text-brass-light",
+                  : "text-muted-gold hover:text-primary",
               )}
             >
               {labels[tab] ?? tab}

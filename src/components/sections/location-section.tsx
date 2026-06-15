@@ -31,7 +31,7 @@ export function LocationSection() {
   return (
     <section id="location" className="relative bg-background px-5 py-20 md:px-12 md:py-28">
       <Reveal as="header" className="mx-auto max-w-6xl text-center">
-        <div className="text-[11px] font-medium uppercase tracking-[.4em] text-accent">
+        <div className="text-[11px] font-medium uppercase tracking-[.4em] text-primary">
           {t("location.eyebrow")}
         </div>
         <h2
@@ -54,9 +54,9 @@ export function LocationSection() {
           <Reveal as="article" key={branch.label} className="paper-card relative w-full max-w-md rounded-md p-6">
             <CornerRivets inset={8} />
             <div className="flex items-start gap-3">
-              <MapPin className="mt-1 h-5 w-5 shrink-0 text-accent" />
+              <MapPin className="mt-1 h-5 w-5 shrink-0 text-primary" />
               <div className="flex-1">
-                <div className="text-[10px] font-medium uppercase tracking-[.3em] text-accent">
+                <div className="text-[10px] font-medium uppercase tracking-[.3em] text-primary">
                   {branch.label}
                 </div>
                 <h3
@@ -79,7 +79,7 @@ export function LocationSection() {
             </p>
             <a
               href={`tel:${branch.tel ?? branch.phone.replace(/[^\d+]/g, "")}`}
-              className="mt-4 inline-flex items-center gap-2 text-[14px] font-semibold tabular-nums text-accent transition-colors hover:text-rust-deep dark:hover:text-brass-pale"
+              className="mt-4 inline-flex items-center gap-2 text-[14px] font-semibold tabular-nums text-primary transition-colors hover:text-rust-deep dark:hover:text-brass-pale"
             >
               <PhoneCall className="h-4 w-4" />
               {branch.phone}
@@ -97,7 +97,7 @@ export function LocationSection() {
               {t("location.departureBoard")}
             </div>
             <h3
-              className="text-grad-primary font-black uppercase leading-none"
+              className="text-primary box-shadow font-black uppercase leading-none"
               style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
             >
               {t("location.hoursTitle")}
@@ -106,7 +106,7 @@ export function LocationSection() {
 
             <div className="mt-7 grid grid-cols-1 gap-4">
               <div>
-                <div className="text-[10px] font-medium uppercase tracking-[.32em] text-brass-light">
+                <div className="text-[10px] font-medium uppercase tracking-[.32em] text-primary">
                   {t("location.hotline")}
                 </div>
                 <a
@@ -118,12 +118,12 @@ export function LocationSection() {
                 </a>
               </div>
               <div>
-                <div className="text-[10px] font-medium uppercase tracking-[.32em] text-brass-light">
+                <div className="text-[10px] font-medium uppercase tracking-[.32em] text-primary">
                   {t("location.emailLabel")}
                 </div>
                 <a
                   href={`mailto:${t("location.email")}`}
-                  className="text-[14px] text-quartz hover:text-brass-light"
+                  className="text-[14px] text-quartz hover:text-primary"
                 >
                   {t("location.email")}
                 </a>
@@ -132,7 +132,7 @@ export function LocationSection() {
           </div>
 
           <div>
-            <div className="grid grid-cols-2 border-b border-brass/30 pb-2 text-[11px] font-medium uppercase tracking-[.22em] text-brass-light">
+            <div className="grid grid-cols-2 border-b border-brass/30 pb-2 text-[11px] font-medium uppercase tracking-[.22em] text-primary">
               <span>{t("location.colDay")}</span>
               <span className="text-right">{t("location.colWindow")}</span>
             </div>
